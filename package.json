@@ -1,0 +1,67 @@
+{
+  "name": "@optimald/uilensai",
+  "version": "0.1.0",
+  "description": "Visual UI analysis with AI",
+  "main": "src/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/cli/ui-single.js",
+    "ui": "node src/cli/ui-single.js",
+    "test-server": "node src/utils/test-server.js",
+    "setup": "node src/utils/setup.js"
+  },
+  "bin": {
+    "uilensai": "src/cli/ui-single.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "UILensAI Team",
+  "license": "MIT",
+  "keywords": [
+    "ui",
+    "ux",
+    "analysis",
+    "anthropic",
+    "screenshots",
+    "testing",
+    "design",
+    "accessibility"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "files": [
+    "src/**/*",
+    "storage/.gitkeep",
+    "storage/screenshots/.gitkeep",
+    "storage/reports/.gitkeep",
+    "README.md"
+  ],
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.12.2",
+    "axios": "^1.6.8",
+    "chalk": "^4.1.2",
+    "date-fns": "^4.1.0",
+    "dotenv": "^16.4.5",
+    "figlet": "^1.7.0",
+    "inquirer": "^8.2.6",
+    "mime-types": "^2.1.35",
+    "open": "^10.1.1",
+    "ora": "^5.4.1",
+    "playwright": "^1.42.1",
+    "sharp": "^0.33.5",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "express": "^4.18.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/optimald/UILensAI.git"
+  },
+  "homepage": "https://github.com/optimald/UILensAI",
+  "bugs": {
+    "url": "https://github.com/optimald/UILensAI/issues"
+  }
+}

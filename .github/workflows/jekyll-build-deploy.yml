@@ -1,0 +1,77 @@
+name: Jekyll Build and Deploy
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        with:
+          static_site_generator: jekyll
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+      
+      - name: Debug - List Files Before
+        run: |
+          ls -la
+          echo "Content of _config.yml:"
+          cat _config.yml | grep -A 10 exclude
+          echo "Checking if README.md exists:"
+          cat README.md | head -10
+          # No longer checking for index.md as we're using README.md instead
+      
+      - name: Install Dependencies
+        run: |
+          bundle install
+      
+      - name: Build Jekyll site
+        run: |
+          echo "Jekyll version:"
+          bundle exec jekyll --version
+          bundle exec jekyll build --verbose --trace
+      
+      - name: Ensure CNAME exists in _site
+        run: |
+          echo "uilensai.com" > _site/CNAME
+          echo "CNAME file contents:"
+          cat _site/CNAME
+      
+      - name: Debug - List Files After Build
+        run: |
+          echo "Files in _site directory:"
+          ls -la _site
+          echo "Checking if index.html exists:"
+          ls -la _site/index.html
+          echo "Content of index.html (first 20 lines):"
+          head -20 _site/index.html
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
+      
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+      

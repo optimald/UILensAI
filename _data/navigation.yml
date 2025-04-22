@@ -1,0 +1,15 @@
+main:
+  - title: GitHub
+    url: https://github.com/optimald/UILensAI
+
+footer:
+  - title: Resources
+    subfolderitems:
+      - page: GitHub Repository
+        url: https://github.com/optimald/UILensAI
+      - page: Support
+        url: mailto:hello@uilensai.com
+  - title: Legal
+    subfolderitems:
+      - page: MIT License
+        url: https://github.com/optimald/UILensAI/blob/master/LICENSE 

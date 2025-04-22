@@ -1,0 +1,58 @@
+# Development files
+.git/
+.github/
+.vscode/
+.gitignore
+.npmignore
+.npmrc
+.env
+.env.*
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Test files
+test-site/
+test/
+tests/
+__tests__/
+coverage/
+
+# Build and development files
+node_modules/
+storage/
+dist/
+assets/
+*.log
+*.lock
+
+# Examples and samples
+examples/
+sample/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Build artifacts
+_site/
+.jekyll-cache/
+
+# Jekyll specific files
+Gemfile
+Gemfile.lock
+CNAME
+*.scss
+
+# IDE files
+.idea/
+
+# Misc
+.DS_Store
+storage/screenshots/*
+storage/reports/*
+!storage/screenshots/.gitkeep
+!storage/reports/.gitkeep 

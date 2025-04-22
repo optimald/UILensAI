@@ -1,0 +1,483 @@
+// Custom styling for UILensAI Jekyll site
+// This will override Just-the-Docs theme defaults
+
+@import "./color_schemes/light";
+
+// Color variables
+$uilens-primary: #4a6ee0;
+$uilens-secondary: #6e4ae0;
+$uilens-accent: #e04a6e;
+$uilens-gray-light: #f5f6fa;
+$uilens-gray-dark: #2d3748;
+
+// Override theme colors
+$body-background-color: #ffffff;
+$sidebar-color: $uilens-gray-light;
+$link-color: $uilens-primary;
+$btn-primary-color: $uilens-primary;
+$base-button-color: $uilens-gray-light;
+
+// Typography improvements
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+  color: $uilens-gray-dark;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  color: $uilens-gray-dark;
+}
+
+h1 {
+  font-size: 2.5rem;
+  border-bottom: 1px solid $uilens-gray-light;
+  padding-bottom: 0.3em;
+  margin-bottom: 0.8em;
+  background: linear-gradient(90deg, $uilens-primary, $uilens-secondary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+}
+
+h2 {
+  font-size: 1.75rem;
+  border-left: 4px solid $uilens-primary;
+  padding-left: 0.75rem;
+  margin-top: 2rem;
+}
+
+// Hero section
+.hero-banner {
+  background: linear-gradient(135deg, $uilens-primary, $uilens-secondary);
+  padding: 4rem 2rem;
+  margin-bottom: 2rem;
+  border-radius: 0 0 8px 8px;
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("../images/hero-pattern.svg") center/cover no-repeat;
+    opacity: 0.1;
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: white;
+    background: none;
+    -webkit-text-fill-color: white;
+    border: none;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+}
+
+// Feature section styling
+.whats-new {
+  background-color: #f5f7fa;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 25px 0;
+  border-left: 5px solid #4a69bd;
+  
+  h2 {
+    color: #3c6382;
+    margin-top: 0;
+  }
+}
+
+// Custom callout boxes
+.callout {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  &.primary {
+    background-color: rgba($uilens-primary, 0.1);
+    border-left-color: $uilens-primary;
+  }
+  
+  &.info {
+    background-color: rgba(#3498db, 0.1);
+    border-left-color: #3498db;
+  }
+  
+  &.warning {
+    background-color: rgba(#f39c12, 0.1);
+    border-left-color: #f39c12;
+  }
+  
+  &.danger {
+    background-color: rgba(#e74c3c, 0.1);
+    border-left-color: #e74c3c;
+  }
+  
+  &.tip {
+    background-color: rgba(#2ecc71, 0.1);
+    border-left-color: #2ecc71;
+    
+    &::before {
+      content: "💡";
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 1.5rem;
+    }
+  }
+  
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Code block enhancements
+pre {
+  background-color: $uilens-gray-dark;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  position: relative;
+  
+  &::before {
+    content: "Code";
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: $uilens-primary;
+    color: white;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0 8px 0 8px;
+  }
+  
+  code {
+    color: white;
+    background: none;
+    padding: 0;
+  }
+}
+
+code {
+  color: $uilens-secondary;
+  border-radius: 3px;
+  padding: 0.2em 0.4em;
+  background-color: rgba($uilens-gray-light, 0.7);
+}
+
+// Feature grid
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+  
+  .feature-item {
+    padding: 1.5rem;
+    border-radius: 8px;
+    background-color: $uilens-gray-light;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, $uilens-primary, $uilens-secondary);
+    }
+    
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1);
+    }
+    
+    h3 {
+      margin-top: 0.5rem;
+      color: $uilens-primary;
+      font-size: 1.4rem;
+    }
+    
+    &.animated {
+      animation: fadeInUp 0.5s ease forwards;
+    }
+  }
+}
+
+// Buttons
+.btn-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  
+  &::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: width 0.3s ease;
+    z-index: -1;
+  }
+  
+  &:hover::after {
+    width: 100%;
+  }
+  
+  &.btn-primary {
+    background: linear-gradient(90deg, $uilens-primary, $uilens-secondary);
+    color: white;
+    box-shadow: 0 4px 12px rgba($uilens-primary, 0.3);
+    
+    &:hover {
+      box-shadow: 0 6px 16px rgba($uilens-primary, 0.5);
+      transform: translateY(-2px);
+    }
+  }
+  
+  &.btn-secondary {
+    background: linear-gradient(90deg, $uilens-secondary, $uilens-accent);
+    color: white;
+    box-shadow: 0 4px 12px rgba($uilens-secondary, 0.3);
+    
+    &:hover {
+      box-shadow: 0 6px 16px rgba($uilens-secondary, 0.5);
+      transform: translateY(-2px);
+    }
+  }
+  
+  &.btn-outline {
+    background-color: transparent;
+    border: 2px solid $uilens-primary;
+    color: $uilens-primary;
+    
+    &:hover {
+      background-color: $uilens-primary;
+      color: white;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// Custom footer
+.site-footer {
+  border-top: 1px solid $uilens-gray-light;
+  padding-top: 2rem;
+  margin-top: 3rem;
+  text-align: center;
+  
+  p {
+    color: lighten($uilens-gray-dark, 30%);
+  }
+}
+
+// Main content spacing and width
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  
+  @media (max-width: 800px) {
+    padding: 0 1rem;
+  }
+}
+
+// Sidebar navigation improvements
+.side-bar {
+  background-color: $uilens-gray-light;
+  border-right: 1px solid rgba($uilens-primary, 0.1);
+  
+  .site-header {
+    border-bottom: 1px solid rgba($uilens-primary, 0.1);
+  }
+  
+  .site-title {
+    font-weight: 700;
+    color: $uilens-primary;
+    
+    &:hover {
+      background: linear-gradient(90deg, $uilens-primary, $uilens-secondary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  }
+}
+
+.nav-list .nav-list-item .nav-list-link {
+  color: $uilens-gray-dark;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background-color: rgba($uilens-primary, 0.1);
+    transform: translateX(3px);
+  }
+  
+  &.active {
+    background-color: rgba($uilens-primary, 0.15);
+    color: $uilens-primary;
+    font-weight: 600;
+  }
+}
+
+// Animations
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animated {
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+// Table styling
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  
+  th {
+    background-color: $uilens-primary;
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    
+    &:first-child {
+      border-top-left-radius: 8px;
+    }
+    
+    &:last-child {
+      border-top-right-radius: 8px;
+    }
+  }
+  
+  td {
+    padding: 0.75rem 1rem;
+    border-top: 1px solid rgba($uilens-gray-light, 0.7);
+  }
+  
+  tr:nth-child(even) {
+    background-color: rgba($uilens-gray-light, 0.3);
+  }
+  
+  tr:hover {
+    background-color: rgba($uilens-primary, 0.05);
+  }
+}
+
+// Document link styling
+a:not(.btn) {
+  color: $uilens-primary;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s ease;
+  
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: $uilens-primary;
+    transition: width 0.3s ease;
+  }
+  
+  &:hover {
+    color: darken($uilens-primary, 10%);
+    
+    &::before {
+      width: 100%;
+    }
+  }
+}
+
+// Print styles
+@media print {
+  .side-bar, .hero-banner, .btn-container {
+    display: none;
+  }
+  
+  .main {
+    max-width: 100%;
+    margin: 0;
+  }
+  
+  h1 {
+    color: $uilens-gray-dark;
+    -webkit-text-fill-color: $uilens-gray-dark;
+  }
+}
+
+// Improve main title rendering
+.main-header {
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #2a4b8d;
+    font-weight: 700;
+  }
+} 
