@@ -1,0 +1,42 @@
+---
+layout: default
+---
+
+<header class="site-header">
+  <div class="hero-banner">
+    <div class="hero-content">
+      <h1 class="hero-title">{{ page.title }}</h1>
+      {% if page.subtitle %}
+        <p class="hero-subtitle">{{ page.subtitle }}</p>
+      {% endif %}
+    </div>
+  </div>
+</header>
+
+<div class="main-content">
+  {{ content }}
+</div>
+
+<script>
+  // Add animation classes on scroll
+  document.addEventListener('DOMContentLoaded', function() {
+    const elements = document.querySelectorAll('.feature-item, .whats-new, .callout');
+    
+    function checkVisibility() {
+      elements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+        
+        if (rect.top <= windowHeight * 0.8) {
+          el.classList.add('animated');
+        }
+      });
+    }
+    
+    // Initial check
+    checkVisibility();
+    
+    // Check on scroll
+    window.addEventListener('scroll', checkVisibility);
+  });
+</script> 
