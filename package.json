@@ -1,0 +1,92 @@
+{
+  "name": "uilensai",
+  "version": "0.1.8",
+  "description": "Visual UI analysis with AI",
+  "main": "src/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/cli/ui-single.js",
+    "ui": "node src/cli/ui-single.js",
+    "test-server": "node src/utils/test-server.js",
+    "setup": "node src/utils/setup.js",
+    "prepare": "husky",
+    "push:private": "git push private HEAD:master",
+    "push:public": "PUSH_PUBLIC=true git push origin HEAD:master",
+    "clean-push": "./scripts/clean-push.sh",
+    "release": "npm run clean-push && npm publish",
+    "postinstall": "npx playwright install chromium"
+  },
+  "bin": {
+    "uilensai": "src/cli/ui-single.js"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "author": "UILensAI Team",
+  "license": "MIT",
+  "keywords": [
+    "ui",
+    "ux",
+    "analysis",
+    "anthropic",
+    "screenshots",
+    "testing",
+    "design",
+    "accessibility"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src/**/*",
+    "storage/.gitkeep",
+    "storage/screenshots/.gitkeep",
+    "storage/reports/.gitkeep",
+    "README.md",
+    ".npmrc"
+  ],
+  "dependencies": {
+    "@anthropic-ai/sdk": "0.12.2",
+    "axios": "1.6.8",
+    "chalk": "4.1.2",
+    "dotenv": "16.4.5",
+    "figlet": "1.7.0",
+    "mime-types": "2.1.35",
+    "open": "10.1.1",
+    "ora": "5.4.1",
+    "playwright": "1.42.1",
+    "sharp": "0.33.5",
+    "uuid": "11.1.0"
+  },
+  "peerDependenciesMeta": {
+    "@typescript-eslint/parser": {
+      "optional": true
+    }
+  },
+  "bundleDependencies": [
+    "@anthropic-ai/sdk",
+    "playwright",
+    "axios",
+    "chalk",
+    "dotenv",
+    "figlet",
+    "mime-types",
+    "open",
+    "ora",
+    "sharp",
+    "uuid"
+  ],
+  "devDependencies": {
+    "express": "4.18.2",
+    "husky": "9.1.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/optimald/UILensAI.git"
+  },
+  "homepage": "https://github.com/optimald/UILensAI",
+  "bugs": {
+    "url": "https://github.com/optimald/UILensAI/issues"
+  }
+}

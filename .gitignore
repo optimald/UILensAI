@@ -1,0 +1,76 @@
+# Node modules
+node_modules/
+
+# Jekyll build specific directories to exclude
+_site/docs/
+.jekyll-cache/
+
+# Environment variables
+.env
+
+# Storage directory for screenshots and reports
+storage/*
+!storage/screenshots/
+!storage/reports/
+!storage/cache/
+
+storage/screenshots/*
+storage/reports/*
+storage/cache/*
+
+!storage/screenshots/.gitkeep
+!storage/reports/.gitkeep
+!storage/cache/.gitkeep
+
+# Reports directory
+reports/*
+!reports/.gitkeep
+
+# Test site and test files
+test-site/
+test-*.js
+*-test.js
+*.test.js
+*.spec.js
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo 
+
+# Build files
+dist/
+build/
+
+# Temp files
+*.tmp
+*.temp
+.cache/ 
+
+# Testing files
+testing-plan.md
+
+# Backups
+backups/
+*.tar.gz 
+
+# NPM package files
+*-uilensai-*.tgz
+*.tgz

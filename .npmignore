@@ -1,0 +1,71 @@
+# Development files
+.git/
+.github/
+.vscode/
+.gitignore
+.npmignore
+.npmrc
+.env
+.env.*
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Test files
+test-site/
+test/
+tests/
+__tests__/
+coverage/
+
+# Build files
+# Note: Don't ignore node_modules since we're bundling dependencies
+# node_modules/
+dist/
+assets/
+*.log
+*.lock
+
+# Examples and samples
+examples/
+sample/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Build artifacts
+_site/
+.jekyll-cache/
+
+# Jekyll specific files
+Gemfile
+Gemfile.lock
+CNAME
+*.scss
+
+# IDE files
+.idea/
+
+# Misc
+.DS_Store
+storage/screenshots/*
+storage/reports/*
+!storage/screenshots/.gitkeep
+!storage/reports/.gitkeep
+
+# Testing files
+testing-plan.md
+
+# Backups
+backups/
+*.tar.gz
+
+# Scripts folder except essential scripts
+scripts/*
+!scripts/post-commit.sh
+!scripts/pre-push.sh
+!scripts/clean-push.sh
