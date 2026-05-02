@@ -1,0 +1,36 @@
+version: 2
+
+updates:
+  # Root package.json
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+    groups:
+      # Batch all minor/patch into one PR
+      minor-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+    ignore:
+      # ora v6+ is ESM-only, breaks CommonJS
+      - dependency-name: "ora"
+        versions: [">=6.0.0"]
+      # openai v6+ has breaking API changes
+      - dependency-name: "openai"
+        versions: [">=6.0.0"]
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    labels:
+      - "ci"
+    groups:
+      actions:
+        patterns: ["*"]

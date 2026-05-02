@@ -1,0 +1,45 @@
+{
+  "name": "@optimald/uilensai-cli",
+  "version": "1.3.28",
+  "description": "UILensAI Command Line Interface",
+  "main": "cli.js",
+  "bin": {
+    "uilensai": "./cli.js"
+  },
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/optimald/uilensai-private.git",
+    "directory": "packages/cli"
+  },
+  "scripts": {
+    "build": "echo 'CLI build complete'",
+    "start": "node cli.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@uilensai/core": "^1.0.0",
+    "chalk": "^4.1.2",
+    "commander": "^11.0.0",
+    "dotenv": "^16.3.1",
+    "figlet": "^1.7.0",
+    "open": "^10.1.1",
+    "ora": "^5.4.1",
+    "uuid": "^10.0.0",
+    "playwright": "1.47.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": [
+    "ui",
+    "analysis",
+    "lighthouse",
+    "performance",
+    "accessibility",
+    "seo",
+    "cli"
+  ],
+  "author": "OptimalD",
+  "license": "MIT"
+}

@@ -1,0 +1,26 @@
+# CODEOWNERS — Require review for security-sensitive areas
+# See: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owner for all files
+*                                   @optimald
+
+# Security-critical: middleware, auth, encryption
+lib/middleware/                      @optimald
+packages/api/middleware/             @optimald
+packages/api/services/webhookService.js  @optimald
+packages/worker/services/secureEncryptionService.js  @optimald
+packages/worker/services/apiKeyService.js  @optimald
+
+# Admin endpoints
+packages/api/endpoints/uilensai/v1/admin/  @optimald
+
+# Infrastructure & deployment
+.github/                            @optimald
+vercel.json                          @optimald
+Dockerfile                           @optimald
+packages/worker/Dockerfile           @optimald
+.gitignore                           @optimald
+.env.example                         @optimald
+
+# CI/CD pipelines
+.github/workflows/                   @optimald

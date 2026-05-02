@@ -1,0 +1,920 @@
+{
+  "fetched_at": "2025-05-31T04:38:13.205Z",
+  "total_models": 73,
+  "models": [
+    {
+      "id": "babbage-002",
+      "object": "model",
+      "created": 1692634615,
+      "owned_by": "system",
+      "context_tokens": 16384,
+      "output_tokens": 4096
+    },
+    {
+      "id": "chatgpt-4o-latest",
+      "object": "model",
+      "created": 1723515131,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 16384
+    },
+    {
+      "id": "codex-mini-latest",
+      "object": "model",
+      "created": 1746673257,
+      "owned_by": "system",
+      "context_tokens": 8192,
+      "output_tokens": 4096
+    },
+    {
+      "id": "dall-e-2",
+      "object": "model",
+      "created": 1698798177,
+      "owned_by": "system",
+      "context_tokens": 1000,
+      "output_tokens": "Image"
+    },
+    {
+      "id": "dall-e-3",
+      "object": "model",
+      "created": 1698785189,
+      "owned_by": "system",
+      "context_tokens": 4000,
+      "output_tokens": "Image"
+    },
+    {
+      "id": "davinci-002",
+      "object": "model",
+      "created": 1692634301,
+      "owned_by": "system",
+      "context_tokens": 16384,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-3.5-turbo",
+      "object": "model",
+      "created": 1677610602,
+      "owned_by": "openai",
+      "context_tokens": 16385,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-3.5-turbo-0125",
+      "object": "model",
+      "created": 1706048358,
+      "owned_by": "system",
+      "context_tokens": 16385,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-3.5-turbo-1106",
+      "object": "model",
+      "created": 1698959748,
+      "owned_by": "system",
+      "context_tokens": 16385,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-3.5-turbo-16k",
+      "object": "model",
+      "created": 1683758102,
+      "owned_by": "openai-internal",
+      "context_tokens": 16385,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-3.5-turbo-instruct",
+      "object": "model",
+      "created": 1692901427,
+      "owned_by": "system",
+      "context_tokens": 4096,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-3.5-turbo-instruct-0914",
+      "object": "model",
+      "created": 1694122472,
+      "owned_by": "system",
+      "context_tokens": 4096,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-4",
+      "object": "model",
+      "created": 1687882411,
+      "owned_by": "openai",
+      "context_tokens": 8192,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-4-0125-preview",
+      "object": "model",
+      "created": 1706037612,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-4-0613",
+      "object": "model",
+      "created": 1686588896,
+      "owned_by": "openai",
+      "context_tokens": 8192,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-4-1106-preview",
+      "object": "model",
+      "created": 1698957206,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-4-turbo",
+      "object": "model",
+      "created": 1712361441,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-4-turbo-2024-04-09",
+      "object": "model",
+      "created": 1712601677,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-4-turbo-preview",
+      "object": "model",
+      "created": 1706037777,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-4.1",
+      "object": "model",
+      "created": 1744316542,
+      "owned_by": "system",
+      "context_tokens": 200000,
+      "output_tokens": 32768
+    },
+    {
+      "id": "gpt-4.1-2025-04-14",
+      "object": "model",
+      "created": 1744315746,
+      "owned_by": "system",
+      "context_tokens": 200000,
+      "output_tokens": 32768
+    },
+    {
+      "id": "gpt-4.1-mini",
+      "object": "model",
+      "created": 1744318173,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 16384
+    },
+    {
+      "id": "gpt-4.1-mini-2025-04-14",
+      "object": "model",
+      "created": 1744317547,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 16384
+    },
+    {
+      "id": "gpt-4.1-nano",
+      "object": "model",
+      "created": 1744321707,
+      "owned_by": "system",
+      "context_tokens": 64000,
+      "output_tokens": 8192
+    },
+    {
+      "id": "gpt-4.1-nano-2025-04-14",
+      "object": "model",
+      "created": 1744321025,
+      "owned_by": "system",
+      "context_tokens": 64000,
+      "output_tokens": 8192
+    },
+    {
+      "id": "gpt-4.5-preview",
+      "object": "model",
+      "created": 1740623059,
+      "owned_by": "system",
+      "context_tokens": 256000,
+      "output_tokens": 65536
+    },
+    {
+      "id": "gpt-4.5-preview-2025-02-27",
+      "object": "model",
+      "created": 1740623304,
+      "owned_by": "system",
+      "context_tokens": 256000,
+      "output_tokens": 65536
+    },
+    {
+      "id": "gpt-4o",
+      "object": "model",
+      "created": 1715367049,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-4o-2024-05-13",
+      "object": "model",
+      "created": 1715368132,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-4o-2024-08-06",
+      "object": "model",
+      "created": 1722814719,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 16384
+    },
+    {
+      "id": "gpt-4o-2024-11-20",
+      "object": "model",
+      "created": 1739331543,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 16384
+    },
+    {
+      "id": "gpt-4o-audio-preview",
+      "object": "model",
+      "created": 1727460443,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-4o-audio-preview-2024-10-01",
+      "object": "model",
+      "created": 1727389042,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-4o-audio-preview-2024-12-17",
+      "object": "model",
+      "created": 1734034239,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-4o-mini",
+      "object": "model",
+      "created": 1721172741,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 16384
+    },
+    {
+      "id": "gpt-4o-mini-2024-07-18",
+      "object": "model",
+      "created": 1721172717,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 16384
+    },
+    {
+      "id": "gpt-4o-mini-audio-preview",
+      "object": "model",
+      "created": 1734387424,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 16384
+    },
+    {
+      "id": "gpt-4o-mini-audio-preview-2024-12-17",
+      "object": "model",
+      "created": 1734115920,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 16384
+    },
+    {
+      "id": "gpt-4o-mini-realtime-preview",
+      "object": "model",
+      "created": 1734387380,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 16384
+    },
+    {
+      "id": "gpt-4o-mini-realtime-preview-2024-12-17",
+      "object": "model",
+      "created": 1734112601,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 16384
+    },
+    {
+      "id": "gpt-4o-mini-search-preview",
+      "object": "model",
+      "created": 1741391161,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 16384
+    },
+    {
+      "id": "gpt-4o-mini-search-preview-2025-03-11",
+      "object": "model",
+      "created": 1741390858,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 16384
+    },
+    {
+      "id": "gpt-4o-mini-transcribe",
+      "object": "model",
+      "created": 1742068596,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 16384
+    },
+    {
+      "id": "gpt-4o-mini-tts",
+      "object": "model",
+      "created": 1742403959,
+      "owned_by": "system",
+      "context_tokens": 4096,
+      "output_tokens": "Audio"
+    },
+    {
+      "id": "gpt-4o-realtime-preview",
+      "object": "model",
+      "created": 1727659998,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-4o-realtime-preview-2024-10-01",
+      "object": "model",
+      "created": 1727131766,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-4o-realtime-preview-2024-12-17",
+      "object": "model",
+      "created": 1733945430,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-4o-search-preview",
+      "object": "model",
+      "created": 1741388720,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-4o-search-preview-2025-03-11",
+      "object": "model",
+      "created": 1741388170,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-4o-transcribe",
+      "object": "model",
+      "created": 1742068463,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 4096
+    },
+    {
+      "id": "gpt-image-1",
+      "object": "model",
+      "created": 1745517030,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": "Image"
+    },
+    {
+      "id": "o1",
+      "object": "model",
+      "created": 1734375816,
+      "owned_by": "system",
+      "context_tokens": 200000,
+      "output_tokens": 100000
+    },
+    {
+      "id": "o1-2024-12-17",
+      "object": "model",
+      "created": 1734326976,
+      "owned_by": "system",
+      "context_tokens": 200000,
+      "output_tokens": 100000
+    },
+    {
+      "id": "o1-mini",
+      "object": "model",
+      "created": 1725649008,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 65536
+    },
+    {
+      "id": "o1-mini-2024-09-12",
+      "object": "model",
+      "created": 1725648979,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 65536
+    },
+    {
+      "id": "o1-preview",
+      "object": "model",
+      "created": 1725648897,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 32768
+    },
+    {
+      "id": "o1-preview-2024-09-12",
+      "object": "model",
+      "created": 1725648865,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 32768
+    },
+    {
+      "id": "o1-pro",
+      "object": "model",
+      "created": 1742251791,
+      "owned_by": "system",
+      "context_tokens": 200000,
+      "output_tokens": 100000
+    },
+    {
+      "id": "o1-pro-2025-03-19",
+      "object": "model",
+      "created": 1742251504,
+      "owned_by": "system",
+      "context_tokens": 200000,
+      "output_tokens": 100000
+    },
+    {
+      "id": "o3-mini",
+      "object": "model",
+      "created": 1737146383,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 65536
+    },
+    {
+      "id": "o3-mini-2025-01-31",
+      "object": "model",
+      "created": 1738010200,
+      "owned_by": "system",
+      "context_tokens": 128000,
+      "output_tokens": 65536
+    },
+    {
+      "id": "o4-mini",
+      "object": "model",
+      "created": 1744225351,
+      "owned_by": "system",
+      "context_tokens": 256000,
+      "output_tokens": 131072
+    },
+    {
+      "id": "o4-mini-2025-04-16",
+      "object": "model",
+      "created": 1744133506,
+      "owned_by": "system",
+      "context_tokens": 256000,
+      "output_tokens": 131072
+    },
+    {
+      "id": "omni-moderation-2024-09-26",
+      "object": "model",
+      "created": 1732734466,
+      "owned_by": "system",
+      "context_tokens": 32768,
+      "output_tokens": "Classification"
+    },
+    {
+      "id": "omni-moderation-latest",
+      "object": "model",
+      "created": 1731689265,
+      "owned_by": "system",
+      "context_tokens": 32768,
+      "output_tokens": "Classification"
+    },
+    {
+      "id": "text-embedding-3-large",
+      "object": "model",
+      "created": 1705953180,
+      "owned_by": "system",
+      "context_tokens": 8191,
+      "output_tokens": 3072
+    },
+    {
+      "id": "text-embedding-3-small",
+      "object": "model",
+      "created": 1705948997,
+      "owned_by": "system",
+      "context_tokens": 8191,
+      "output_tokens": 1536
+    },
+    {
+      "id": "text-embedding-ada-002",
+      "object": "model",
+      "created": 1671217299,
+      "owned_by": "openai-internal",
+      "context_tokens": 8191,
+      "output_tokens": 1536
+    },
+    {
+      "id": "tts-1",
+      "object": "model",
+      "created": 1681940951,
+      "owned_by": "openai-internal",
+      "context_tokens": 4096,
+      "output_tokens": "Audio"
+    },
+    {
+      "id": "tts-1-1106",
+      "object": "model",
+      "created": 1699053241,
+      "owned_by": "system",
+      "context_tokens": 4096,
+      "output_tokens": "Audio"
+    },
+    {
+      "id": "tts-1-hd",
+      "object": "model",
+      "created": 1699046015,
+      "owned_by": "system",
+      "context_tokens": 4096,
+      "output_tokens": "Audio"
+    },
+    {
+      "id": "tts-1-hd-1106",
+      "object": "model",
+      "created": 1699053533,
+      "owned_by": "system",
+      "context_tokens": 4096,
+      "output_tokens": "Audio"
+    },
+    {
+      "id": "whisper-1",
+      "object": "model",
+      "created": 1677532384,
+      "owned_by": "openai-internal",
+      "context_tokens": "N/A",
+      "output_tokens": "N/A"
+    }
+  ],
+  "token_limits": {
+    "gpt-4": {
+      "context": 8192,
+      "output": 4096
+    },
+    "gpt-4-32k": {
+      "context": 32768,
+      "output": 4096
+    },
+    "gpt-4-0613": {
+      "context": 8192,
+      "output": 4096
+    },
+    "gpt-4-turbo": {
+      "context": 128000,
+      "output": 4096
+    },
+    "gpt-4-turbo-preview": {
+      "context": 128000,
+      "output": 4096
+    },
+    "gpt-4-turbo-2024-04-09": {
+      "context": 128000,
+      "output": 4096
+    },
+    "gpt-4-0125-preview": {
+      "context": 128000,
+      "output": 4096
+    },
+    "gpt-4-1106-preview": {
+      "context": 128000,
+      "output": 4096
+    },
+    "gpt-4-vision-preview": {
+      "context": 128000,
+      "output": 4096
+    },
+    "gpt-4o": {
+      "context": 128000,
+      "output": 4096
+    },
+    "gpt-4o-2024-05-13": {
+      "context": 128000,
+      "output": 4096
+    },
+    "gpt-4o-2024-08-06": {
+      "context": 128000,
+      "output": 16384
+    },
+    "gpt-4o-2024-11-20": {
+      "context": 128000,
+      "output": 16384
+    },
+    "gpt-4o-mini": {
+      "context": 128000,
+      "output": 16384
+    },
+    "gpt-4o-mini-2024-07-18": {
+      "context": 128000,
+      "output": 16384
+    },
+    "chatgpt-4o-latest": {
+      "context": 128000,
+      "output": 16384
+    },
+    "gpt-4.1": {
+      "context": 200000,
+      "output": 32768
+    },
+    "gpt-4.1-2025-04-14": {
+      "context": 200000,
+      "output": 32768
+    },
+    "gpt-4.1-mini": {
+      "context": 128000,
+      "output": 16384
+    },
+    "gpt-4.1-mini-2025-04-14": {
+      "context": 128000,
+      "output": 16384
+    },
+    "gpt-4.1-nano": {
+      "context": 64000,
+      "output": 8192
+    },
+    "gpt-4.1-nano-2025-04-14": {
+      "context": 64000,
+      "output": 8192
+    },
+    "gpt-4.5-preview": {
+      "context": 256000,
+      "output": 65536
+    },
+    "gpt-4.5-preview-2025-02-27": {
+      "context": 256000,
+      "output": 65536
+    },
+    "gpt-4o-audio-preview": {
+      "context": 128000,
+      "output": 4096
+    },
+    "gpt-4o-audio-preview-2024-10-01": {
+      "context": 128000,
+      "output": 4096
+    },
+    "gpt-4o-audio-preview-2024-12-17": {
+      "context": 128000,
+      "output": 4096
+    },
+    "gpt-4o-mini-audio-preview": {
+      "context": 128000,
+      "output": 16384
+    },
+    "gpt-4o-mini-audio-preview-2024-12-17": {
+      "context": 128000,
+      "output": 16384
+    },
+    "gpt-4o-realtime-preview": {
+      "context": 128000,
+      "output": 4096
+    },
+    "gpt-4o-realtime-preview-2024-10-01": {
+      "context": 128000,
+      "output": 4096
+    },
+    "gpt-4o-realtime-preview-2024-12-17": {
+      "context": 128000,
+      "output": 4096
+    },
+    "gpt-4o-mini-realtime-preview": {
+      "context": 128000,
+      "output": 16384
+    },
+    "gpt-4o-mini-realtime-preview-2024-12-17": {
+      "context": 128000,
+      "output": 16384
+    },
+    "gpt-4o-search-preview": {
+      "context": 128000,
+      "output": 4096
+    },
+    "gpt-4o-search-preview-2025-03-11": {
+      "context": 128000,
+      "output": 4096
+    },
+    "gpt-4o-mini-search-preview": {
+      "context": 128000,
+      "output": 16384
+    },
+    "gpt-4o-mini-search-preview-2025-03-11": {
+      "context": 128000,
+      "output": 16384
+    },
+    "gpt-4o-transcribe": {
+      "context": 128000,
+      "output": 4096
+    },
+    "gpt-4o-mini-transcribe": {
+      "context": 128000,
+      "output": 16384
+    },
+    "gpt-4o-mini-tts": {
+      "context": 4096,
+      "output": "Audio"
+    },
+    "gpt-3.5-turbo": {
+      "context": 16385,
+      "output": 4096
+    },
+    "gpt-3.5-turbo-0125": {
+      "context": 16385,
+      "output": 4096
+    },
+    "gpt-3.5-turbo-1106": {
+      "context": 16385,
+      "output": 4096
+    },
+    "gpt-3.5-turbo-16k": {
+      "context": 16385,
+      "output": 4096
+    },
+    "gpt-3.5-turbo-instruct": {
+      "context": 4096,
+      "output": 4096
+    },
+    "gpt-3.5-turbo-instruct-0914": {
+      "context": 4096,
+      "output": 4096
+    },
+    "o1": {
+      "context": 200000,
+      "output": 100000
+    },
+    "o1-2024-12-17": {
+      "context": 200000,
+      "output": 100000
+    },
+    "o1-mini": {
+      "context": 128000,
+      "output": 65536
+    },
+    "o1-mini-2024-09-12": {
+      "context": 128000,
+      "output": 65536
+    },
+    "o1-preview": {
+      "context": 128000,
+      "output": 32768
+    },
+    "o1-preview-2024-09-12": {
+      "context": 128000,
+      "output": 32768
+    },
+    "o1-pro": {
+      "context": 200000,
+      "output": 100000
+    },
+    "o1-pro-2025-03-19": {
+      "context": 200000,
+      "output": 100000
+    },
+    "o3-mini": {
+      "context": 128000,
+      "output": 65536
+    },
+    "o3-mini-2025-01-31": {
+      "context": 128000,
+      "output": 65536
+    },
+    "o4-mini": {
+      "context": 256000,
+      "output": 131072
+    },
+    "o4-mini-2025-04-16": {
+      "context": 256000,
+      "output": 131072
+    },
+    "text-davinci-003": {
+      "context": 4097,
+      "output": 4097
+    },
+    "text-davinci-002": {
+      "context": 4097,
+      "output": 4097
+    },
+    "text-curie-001": {
+      "context": 2049,
+      "output": 2049
+    },
+    "text-babbage-001": {
+      "context": 2049,
+      "output": 2049
+    },
+    "text-ada-001": {
+      "context": 2049,
+      "output": 2049
+    },
+    "davinci-002": {
+      "context": 16384,
+      "output": 4096
+    },
+    "babbage-002": {
+      "context": 16384,
+      "output": 4096
+    },
+    "text-embedding-ada-002": {
+      "context": 8191,
+      "output": 1536
+    },
+    "text-embedding-3-small": {
+      "context": 8191,
+      "output": 1536
+    },
+    "text-embedding-3-large": {
+      "context": 8191,
+      "output": 3072
+    },
+    "whisper-1": {
+      "context": "N/A",
+      "output": "N/A"
+    },
+    "tts-1": {
+      "context": 4096,
+      "output": "Audio"
+    },
+    "tts-1-hd": {
+      "context": 4096,
+      "output": "Audio"
+    },
+    "tts-1-1106": {
+      "context": 4096,
+      "output": "Audio"
+    },
+    "tts-1-hd-1106": {
+      "context": 4096,
+      "output": "Audio"
+    },
+    "dall-e-2": {
+      "context": 1000,
+      "output": "Image"
+    },
+    "dall-e-3": {
+      "context": 4000,
+      "output": "Image"
+    },
+    "gpt-image-1": {
+      "context": 128000,
+      "output": "Image"
+    },
+    "text-moderation-latest": {
+      "context": 32768,
+      "output": "Classification"
+    },
+    "text-moderation-stable": {
+      "context": 32768,
+      "output": "Classification"
+    },
+    "omni-moderation-latest": {
+      "context": 32768,
+      "output": "Classification"
+    },
+    "omni-moderation-2024-09-26": {
+      "context": 32768,
+      "output": "Classification"
+    },
+    "codex-mini-latest": {
+      "context": 8192,
+      "output": 4096
+    }
+  }
+}

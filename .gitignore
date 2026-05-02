@@ -1,0 +1,80 @@
+# Dependencies
+node_modules/
+packages/*/node_modules/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage
+coverage/
+*.lcov
+.nyc_output
+
+# Optional npm cache
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Output of 'npm pack'
+*.tgz
+
+# Build outputs
+dist/
+build/
+
+# Storage directories (data — not shipped)
+storage/
+!packages/core/storage/index.js
+!packages/worker/uilensai/storage/index.js
+
+# Test results
+test-results/
+test-output/
+
+# Temporary files
+*.tmp
+.temp/
+temp-*/
+backup-*/
+
+# Large binary files
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+screenshots/
+
+# Large JSON test data
+*-test-results.json
+*-analysis-results.json
+*-report.json
+
+# OS generated files
+.DS_Store
+._*
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Backup files
+*.backup
+*.bak

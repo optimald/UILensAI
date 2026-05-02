@@ -1,0 +1,47 @@
+# Development files
+.git/
+.github/
+.vscode/
+.gitignore
+.npmignore
+.npmrc
+.env
+.env.*
+
+# Documentation (keep only README)
+*.md
+!README.md
+!CHANGELOG.md
+
+# Test files
+tests/
+__tests__/
+coverage/
+
+# Build artifacts
+dist/
+*.log
+*.lock
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# IDE files
+.idea/
+
+# OS files
+.DS_Store
+
+# Storage data (not code)
+storage/screenshots/*
+storage/reports/*
+
+# Scripts (dev only)
+scripts/*
+
+# Large binaries
+*.tgz
+*.png
+*.jpg

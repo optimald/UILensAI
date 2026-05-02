@@ -1,0 +1,89 @@
+name: Release Integrity & SBOM
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  packages: write
+  id-token: write
+  attestations: write
+
+jobs:
+  # ─── PS.2: Verify Release Integrity ──────────────────────
+  release-integrity:
+    name: Build, Verify & Publish Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+
+      - name: Verify npm lockfile integrity
+        run: npm ci --ignore-scripts
+
+      - name: Generate SHA-256 checksums
+        run: |
+          mkdir -p release-artifacts
+          # Create reproducible tarball of source
+          git archive --format=tar.gz --prefix=uilensai-${GITHUB_REF_NAME}/ HEAD > release-artifacts/uilensai-${GITHUB_REF_NAME}-source.tar.gz
+          # Generate checksums
+          cd release-artifacts
+          sha256sum * > SHA256SUMS.txt
+          echo "## Checksums" >> $GITHUB_STEP_SUMMARY
+          cat SHA256SUMS.txt >> $GITHUB_STEP_SUMMARY
+
+
+      # PS.3: Archive with provenance metadata
+      - name: Generate build provenance metadata
+        run: |
+          cat > release-artifacts/BUILD-PROVENANCE.json << EOF
+          {
+            "version": "${GITHUB_REF_NAME}",
+            "commit": "${GITHUB_SHA}",
+            "buildTime": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "runner": "${RUNNER_OS}-${RUNNER_ARCH}",
+            "nodeVersion": "$(node --version)",
+            "npmVersion": "$(npm --version)",
+            "workflow": "${GITHUB_WORKFLOW}",
+            "runId": "${GITHUB_RUN_ID}",
+            "repository": "${GITHUB_REPOSITORY}",
+            "actor": "${GITHUB_ACTOR}"
+          }
+          EOF
+
+      # PS.4: Generate SBOM (CycloneDX format)
+      - name: Generate SBOM (root)
+        run: npx --yes @cyclonedx/cyclonedx-npm --output-file release-artifacts/sbom-root.json --output-format json || echo "⚠️ Root SBOM generation failed (non-fatal)"
+
+      - name: Generate SBOM (worker)
+        run: |
+          cd packages/worker
+          npm ci --ignore-scripts --omit=optional 2>/dev/null || npm install --ignore-scripts --omit=optional 2>/dev/null || true
+          npx --yes @cyclonedx/cyclonedx-npm --output-file ../../release-artifacts/sbom-worker.json --output-format json || echo "⚠️ Worker SBOM generation failed (non-fatal)"
+
+
+      - name: Update final checksums
+        run: |
+          cd release-artifacts
+          sha256sum sbom-*.json BUILD-PROVENANCE.json >> SHA256SUMS.txt
+
+      # PS.3: Create GitHub Release with all artifacts archived
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            release-artifacts/SHA256SUMS.txt
+            release-artifacts/BUILD-PROVENANCE.json
+            release-artifacts/sbom-root.json
+            release-artifacts/sbom-worker.json
+            release-artifacts/uilensai-*-source.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

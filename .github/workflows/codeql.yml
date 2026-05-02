@@ -1,0 +1,56 @@
+name: CodeQL Analysis
+# DISABLED: Requires GitHub Advanced Security (GHAS), not available on current plan.
+# To re-enable, uncomment the triggers below after upgrading to GHAS.
+
+on:
+  workflow_dispatch:
+  # push:
+  #   branches: [main]
+  # pull_request:
+  #   branches: [main]
+  # schedule:
+  #   - cron: '0 7 * * 1'
+
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+
+jobs:
+  analyze:
+    name: CodeQL SAST
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [javascript]
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-and-quality
+          config: |
+            paths:
+              - packages/worker
+              - packages/core
+              - lib
+              - tools
+              - scripts
+            paths-ignore:
+              - '**/node_modules/**'
+              - '**/*.test.*'
+              - '**/*.spec.*'
+              - 'packages/cli/*.log'
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v4
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: /language:${{ matrix.language }}
+

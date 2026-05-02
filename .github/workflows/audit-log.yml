@@ -1,0 +1,70 @@
+name: Weekly Security Audit Log
+
+on:
+  schedule:
+    # Every Monday at 5 AM UTC
+    - cron: '0 5 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: read
+  actions: read
+
+jobs:
+  audit-log:
+    name: Generate Weekly Audit Report
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Collect audit data
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          REPO="optimald/uilensai-private"
+          SINCE=$(date -u -d '7 days ago' +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || date -u -v-7d +%Y-%m-%dT%H:%M:%SZ)
+
+          echo "# Weekly Security Audit Report" > audit-report.md
+          echo "**Period:** $SINCE to $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> audit-report.md
+          echo "**Repository:** $REPO" >> audit-report.md
+          echo "" >> audit-report.md
+
+          # Recent commits
+          echo "## Commits to main (last 7 days)" >> audit-report.md
+          echo '```' >> audit-report.md
+          git log --since="$SINCE" --format="%h %s (%an, %ad)" --date=short main 2>/dev/null || echo "No commits"
+          echo '```' >> audit-report.md
+          echo "" >> audit-report.md
+
+          # Open PRs
+          echo "## Open Pull Requests" >> audit-report.md
+          gh pr list --repo $REPO --state open --json number,title,author,createdAt --template '{{range .}}#{{.number}} {{.title}} ({{.author.login}}, {{.createdAt}}){{"\n"}}{{end}}' >> audit-report.md 2>/dev/null || echo "None"
+          echo "" >> audit-report.md
+
+          # Security workflow runs
+          echo "## Security Workflow Runs" >> audit-report.md
+          for WF in security codeql pr-security; do
+            echo "### $WF" >> audit-report.md
+            gh run list --repo $REPO --workflow $WF.yml --limit 5 --json status,conclusion,createdAt,displayTitle --template '{{range .}}{{.status}}/{{.conclusion}} - {{.displayTitle}} ({{.createdAt}}){{"\n"}}{{end}}' >> audit-report.md 2>/dev/null || echo "No runs found"
+            echo "" >> audit-report.md
+          done
+
+          # Dependabot alerts
+          echo "## Dependabot Security Alerts" >> audit-report.md
+          gh api repos/$REPO/dependabot/alerts --jq '.[0:10] | .[] | "- \(.security_advisory.summary) (\(.state), \(.security_advisory.severity))"' >> audit-report.md 2>/dev/null || echo "Unable to fetch (may need Dependabot enabled)"
+          echo "" >> audit-report.md
+
+          echo "---" >> audit-report.md
+          echo "Generated: $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> audit-report.md
+
+      - name: Display audit report
+        run: |
+          cat audit-report.md >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-audit-report-${{ github.run_id }}
+          path: audit-report.md
+          retention-days: 90

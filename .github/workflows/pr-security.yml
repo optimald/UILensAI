@@ -1,0 +1,116 @@
+name: PR Security Gates
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  # ─── PS.1: Verify signed commits ────────────────────────
+  verify-commits:
+    name: Verify Commit Signatures
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Check for unsigned commits
+        run: |
+          echo "## Commit Signature Verification" >> $GITHUB_STEP_SUMMARY
+          UNSIGNED=0
+          for COMMIT in $(git rev-list origin/main..HEAD); do
+            SIG=$(git log --format='%G?' -1 $COMMIT)
+            AUTHOR=$(git log --format='%an <%ae>' -1 $COMMIT)
+            SHORT=$(git log --format='%h' -1 $COMMIT)
+            if [ "$SIG" = "G" ] || [ "$SIG" = "U" ] || [ "$SIG" = "X" ] || [ "$SIG" = "Y" ]; then
+              echo "✅ $SHORT ($AUTHOR): Signed" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "⚠️ $SHORT ($AUTHOR): **Unsigned**" >> $GITHUB_STEP_SUMMARY
+              UNSIGNED=$((UNSIGNED + 1))
+            fi
+          done
+          if [ $UNSIGNED -gt 0 ]; then
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "> [!WARNING]" >> $GITHUB_STEP_SUMMARY
+            echo "> $UNSIGNED unsigned commit(s) detected. Consider signing commits with GPG or SSH keys." >> $GITHUB_STEP_SUMMARY
+          fi
+
+  # ─── PS.1: Verify no secrets in diff ────────────────────
+  secrets-check:
+    name: Secrets in Diff Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Check for secrets in PR diff
+        uses: trufflesecurity/trufflehog@main
+        with:
+          extra_args: --since-commit=${{ github.event.pull_request.base.sha }} --only-verified
+
+  # ─── PS.2: Lockfile integrity ────────────────────────────
+  lockfile-integrity:
+    name: Lockfile Integrity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+
+      - name: Verify lockfile integrity
+        run: |
+          npm ci --ignore-scripts 2>&1 | tee npm-ci-output.txt
+          if grep -i "npm warn" npm-ci-output.txt | grep -i "lockfile"; then
+            echo "::error::Lockfile integrity check failed"
+            exit 1
+          fi
+          echo "✅ Lockfile integrity verified" >> $GITHUB_STEP_SUMMARY
+
+  # ─── PS.1: Audit for new vulnerabilities ─────────────────
+  dependency-audit:
+    name: Dependency Audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+
+      - name: npm audit (critical/high only)
+        run: |
+          npm audit --audit-level=high --omit=dev 2>&1 | tee audit-output.txt || true
+          echo "## npm Audit Results" >> $GITHUB_STEP_SUMMARY
+          cat audit-output.txt >> $GITHUB_STEP_SUMMARY
+
+  # ─── PS.4: SBOM diff check ──────────────────────────────
+  sbom-check:
+    name: SBOM Dependency Review
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Generate SBOM (worker)
+        run: |
+          npx --yes @cyclonedx/cyclonedx-npm ./packages/worker --output-file sbom-worker.json --output-format json || echo "⚠️ Worker SBOM generation failed"
+
+      - name: Generate SBOM (core)
+        run: |
+          npx --yes @cyclonedx/cyclonedx-npm ./packages/core --output-file sbom-core.json --output-format json || echo "⚠️ Core SBOM generation failed"
+
+      - name: SBOM Summary
+        run: |
+          DEPS_WORKER=$(cat sbom-worker.json | python3 -c "import json,sys; d=json.load(sys.stdin); print(len(d.get('components',[])))" 2>/dev/null || echo "0")
+          DEPS_CORE=$(cat sbom-core.json | python3 -c "import json,sys; d=json.load(sys.stdin); print(len(d.get('components',[])))" 2>/dev/null || echo "0")
+          echo "## SBOM Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Worker Dependencies:** $DEPS_WORKER" >> $GITHUB_STEP_SUMMARY
+          echo "- **Core Dependencies:** $DEPS_CORE" >> $GITHUB_STEP_SUMMARY

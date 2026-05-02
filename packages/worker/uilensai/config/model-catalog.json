@@ -1,0 +1,778 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://uilens.ai/schemas/model-catalog.json",
+  "title": "UILensAI Model Catalog Configuration",
+  "description": "Configuration file for AI model capabilities, pricing, and metadata. Update this file when providers change models or pricing.",
+  "version": "1.3.0",
+  "lastUpdated": "2025-11-29",
+  "providers": {
+    "anthropic": {
+      "name": "Anthropic",
+      "website": "https://www.anthropic.com",
+      "pricingUrl": "https://www.anthropic.com/pricing",
+      "models": {
+        "claude-opus-4-5-20251101": {
+          "name": "Claude Opus 4.5",
+          "contextWindowTokens": 200000,
+          "maxOutputTokens": 64000,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 5,
+          "costOutputPerMillion": 25,
+          "notes": "Most powerful Claude model. Exceptional reasoning and analysis capabilities.",
+          "deprecated": false,
+          "releaseDate": "2025-11-01",
+          "features": [
+            "extended_thinking",
+            "priority_tier"
+          ],
+          "trainingDataCutoff": "2025-09-01"
+        },
+        "claude-opus-4-20250514": {
+          "name": "Claude Opus 4",
+          "contextWindowTokens": 200000,
+          "maxOutputTokens": 32000,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 15,
+          "costOutputPerMillion": 75,
+          "notes": "Our most capable model with highest level of intelligence and capability. Includes extended thinking.",
+          "deprecated": false,
+          "releaseDate": "2025-05-14",
+          "features": [
+            "extended_thinking",
+            "priority_tier"
+          ],
+          "trainingDataCutoff": "2025-03-01"
+        },
+        "claude-sonnet-4-20250514": {
+          "name": "Claude Sonnet 4",
+          "contextWindowTokens": 200000,
+          "maxOutputTokens": 64000,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 3,
+          "costOutputPerMillion": 15,
+          "notes": "High-performance model with balanced intelligence and speed. Includes extended thinking.",
+          "deprecated": false,
+          "releaseDate": "2025-05-14",
+          "features": [
+            "extended_thinking",
+            "priority_tier"
+          ],
+          "trainingDataCutoff": "2025-03-01"
+        },
+        "claude-3-7-sonnet-20250219": {
+          "name": "Claude Sonnet 3.7",
+          "contextWindowTokens": 200000,
+          "maxOutputTokens": 64000,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 3,
+          "costOutputPerMillion": 15,
+          "notes": "High-performance model with early extended thinking. Can be extended to 128k output with beta header.",
+          "deprecated": false,
+          "releaseDate": "2025-02-19",
+          "features": [
+            "extended_thinking",
+            "priority_tier"
+          ],
+          "trainingDataCutoff": "2024-10-31",
+          "betaFeatures": [
+            "output-128k-2025-02-19"
+          ]
+        },
+        "claude-opus-4-1-20250805": {
+          "name": "Claude Opus 4.1",
+          "contextWindowTokens": 200000,
+          "maxOutputTokens": 16384,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 15,
+          "costOutputPerMillion": 75,
+          "notes": "Most capable model. Target 6-8K, hard limit 16K (model supports 32K). Claude 4 extremely verbose.",
+          "deprecated": false,
+          "releaseDate": "2025-08-05",
+          "features": [
+            "extended_thinking",
+            "priority_tier"
+          ],
+          "trainingDataCutoff": "2025-04-01"
+        },
+        "claude-sonnet-4-5-20250929": {
+          "name": "Claude Sonnet 4.5",
+          "contextWindowTokens": 200000,
+          "maxOutputTokens": 16384,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 3,
+          "costOutputPerMillion": 15,
+          "notes": "High-performance model. Target 6-8K, hard limit 16K (model supports 64K). Claude 4.5 extremely verbose.",
+          "deprecated": false,
+          "releaseDate": "2025-09-29",
+          "features": [
+            "extended_thinking",
+            "priority_tier"
+          ],
+          "trainingDataCutoff": "2025-04-01"
+        },
+        "claude-haiku-4-5-20251001": {
+          "name": "Claude Haiku 4.5",
+          "contextWindowTokens": 200000,
+          "maxOutputTokens": 14336,
+          "supportsVision": true,
+          "performanceTier": "intermediate",
+          "costInputPerMillion": 1,
+          "costOutputPerMillion": 5,
+          "notes": "Fast model. Target 6K, hard limit 14K (model supports 64K). Increased for Claude 4.5 verbosity.",
+          "deprecated": false,
+          "releaseDate": "2025-10-01",
+          "features": [
+            "priority_tier"
+          ],
+          "trainingDataCutoff": "2025-04-01"
+        },
+        "claude-3-opus-20240229": {
+          "name": "Claude 3 Opus",
+          "contextWindowTokens": 200000,
+          "maxOutputTokens": 4096,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 15,
+          "costOutputPerMillion": 75,
+          "notes": "Powerful model for complex tasks. No priority tier access.",
+          "deprecated": false,
+          "releaseDate": "2024-02-29",
+          "trainingDataCutoff": "2023-08-01"
+        },
+        "claude-3-5-sonnet-20241022": {
+          "name": "Claude 3.5 Sonnet (Latest)",
+          "contextWindowTokens": 200000,
+          "maxOutputTokens": 8192,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 3,
+          "costOutputPerMillion": 15,
+          "notes": "Our previous intelligent model with high level of intelligence and capability.",
+          "deprecated": false,
+          "releaseDate": "2024-10-22",
+          "features": [
+            "priority_tier"
+          ],
+          "trainingDataCutoff": "2024-04-01"
+        },
+        "claude-3-5-sonnet-20240620": {
+          "name": "Claude 3.5 Sonnet",
+          "contextWindowTokens": 200000,
+          "maxOutputTokens": 8192,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 3,
+          "costOutputPerMillion": 15,
+          "notes": "Previous Sonnet model, still highly capable.",
+          "deprecated": false,
+          "releaseDate": "2024-06-20",
+          "features": [
+            "priority_tier"
+          ],
+          "trainingDataCutoff": "2024-04-01"
+        },
+        "claude-3-5-haiku-20241022": {
+          "name": "Claude 3.5 Haiku",
+          "contextWindowTokens": 200000,
+          "maxOutputTokens": 8192,
+          "supportsVision": true,
+          "performanceTier": "basic",
+          "costInputPerMillion": 0.8,
+          "costOutputPerMillion": 4,
+          "notes": "Our fastest model with intelligence at blazing speeds.",
+          "deprecated": false,
+          "releaseDate": "2024-10-22",
+          "features": [
+            "priority_tier"
+          ],
+          "trainingDataCutoff": "2024-07-01"
+        },
+        "claude-3-sonnet-20240229": {
+          "name": "Claude 3 Sonnet",
+          "contextWindowTokens": 200000,
+          "maxOutputTokens": 4096,
+          "supportsVision": true,
+          "performanceTier": "intermediate",
+          "costInputPerMillion": 3,
+          "costOutputPerMillion": 15,
+          "notes": "Balanced performance and cost. DEPRECATED: Will reach end-of-life on July 21st, 2025. Migrate to Claude 3.5 Sonnet.",
+          "deprecated": true,
+          "deprecationDate": "2025-01-10",
+          "endOfLifeDate": "2025-07-21",
+          "replacementModel": "claude-3-5-sonnet-20241022",
+          "releaseDate": "2024-02-29",
+          "trainingDataCutoff": "2023-08-01"
+        },
+        "claude-3-haiku-20240307": {
+          "name": "Claude 3 Haiku",
+          "contextWindowTokens": 200000,
+          "maxOutputTokens": 4096,
+          "supportsVision": true,
+          "performanceTier": "basic",
+          "costInputPerMillion": 0.25,
+          "costOutputPerMillion": 1.25,
+          "notes": "Fast and compact model for near-instant responsiveness.",
+          "deprecated": false,
+          "releaseDate": "2024-03-07",
+          "trainingDataCutoff": "2023-08-01"
+        },
+        "claude-4-preview": {
+          "name": "Claude 4 Preview",
+          "contextWindowTokens": 500000,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 2,
+          "costOutputPerMillion": 8,
+          "notes": "Next-generation Claude model with enhanced capabilities and larger context window.",
+          "deprecated": true,
+          "releaseDate": "2025-06-01",
+          "experimental": true
+        }
+      }
+    },
+    "openai": {
+      "name": "OpenAI",
+      "website": "https://openai.com",
+      "pricingUrl": "https://openai.com/pricing",
+      "models": {
+        "gpt-4o": {
+          "name": "GPT-4o",
+          "contextWindowTokens": 128000,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 2.5,
+          "costOutputPerMillion": 10,
+          "notes": "GPT-4 Omni - excellent multimodal capabilities.",
+          "deprecated": false,
+          "releaseDate": "2024-05-13"
+        },
+        "gpt-4o-2024-11-20": {
+          "name": "GPT-4o (Latest)",
+          "contextWindowTokens": 128000,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 2.5,
+          "costOutputPerMillion": 10,
+          "notes": "Latest GPT-4o model.",
+          "deprecated": false,
+          "releaseDate": "2024-11-20"
+        },
+        "gpt-4o-mini": {
+          "name": "GPT-4o Mini",
+          "contextWindowTokens": 128000,
+          "supportsVision": true,
+          "performanceTier": "basic",
+          "costInputPerMillion": 0.15,
+          "costOutputPerMillion": 0.6,
+          "notes": "Smaller, faster, more affordable GPT-4o.",
+          "deprecated": false,
+          "releaseDate": "2024-07-18"
+        },
+        "gpt-4-turbo": {
+          "name": "GPT-4 Turbo",
+          "contextWindowTokens": 128000,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 10,
+          "costOutputPerMillion": 30,
+          "notes": "GPT-4 Turbo with vision capabilities.",
+          "deprecated": false,
+          "releaseDate": "2024-04-09"
+        },
+        "gpt-4": {
+          "name": "GPT-4",
+          "contextWindowTokens": 8192,
+          "supportsVision": false,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 30,
+          "costOutputPerMillion": 60,
+          "notes": "Original GPT-4 - high quality but expensive.",
+          "deprecated": true,
+          "releaseDate": "2023-03-14"
+        },
+        "gpt-3.5-turbo": {
+          "name": "GPT-3.5 Turbo",
+          "contextWindowTokens": 16385,
+          "supportsVision": false,
+          "performanceTier": "basic",
+          "costInputPerMillion": 0.5,
+          "costOutputPerMillion": 1.5,
+          "notes": "Fast and affordable for basic tasks.",
+          "deprecated": false,
+          "releaseDate": "2023-03-01"
+        },
+        "o1": {
+          "name": "OpenAI o1",
+          "contextWindowTokens": 200000,
+          "maxOutputTokens": 100000,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 15,
+          "costOutputPerMillion": 60,
+          "notes": "Advanced reasoning model with extended thinking capabilities. Excellent for complex problem-solving and coding.",
+          "deprecated": false,
+          "releaseDate": "2024-12-17"
+        },
+        "o1-mini": {
+          "name": "OpenAI o1-mini",
+          "contextWindowTokens": 128000,
+          "maxOutputTokens": 65536,
+          "supportsVision": false,
+          "performanceTier": "intermediate",
+          "costInputPerMillion": 1.10,
+          "costOutputPerMillion": 4.40,
+          "notes": "Faster, more affordable reasoning model for coding and STEM tasks. Standard pricing with caching support.",
+          "deprecated": false,
+          "releaseDate": "2024-09-12"
+        },
+        "o3": {
+          "name": "OpenAI o3",
+          "contextWindowTokens": 200000,
+          "maxOutputTokens": 100000,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 2.00,
+          "costOutputPerMillion": 8.00,
+          "notes": "Advanced reasoning model succeeding o1. Standard pricing: $2/$8 per M, with caching: $0.50/$8.",
+          "deprecated": false,
+          "releaseDate": "2025-01-20"
+        },
+        "o3-mini": {
+          "name": "OpenAI o3-mini",
+          "contextWindowTokens": 128000,
+          "maxOutputTokens": 65536,
+          "supportsVision": false,
+          "performanceTier": "intermediate",
+          "costInputPerMillion": 1.10,
+          "costOutputPerMillion": 4.40,
+          "notes": "Cost-effective reasoning model. Standard pricing with caching support ($0.55/$4.40).",
+          "deprecated": false,
+          "releaseDate": "2025-01-20"
+        },
+        "o4-mini": {
+          "name": "OpenAI o4-mini",
+          "contextWindowTokens": 128000,
+          "maxOutputTokens": 65536,
+          "supportsVision": false,
+          "performanceTier": "intermediate",
+          "costInputPerMillion": 1.10,
+          "costOutputPerMillion": 4.40,
+          "notes": "Latest mini reasoning model. Standard pricing: $1.10/$4.40, with caching: $0.275/$4.40.",
+          "deprecated": false,
+          "releaseDate": "2025-04-16"
+        },
+        "gpt-5": {
+          "name": "GPT-5",
+          "contextWindowTokens": 200000,
+          "maxOutputTokens": 100000,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 1.25,
+          "costOutputPerMillion": 10.00,
+          "notes": "Latest GPT-5 model. Standard pricing with caching support ($0.125/$10).",
+          "deprecated": false,
+          "releaseDate": "2025-05-01"
+        },
+        "gpt-5-mini": {
+          "name": "GPT-5 Mini",
+          "contextWindowTokens": 128000,
+          "maxOutputTokens": 65536,
+          "supportsVision": true,
+          "performanceTier": "intermediate",
+          "costInputPerMillion": 0.25,
+          "costOutputPerMillion": 2.00,
+          "notes": "Cost-effective GPT-5 variant. Standard pricing with caching support ($0.025/$2).",
+          "deprecated": false,
+          "releaseDate": "2025-05-01"
+        },
+        "gpt-4.1": {
+          "name": "GPT-4.1",
+          "contextWindowTokens": 200000,
+          "maxOutputTokens": 100000,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 2.00,
+          "costOutputPerMillion": 8.00,
+          "notes": "GPT-4.1 model. Standard pricing with caching support ($0.50/$8).",
+          "deprecated": false,
+          "releaseDate": "2025-04-14"
+        },
+        "gpt-4.1-mini": {
+          "name": "GPT-4.1 Mini",
+          "contextWindowTokens": 128000,
+          "maxOutputTokens": 65536,
+          "supportsVision": true,
+          "performanceTier": "intermediate",
+          "costInputPerMillion": 0.40,
+          "costOutputPerMillion": 1.60,
+          "notes": "Cost-effective GPT-4.1 variant. Standard pricing with caching support ($0.10/$1.60).",
+          "deprecated": false,
+          "releaseDate": "2025-04-14"
+        },
+        "gpt-4o-2025-01-21": {
+          "name": "GPT-4o (2025-01-21)",
+          "contextWindowTokens": 128000,
+          "maxOutputTokens": 16384,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 2.5,
+          "costOutputPerMillion": 10,
+          "notes": "Latest GPT-4o update with improved performance and structured outputs.",
+          "deprecated": false,
+          "releaseDate": "2025-01-21"
+        },
+        "gpt-5.1": {
+          "name": "GPT-5.1",
+          "contextWindowTokens": 200000,
+          "maxOutputTokens": 100000,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 1.50,
+          "costOutputPerMillion": 12.00,
+          "notes": "Latest GPT-5.1 model with enhanced reasoning and coding capabilities.",
+          "deprecated": false,
+          "releaseDate": "2025-11-13"
+        },
+        "gpt-5-pro": {
+          "name": "GPT-5 Pro",
+          "contextWindowTokens": 200000,
+          "maxOutputTokens": 100000,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 2.00,
+          "costOutputPerMillion": 15.00,
+          "notes": "Professional tier GPT-5 with enhanced capabilities.",
+          "deprecated": false,
+          "releaseDate": "2025-10-06"
+        },
+        "gpt-5-nano": {
+          "name": "GPT-5 Nano",
+          "contextWindowTokens": 64000,
+          "maxOutputTokens": 32000,
+          "supportsVision": true,
+          "performanceTier": "basic",
+          "costInputPerMillion": 0.10,
+          "costOutputPerMillion": 0.40,
+          "notes": "Ultra-efficient GPT-5 variant for high-throughput applications.",
+          "deprecated": false,
+          "releaseDate": "2025-08-07"
+        },
+        "gpt-4.1-nano": {
+          "name": "GPT-4.1 Nano",
+          "contextWindowTokens": 64000,
+          "maxOutputTokens": 32000,
+          "supportsVision": true,
+          "performanceTier": "basic",
+          "costInputPerMillion": 0.10,
+          "costOutputPerMillion": 0.40,
+          "notes": "Ultra-efficient GPT-4.1 variant.",
+          "deprecated": false,
+          "releaseDate": "2025-04-14"
+        },
+        "o1-pro": {
+          "name": "OpenAI o1-pro",
+          "contextWindowTokens": 200000,
+          "maxOutputTokens": 100000,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 20.00,
+          "costOutputPerMillion": 80.00,
+          "notes": "Professional reasoning model with maximum compute for complex problems.",
+          "deprecated": false,
+          "releaseDate": "2025-03-19"
+        }
+      }
+    },
+    "google": {
+      "name": "Google",
+      "website": "https://ai.google.dev",
+      "pricingUrl": "https://ai.google.dev/pricing",
+      "models": {
+        "gemini-2.0-flash-exp": {
+          "name": "Gemini 2.0 Flash (Experimental)",
+          "contextWindowTokens": 1048576,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 0.1,
+          "costOutputPerMillion": 0.4,
+          "notes": "Latest experimental Gemini 2.0 Flash model.",
+          "deprecated": false,
+          "experimental": true,
+          "releaseDate": "2024-12-11"
+        },
+        "gemini-1.5-pro": {
+          "name": "Gemini 1.5 Pro",
+          "contextWindowTokens": 2097152,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 1.25,
+          "costOutputPerMillion": 5,
+          "notes": "High-capability model with very large context window. Pricing varies by input size.",
+          "deprecated": false,
+          "releaseDate": "2024-02-15"
+        },
+        "gemini-1.5-flash": {
+          "name": "Gemini 1.5 Flash",
+          "contextWindowTokens": 1048576,
+          "supportsVision": true,
+          "performanceTier": "intermediate",
+          "costInputPerMillion": 0.075,
+          "costOutputPerMillion": 0.3,
+          "notes": "Fast and efficient with large context window.",
+          "deprecated": false,
+          "releaseDate": "2024-05-14"
+        },
+        "gemini-1.5-flash-8b": {
+          "name": "Gemini 1.5 Flash 8B",
+          "contextWindowTokens": 1048576,
+          "supportsVision": true,
+          "performanceTier": "basic",
+          "costInputPerMillion": 0.0375,
+          "costOutputPerMillion": 0.15,
+          "notes": "Smaller, faster variant of Flash.",
+          "deprecated": false,
+          "releaseDate": "2024-10-03"
+        },
+        "gemini-2.5-pro": {
+          "name": "Gemini 2.5 Pro",
+          "contextWindowTokens": 1048576,
+          "maxOutputTokens": 65536,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 1.25,
+          "costOutputPerMillion": 10,
+          "notes": "High-performance model for complex problems, reasoning, coding, and long context. Pricing: ≤200K tokens=$1.25/$10, >200K=$2.50/$15 per M.",
+          "deprecated": false,
+          "releaseDate": "2025-01-01"
+        },
+        "gemini-2.5-flash": {
+          "name": "Gemini 2.5 Flash",
+          "contextWindowTokens": 1048576,
+          "maxOutputTokens": 65536,
+          "supportsVision": true,
+          "performanceTier": "intermediate",
+          "costInputPerMillion": 0.15,
+          "costOutputPerMillion": 0.60,
+          "notes": "Fast and cost-effective Gemini model. Great for general purpose tasks with large context support.",
+          "deprecated": false,
+          "releaseDate": "2025-01-01"
+        },
+        "gemini-2.5-flash-lite": {
+          "name": "Gemini 2.5 Flash-Lite",
+          "contextWindowTokens": 1048576,
+          "maxOutputTokens": 65536,
+          "supportsVision": true,
+          "performanceTier": "basic",
+          "costInputPerMillion": 0.075,
+          "costOutputPerMillion": 0.30,
+          "notes": "The fastest and most cost-effective Gemini model. Optimized for high-throughput.",
+          "deprecated": false,
+          "releaseDate": "2025-01-01"
+        },
+        "gemini-2.0-flash": {
+          "name": "Gemini 2.0 Flash",
+          "contextWindowTokens": 1048576,
+          "maxOutputTokens": 8192,
+          "supportsVision": true,
+          "performanceTier": "intermediate",
+          "costInputPerMillion": 0.10,
+          "costOutputPerMillion": 0.40,
+          "notes": "Stable Gemini 2.0 Flash model.",
+          "deprecated": false,
+          "releaseDate": "2024-12-11"
+        },
+        "gemini-2.0-flash-lite": {
+          "name": "Gemini 2.0 Flash-Lite",
+          "contextWindowTokens": 1048576,
+          "maxOutputTokens": 8192,
+          "supportsVision": true,
+          "performanceTier": "basic",
+          "costInputPerMillion": 0.075,
+          "costOutputPerMillion": 0.30,
+          "notes": "Lightweight Gemini 2.0 variant for cost-effective processing.",
+          "deprecated": false,
+          "releaseDate": "2024-12-11"
+        },
+        "gemini-3-pro-preview": {
+          "name": "Gemini 3 Pro Preview",
+          "contextWindowTokens": 1048576,
+          "maxOutputTokens": 65536,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 2.0,
+          "costOutputPerMillion": 12.0,
+          "notes": "The most capable Gemini model. State-of-the-art reasoning and multimodal understanding.",
+          "deprecated": false,
+          "experimental": true,
+          "releaseDate": "2025-11-01"
+        }
+      }
+    },
+    "xai": {
+      "name": "xAI",
+      "website": "https://x.ai",
+      "pricingUrl": "https://x.ai/api",
+      "models": {
+        "grok-4.1-fast": {
+          "name": "Grok 4.1 Fast",
+          "contextWindowTokens": 2000000,
+          "maxOutputTokens": 100000,
+          "supportsVision": false,
+          "performanceTier": "intermediate",
+          "costInputPerMillion": 0.20,
+          "costOutputPerMillion": 0.50,
+          "notes": "Fast and cost-effective Grok model with 2M context window. Best for high-throughput applications.",
+          "deprecated": false,
+          "releaseDate": "2025-11-19"
+        },
+        "grok-4-fast": {
+          "name": "Grok 4 Fast",
+          "contextWindowTokens": 2000000,
+          "maxOutputTokens": 100000,
+          "supportsVision": false,
+          "performanceTier": "intermediate",
+          "costInputPerMillion": 0.20,
+          "costOutputPerMillion": 0.50,
+          "notes": "Cost-efficient Grok 4 with 2M context window.",
+          "deprecated": false,
+          "releaseDate": "2025-09-01"
+        },
+        "grok-4": {
+          "name": "Grok 4",
+          "contextWindowTokens": 256000,
+          "maxOutputTokens": 32000,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 3.00,
+          "costOutputPerMillion": 15.00,
+          "notes": "Full Grok 4 model with vision capabilities. Most powerful xAI model.",
+          "deprecated": false,
+          "releaseDate": "2025-07-09"
+        },
+        "grok-code-fast-1": {
+          "name": "Grok Code Fast 1",
+          "contextWindowTokens": 256000,
+          "maxOutputTokens": 32000,
+          "supportsVision": false,
+          "performanceTier": "intermediate",
+          "costInputPerMillion": 0.20,
+          "costOutputPerMillion": 1.50,
+          "notes": "Optimized for agentic coding tasks.",
+          "deprecated": false,
+          "releaseDate": "2025-08-01"
+        },
+        "grok-2": {
+          "name": "Grok 2",
+          "contextWindowTokens": 131072,
+          "maxOutputTokens": 8192,
+          "supportsVision": true,
+          "performanceTier": "intermediate",
+          "costInputPerMillion": 2.00,
+          "costOutputPerMillion": 10.00,
+          "notes": "Previous generation Grok with vision capabilities.",
+          "deprecated": false,
+          "releaseDate": "2024-08-01"
+        },
+        "grok-beta": {
+          "name": "Grok Beta",
+          "contextWindowTokens": 131072,
+          "maxOutputTokens": 8192,
+          "supportsVision": false,
+          "performanceTier": "basic",
+          "costInputPerMillion": 1.00,
+          "costOutputPerMillion": 5.00,
+          "notes": "Original Grok beta model.",
+          "deprecated": true,
+          "releaseDate": "2024-03-01"
+        }
+      }
+    },
+    "deepseek": {
+      "name": "DeepSeek",
+      "website": "https://www.deepseek.com",
+      "pricingUrl": "https://www.deepseek.com/pricing",
+      "models": {
+        "deepseek/deepseek-chat-v3-0324": {
+          "name": "DeepSeek V3",
+          "contextWindowTokens": 128000,
+          "maxOutputTokens": 8192,
+          "supportsVision": false,
+          "performanceTier": "intermediate",
+          "costInputPerMillion": 0.14,
+          "costOutputPerMillion": 0.28,
+          "notes": "Cost-effective model with strong reasoning and coding capabilities.",
+          "deprecated": false,
+          "releaseDate": "2024-12-26"
+        },
+        "deepseek/deepseek-chat": {
+          "name": "DeepSeek V3",
+          "contextWindowTokens": 128000,
+          "maxOutputTokens": 8192,
+          "supportsVision": false,
+          "performanceTier": "intermediate",
+          "costInputPerMillion": 0.14,
+          "costOutputPerMillion": 0.28,
+          "notes": "Cost-effective model with strong reasoning and coding capabilities.",
+          "deprecated": false,
+          "releaseDate": "2024-12-26"
+        },
+        "deepseek-reasoner": {
+          "name": "DeepSeek R1",
+          "contextWindowTokens": 128000,
+          "maxOutputTokens": 65536,
+          "supportsVision": false,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 0.55,
+          "costOutputPerMillion": 2.19,
+          "notes": "DeepSeek reasoning model (R1). Supports up to 64K output limits.",
+          "deprecated": false,
+          "releaseDate": "2025-01-20"
+        }
+      }
+    }
+  },
+  "performanceTiers": {
+    "basic": {
+      "description": "Cost-effective models suitable for simple tasks",
+      "useCases": [
+        "Basic analysis",
+        "Simple content generation",
+        "Quick responses"
+      ]
+    },
+    "intermediate": {
+      "description": "Balanced performance and cost for most use cases",
+      "useCases": [
+        "Comprehensive analysis",
+        "Complex reasoning",
+        "Multi-step tasks"
+      ]
+    },
+    "advanced": {
+      "description": "Highest capability models for complex tasks",
+      "useCases": [
+        "Complex analysis",
+        "Expert-level reasoning",
+        "Multi-modal tasks"
+      ]
+    }
+  },
+  "updateInstructions": {
+    "description": "How to update this configuration file",
+    "steps": [
+      "1. Check provider pricing pages for updates",
+      "2. Update model pricing in costInputPerMillion and costOutputPerMillion",
+      "3. Add new models with complete metadata",
+      "4. Mark deprecated models with 'deprecated': true",
+      "5. Update version and lastUpdated fields",
+      "6. Test with a small analysis to verify pricing accuracy"
+    ],
+    "automationNote": "Consider setting up automated checks against provider APIs for pricing updates"
+  }
+}

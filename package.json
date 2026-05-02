@@ -1,0 +1,85 @@
+{
+  "name": "@optimald/uilensai",
+  "version": "1.3.29",
+  "description": "UILensAI Website Analysis Tool — Pure npm package",
+  "main": "packages/worker/uilensai/index.js",
+  "scripts": {
+    "build": "echo 'Build complete'",
+    "test": "jest",
+    "cli": "node packages/cli/cli.js",
+    "install:all": "cd packages/cli && npm install && cd ../worker && npm install"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "eslint": "^9.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "jest": "^30.3.0"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "cheerio": "^1.0.0",
+    "dotenv": "^17.3.1",
+    "openai": "^4.98.0",
+    "sharp": "^0.34.5",
+    "uuid": "^11.1.0",
+    "zod": "^3.24.0"
+  },
+  "files": [
+    "packages/cli/cli.js",
+    "packages/cli/package.json",
+    "packages/worker/uilensai/index.js",
+    "packages/worker/uilensai/analyze/*.js",
+    "packages/worker/uilensai/analyze/ui/*.js",
+    "packages/worker/uilensai/capture/index.js",
+    "packages/worker/uilensai/cli/cli.js",
+    "packages/worker/uilensai/config/industry-taxonomy.js",
+    "packages/worker/uilensai/config/model-defaults.js",
+    "packages/worker/uilensai/config/transitionFlags.js",
+    "packages/worker/uilensai/config/*.json",
+    "packages/worker/uilensai/report/index.js",
+    "packages/worker/uilensai/schemas/*.json",
+    "packages/worker/uilensai/services/*.js",
+    "packages/worker/uilensai/agents/*.js",
+    "packages/worker/uilensai/utils/*.js",
+    "packages/worker/uilensai/utils/ai-models/*.js",
+    "packages/worker/uilensai/utils/ai-providers/*.js",
+    "packages/worker/uilensai/utils/data-collectors/*.js",
+    "packages/worker/uilensai/utils/presets/*.js",
+    "!packages/worker/uilensai/utils/presets/*.bak",
+    "packages/worker/uilensai/utils/prompts/*.js",
+    "packages/worker/uilensai/utils/recommendations/*.js",
+    "packages/worker/uilensai/storage/index.js",
+    "packages/worker/uilensai/package.json",
+    "packages/worker/package.json",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=9.0.0"
+  },
+  "bin": {
+    "uilensai": "./packages/cli/cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/optimald/uilensai.git"
+  },
+  "keywords": [
+    "ui",
+    "analysis",
+    "website",
+    "accessibility",
+    "seo",
+    "performance",
+    "cloudflare",
+    "cli"
+  ],
+  "author": "OptimalD",
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}
