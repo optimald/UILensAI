@@ -1,7 +1,7 @@
 # UILensAI
 
 [![npm version](https://img.shields.io/npm/v/@optimald/uilensai.svg)](https://www.npmjs.com/package/@optimald/uilensai)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
 UILensAI is an AI-powered website analysis engine providing comprehensive insights across ten specialized modules, including enterprise-grade SEO, AEO (Answer Engine Optimization), and GEO (Generative Engine Optimization) diagnostics.
 
@@ -225,6 +225,19 @@ uilensai/
 └── package.json          # Root package (@optimald/uilensai)
 ```
 
+## WebEvo Integration
+
+UILensAI is used as a direct dependency by [WebEvo](https://webevo.ai):
+
+```javascript
+// In WebEvo's codebase
+const { analyzeWebsite } = require('@optimald/uilensai');
+const results = await analyzeWebsite(url, { modules: ['ui', 'performance', 'seoContent'] });
+// Access enterprise intelligence
+const { strategicInsights, ceoVerdict } = results;
+// WebEvo stores results in its own database
+```
+
 ## Troubleshooting
 
 | Issue | Solution |
@@ -238,4 +251,4 @@ uilensai/
 
 ## License
 
-[MIT](LICENSE) © [OptimalD](https://github.com/optimald)
+[AGPL-3.0](LICENSE) © [OptimalD](https://github.com/optimald)

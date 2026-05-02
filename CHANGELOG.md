@@ -5,9 +5,9 @@ All notable changes to this project will be documented in this file.
 ## [1.3.29] - 2026-05-02
 
 ### Added
-- **Open Source Release:** Published UILensAI under MIT license with full GitHub community infrastructure.
+- **Open Source Release:** Published UILensAI under AGPL-3.0 license with full GitHub community infrastructure.
 - **Site Health Module (10th Module):** New `siteHealth` analysis module extending UILensAI from single-page to full-site analysis. Consumes Cloudflare crawl results and produces link graph analysis (internal link adjacency, inlink/outlink counts, depth mapping), broken link detection via HTTP HEAD validation, redirect chain mapping (301→302→200), duplicate content detection using SimHash near-duplicate algorithm, orphan page identification (zero-inlink pages), and comprehensive crawl stats (status distribution, average response time).
-- **GitHub Community Files:** Added `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `LICENSE` (MIT), and issue templates (`bug_report.md`, `feature_request.md`).
+- **GitHub Community Files:** Added `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `LICENSE` (AGPL-3.0), and issue templates (`bug_report.md`, `feature_request.md`).
 
 ### Changed
 - **README:** Updated module count from nine to ten, added `siteHealth` to CLI `--modules` documentation and available modules table.
@@ -15,7 +15,7 @@ All notable changes to this project will be documented in this file.
 
 ### Removed
 - **Test/Debug Files:** Removed `run-medspa-scan.js`, `scripts/cf-smoke-test.js`, `scripts/client-integration-test.js`, `scripts/verify-release.js`, and `.agents/workflows/pre-release-audit.md` from public release.
-- **Sample Data:** Removed embedded sample report JSON from repository.
+- **Sample Data:** Removed embedded sample report JSON (`webevo-report-morganandmorgan-com-2026-03-17.json`) from repository.
 
 ## [1.3.28] - 2026-04-25
 
@@ -159,7 +159,7 @@ All notable changes to this project will be documented in this file.
 ## [1.3.16] - 2026-03-17
 
 ### Changed
-- **Admin-Only Cost Tracking (`_adminMeta`)**: AI cost data is no longer included in the client-facing report payload. Instead, `analyzeWebsite()` returns cost data under a separate `_adminMeta` field containing `totalCostUSD`, `costBreakdown`, `aiCallCount`, and per-call `costs`. API callers should extract `_adminMeta`, store it server-side for admin dashboards, and **strip it** before sending the report to clients. This prevents savvy users from seeing cost data in network requests.
+- **Admin-Only Cost Tracking (`_adminMeta`)**: AI cost data is no longer included in the client-facing report payload. Instead, `analyzeWebsite()` returns cost data under a separate `_adminMeta` field containing `totalCostUSD`, `costBreakdown`, `aiCallCount`, and per-call `costs`. API callers (e.g. WebEvo) should extract `_adminMeta`, store it server-side for admin dashboards, and **strip it** before sending the report to clients. This prevents savvy users from seeing cost data in network requests.
 
 ### Removed
 - **`estimatedAnalysisCost`**: Removed from report schema and report generation (v1.3.14).
@@ -193,7 +193,7 @@ All notable changes to this project will be documented in this file.
 ## [1.3.3] - 2026-03-17
 
 ### Fixed
-- Moved screenshot base64 embedding from CLI-only post-processing (`cli.js`) into `analyzeSingleViewportScreenshot()` in `ui.js`, so API callers get renderable image data.
+- Moved screenshot base64 embedding from CLI-only post-processing (`cli.js`) into `analyzeSingleViewportScreenshot()` in `ui.js`, so API callers like WebEvo get renderable image data.
 
 ## [1.3.2] - 2026-03-17
 
