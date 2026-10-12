@@ -241,7 +241,7 @@ CRITICAL: Your narrative should read like a senior consultant's assessment, not 
                 privacy: `Privacy and Compliance Expert specializing in data protection regulations`,
                 marketing: `Digital Marketing Strategist with expertise in ${industryContext?.primaryIndustry || 'Unknown'} market positioning`,
                 security: `Principal Security Architect (CISSP, CISM certified) specializing in web application security for ${industryContext?.primaryIndustry || 'Unknown'} organizations`,
-                accessibility: `Senior Accessibility Consultant (IAAP CPAC certified) specializing in WCAG 2.1 compliance for ${industryContext?.primaryIndustry || 'Unknown'} websites`,
+                accessibility: `Senior Accessibility Consultant (IAAP CPAC certified) specializing in WCAG 2.2 compliance for ${industryContext?.primaryIndustry || 'Unknown'} websites`,
                 performance: `Senior Web Performance Engineer specializing in Core Web Vitals optimization for ${industryContext?.primaryIndustry || 'Unknown'} websites`,
                 compatibility: `Senior Browser Compatibility Engineer specializing in cross-browser testing for ${industryContext?.primaryIndustry || 'Unknown'} web applications`,
             };

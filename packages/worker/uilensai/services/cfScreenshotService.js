@@ -4,16 +4,14 @@
  * Cloud-hosted screenshot capture using Cloudflare's /screenshot REST API.
  * Drop-in alternative to the local Playwright capture pipeline.
  * 
- * Docs: https://developers.cloudflare.com/browser-rendering/rest-api/screenshot-endpoint/
+ * Docs: https://developers.cloudflare.com/browser-run/quick-actions/screenshot-endpoint/
  */
 
 const path = require('path');
 const fs = require('fs');
 const fsPromises = require('fs').promises;
 const { v4: uuidv4 } = require('uuid');
-const { getCredentials } = require('./cfBrowserService');
-
-const BASE_URL = 'https://api.cloudflare.com/client/v4/accounts';
+const { getCredentials, cfFetch } = require('./cfBrowserService');
 
 // Mirror the VIEWPORT_PRESETS from capture/index.js for compatibility
 const VIEWPORT_PRESETS = {
@@ -51,7 +49,6 @@ async function captureScreenshot(url, viewport, options = {}) {
     }
 
     const { accountId, apiToken } = creds;
-    const endpoint = `${BASE_URL}/${accountId}/browser-rendering/screenshot`;
     const verbose = options.verbose ?? false;
     const fullPage = options.fullPage ?? true;
     let timeout = options.timeout ?? 45000;
@@ -97,7 +94,7 @@ async function captureScreenshot(url, viewport, options = {}) {
     const captureTimestamp = new Date().toISOString();
 
     try {
-        const response = await fetch(endpoint, {
+        const response = await cfFetch(accountId, 'screenshot', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${apiToken}`,

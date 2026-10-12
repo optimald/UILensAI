@@ -476,17 +476,27 @@ async function analyzeRobotsTxt(siteUrl, page, verbose = false) {
 
         // AI Bot Directive Detection
         const AI_BOTS = [
-            'GPTBot', 'ChatGPT-User', 'Google-Extended', 'GoogleOther',
-            'anthropic-ai', 'ClaudeBot', 'CCBot', 'Bytespider',
-            'PerplexityBot', 'Cohere-ai', 'Applebot-Extended', 'Meta-ExternalAgent',
-            'FacebookBot', 'Amazonbot', 'YouBot', 'Diffbot', 'OAI-SearchBot'
+            'GPTBot', 'ChatGPT-User', 'OAI-SearchBot',
+            'Google-Extended', 'GoogleOther', 'Google-CloudVertexBot', 'GoogleAgent',
+            'anthropic-ai', 'ClaudeBot', 'Claude-SearchBot', 'Claude-User',
+            'CCBot', 'Bytespider',
+            'PerplexityBot', 'Perplexity-User',
+            'Cohere-ai', 'Applebot', 'Applebot-Extended',
+            'Meta-ExternalAgent', 'Meta-ExternalFetcher',
+            'FacebookBot', 'Amazonbot', 'YouBot', 'Diffbot'
         ];
 
-        const aiBotDirectives = { detected: [], aiBotsBlocked: [], aiBotsAllowed: [], hasExplicitAiPolicy: false };
+        const aiBotDirectives = { detected: [], aiBotsBlocked: [], aiBotsAllowed: [], hasExplicitAiPolicy: false, contentSignals: [] };
         let currentUserAgent = null;
 
         for (const line of directives) {
             const trimmed = line.trim();
+            const contentSignalMatch = trimmed.match(/^content-signal:\s*(.+)/i);
+            if (contentSignalMatch) {
+                aiBotDirectives.contentSignals.push(contentSignalMatch[1].trim());
+                aiBotDirectives.hasExplicitAiPolicy = true;
+                continue;
+            }
             const uaMatch = trimmed.match(/^user-agent:\s*(.+)/i);
             if (uaMatch) {
                 currentUserAgent = uaMatch[1].trim();
@@ -534,55 +544,83 @@ async function analyzeRobotsTxt(siteUrl, page, verbose = false) {
  * Per the llmstxt.org specification.
  * Works in both browser and serverless (HTTP-only) modes.
  */
+function extractAgentReadyText(rawText) {
+    if (!rawText) return null;
+    const trimmed = rawText.trim();
+
+    const fromObject = (data) => {
+        const text = data?.result?.content?.[0]?.text
+            || data?.result?.structuredContent
+            || data?.structuredContent
+            || data?.report
+            || data?.text;
+        if (typeof text === 'string' && text.length > 0) return text;
+        if (text && typeof text === 'object') return JSON.stringify(text);
+        return null;
+    };
+
+    if (trimmed.startsWith('{') || trimmed.startsWith('[')) {
+        try {
+            const parsed = fromObject(JSON.parse(trimmed));
+            if (parsed) return parsed;
+        } catch {
+            // Fall through to SSE lines.
+        }
+    }
+
+    for (const line of rawText.split('\n')) {
+        if (!line.startsWith('data: ')) continue;
+        try {
+            const parsed = fromObject(JSON.parse(line.substring(6)));
+            if (parsed) return parsed;
+        } catch {
+            // Ignore partial SSE events.
+        }
+    }
+    return null;
+}
+
+async function postAgentReady(url, body) {
+    const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json, text/event-stream'
+        },
+        body: JSON.stringify(body),
+        signal: AbortSignal.timeout(30000)
+    });
+    const rawText = await res.text();
+    if (!res.ok) return null;
+    return extractAgentReadyText(rawText);
+}
+
 async function analyzeIsItAgentReady(siteUrl, verbose = false) {
     if (verbose) console.log(`[SEOContentModule] Checking isitagentready.com for ${siteUrl}`);
     const startTime = Date.now();
     try {
-        const payload = {
-            jsonrpc: "2.0",
+        const mcpPayload = {
+            jsonrpc: '2.0',
             id: 1,
-            method: "tools/call",
-            params: { name: "scan_site", arguments: { url: siteUrl } }
+            method: 'tools/call',
+            params: { name: 'scan_site', arguments: { url: siteUrl } }
         };
-        const res = await fetch("https://isitagentready.com/mcp", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json, text/event-stream"
-            },
-            body: JSON.stringify(payload),
-            signal: AbortSignal.timeout(30000) // 30s — endpoint can take 10-20s under load
-        });
-        
-        const rawText = await res.text();
-        const elapsed = Date.now() - startTime;
-        if (verbose) console.log(`[SEOContentModule] isitagentready.com responded in ${elapsed}ms (${rawText.length} bytes)`);
-
-        const lines = rawText.split('\n');
-        let agentReadinessReport = "No data returned";
-        for (const line of lines) {
-            if (line.startsWith('data: ')) {
-                try {
-                    const dataObj = JSON.parse(line.substring(6));
-                    if (dataObj?.result?.content?.[0]?.text) {
-                        agentReadinessReport = dataObj.result.content[0].text;
-                        break;
-                    }
-                } catch (e) {
-                    // Ignore parsing error for intermediate SSE lines
-                }
-            }
+        let agentReadinessReport = await postAgentReady('https://isitagentready.com/mcp', mcpPayload);
+        if (!agentReadinessReport) {
+            agentReadinessReport = await postAgentReady('https://isitagentready.com/api/scan', { url: siteUrl, format: 'agent' });
         }
+        if (!agentReadinessReport) agentReadinessReport = 'No data returned';
 
-        if (verbose && agentReadinessReport !== "No data returned") {
+        const elapsed = Date.now() - startTime;
+        if (verbose && agentReadinessReport !== 'No data returned') {
             const level = agentReadinessReport.match(/Level (\d+\/\d+)/)?.[1] || 'unknown';
-            console.log(`[SEOContentModule] ✅ Agent readiness report received: Level ${level} (${agentReadinessReport.length} chars)`);
+            console.log(`[SEOContentModule] Agent readiness report received in ${elapsed}ms: Level ${level} (${agentReadinessReport.length} chars)`);
         }
         return agentReadinessReport;
     } catch (e) {
         const elapsed = Date.now() - startTime;
         if (verbose) console.warn(`[SEOContentModule] isitagentready.com check failed after ${elapsed}ms:`, e.message);
-        return "Check failed or timed out: " + e.message;
+        return 'Check failed or timed out: ' + e.message;
     }
 }
 
@@ -2389,7 +2427,7 @@ const {
             if (optimalBlocks.length < 2) geoRecs.push('Structure content into self-contained paragraphs of 134-167 words for optimal AI citation length');
             if (!schemaTypes.some(t => /FAQ|HowTo/i.test(t))) geoRecs.push('Add FAQ or HowTo schema markup to improve structured data visibility in AI overviews');
             if (eatScore < 50) geoRecs.push('Strengthen E-E-A-T signals (author bios, credentials, citations) to improve AI platform trust scoring');
-            if (!aiR.aiBotPolicy?.hasExplicitAiPolicy) geoRecs.push('Add explicit AI bot directives in robots.txt (GPTBot, ClaudeBot, Google-Extended) to control AI crawler access');
+            if (!aiR.aiBotPolicy?.hasExplicitAiPolicy) geoRecs.push('Add explicit AI crawler rules in robots.txt (GPTBot, OAI-SearchBot, ClaudeBot, Claude-SearchBot, PerplexityBot, Google-Extended) and a Content-Signal line for search, ai-input, and ai-train');
 
             if (verbose) console.log(`[SEOContentModule] ✅ GEO Analysis: citability=${citabilityScore}, chatgpt=${chatgptScore}, perplexity=${perplexityScore}, googleAIO=${googleAIOScore}, overall=${seoContentModuleOutput.geoAnalysis.overallGeoScore}`);
         }

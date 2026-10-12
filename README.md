@@ -9,7 +9,7 @@ UILensAI is an AI-powered website analysis engine providing comprehensive insigh
 
 ## Overview
 
-UILensAI captures website data across various viewport dimensions using Cloudflare Browser Rendering, analyzes it using advanced AI models from six providers, and generates detailed reports with actionable recommendations. The SEO module now includes deep AEO/GEO analysis measuring AI citability, answer engine readiness, and platform-specific scores for ChatGPT, Perplexity, and Google AI Overview.
+UILensAI captures website data across desktop, mobile, and tablet viewports using Cloudflare Browser Run, analyzes it through OpenRouter, and generates detailed reports with actionable recommendations. The SEO module includes AEO and GEO scoring for AI citability, answer-engine readiness, and platform-specific scores for ChatGPT, Perplexity, and Google AI Overview.
 
 ### Key Features
 - **Context-Aware Visual Analysis:** Analyzes rendered desktop/mobile/tablet viewports alongside the DOM.
@@ -19,7 +19,7 @@ UILensAI captures website data across various viewport dimensions using Cloudfla
 - **Cross-Page SEO Analysis:** Leverages Cloudflare crawl data to detect site-wide SEO issues (duplicate titles, thin content, mixed protocols) across multiple pages.
 - **Strategic Insights:** AI-synthesized cross-module intelligence correlating security, privacy, accessibility, and performance findings into executive-level recommendations.
 - **Actionable Advice:** Provides step-by-step implementation directives linked to specific conversion funnel improvements.
-- **Cloud-Native Screenshots:** Uses Cloudflare Browser Rendering REST API — no local browser binaries required.
+- **Cloud-Native Screenshots:** Uses the Cloudflare Browser Run REST API, with a fallback to the previous Browser Rendering path. No local browser binaries are required for capture.
 - **Crawler Resilience:** Automatic Playwright fallback when HTTP fetch is blocked by Cloudflare/bot protection (403 responses).
 
 ## Installation
@@ -28,22 +28,29 @@ UILensAI captures website data across various viewport dimensions using Cloudfla
 npm install @optimald/uilensai
 ```
 
-> **Note**: Requires Node.js >= 20.0.0.
+> **Note**: Requires Node.js >= 22.0.0. Node 20 reached end of life on 30 Apr 2026.
 
 ## Configuration
 
-### AI Provider (required — at least one)
+### AI (required)
+
+Scans call OpenRouter only. One key is required:
 
 ```bash
-OPENROUTER_API_KEY=your_key    # OpenRouter (primary — routes to Gemini, Qwen, etc.)
-ANTHROPIC_API_KEY=your_key     # Anthropic Claude
-OPENAI_API_KEY=your_key        # OpenAI GPT
-GEMINI_API_KEY=your_key        # Google Gemini
-DEEPSEEK_API_KEY=your_key      # DeepSeek
-XAI_API_KEY=your_key           # xAI Grok
+OPENROUTER_API_KEY=your_key
 ```
 
-### Cloudflare Browser Rendering (required for screenshots)
+Default models, priced from the OpenRouter list on 12 Oct 2026:
+
+| Role | Model | Input / output per 1M tokens |
+|------|--------|------------------------------|
+| Main scan | `google/gemini-3.1-flash-lite` | $0.25 / $1.50 |
+| Security and performance | `google/gemini-3.6-flash` | $0.75 / $3.75 |
+| Frontier | `google/gemini-3.8-flash` | $0.75 / $3.75 |
+
+If the primary model is unavailable, the fallback chain is 3.1 Flash Lite, then 3.5 Flash Lite, then 3.6 Flash. Remeasure a live scan before quoting a per-scan dollar budget. The older under-$0.06 figure used preview rates that no longer exist.
+
+### Cloudflare Browser Run (required for screenshots and crawls)
 
 ```bash
 CLOUDFLARE_ACCOUNT_ID=your_account_id
@@ -87,7 +94,7 @@ const screenshots = await captureScreenshots({
   fullPage: true
 });
 
-// Crawl a website via CF Browser Rendering
+// Crawl a website via Cloudflare Browser Run
 const crawlResults = await cfBrowserService.crawlWebsite('https://example.com', {
   limit: 10,
   depth: 2,
@@ -118,11 +125,11 @@ uilensai --url https://example.com --modules all --viewports mobile,tablet,deskt
                                  siteHealth, all
 
   Model Options:
-  --model <model_id>             Specific AI model ID to use
-  --model-family <family>        Preferred AI provider: claude, openai, gemini, deepseek, xai, openrouter
+  --model <model_id>             OpenRouter model ID. Default is google/gemini-3.1-flash-lite
+  --model-family <family>        openrouter (default). Scans do not call provider APIs directly.
   --model-strategy <strategy>    Model selection: single, specialized (default), consensus
   --max-tokens <number>          Max tokens for AI responses
-  --testing                      Use cheapest model to save costs during development
+  --testing                      Force google/gemini-3.1-flash-lite
 
   Analysis Options:
   --analysis-depth <level>       Depth: basic, comprehensive, deep
@@ -160,7 +167,7 @@ uilensai --url https://example.com --modules all --viewports mobile,tablet,deskt
 | Compatibility | `compatibility` | Cross-browser CSS/JS, responsive design, rendering consistency |
 | Marketing | `marketing` | Brand consistency, CTAs, social media, analytics setup |
 | Conversion | `conversion` | Funnel analysis, form usability, trust signals |
-| Accessibility | `accessibility` | WCAG compliance, screen readers, keyboard nav, color contrast |
+| Accessibility | `accessibility` | WCAG 2.2 AA, screen readers, keyboard nav, color contrast |
 | Site Health | `siteHealth` | Link graph, broken links, redirect chains, duplicate content, orphan pages, crawl stats |
 
 ### SEO / AEO / GEO Output Fields
@@ -193,18 +200,15 @@ Common causes:
 
 Inconclusive modules are excluded from the overall report score. Consumers should display the `inconclusiveReason` to users instead of a numeric score.
 
-## AI Providers
+## AI
 
-UILensAI supports six AI providers. Only one is required:
+Every scan goes through OpenRouter. `OPENROUTER_API_KEY` is the only AI credential the engine reads.
 
-| Provider | Env Variable | Models |
-|----------|-------------|--------|
-| OpenRouter | `OPENROUTER_API_KEY` | Gemini 3.1 Flash Lite, Gemini 2.5 Flash, Qwen 2.5 VL 72B |
-| Anthropic | `ANTHROPIC_API_KEY` | Claude 4.5/4 Opus, Sonnet, Haiku |
-| OpenAI | `OPENAI_API_KEY` | GPT-5 series, o3, GPT-4o |
-| Google | `GEMINI_API_KEY` | Gemini 2.5/2.0 Pro & Flash |
-| DeepSeek | `DEEPSEEK_API_KEY` | DeepSeek-Reasoner, DeepSeek-Chat |
-| xAI | `XAI_API_KEY` | Grok 4, Grok 2 |
+| Role | Model |
+|------|--------|
+| Main scan, vision, recommendations | `google/gemini-3.1-flash-lite` |
+| Security and performance | `google/gemini-3.6-flash` |
+| Frontier | `google/gemini-3.8-flash` |
 
 ## Project Structure
 
@@ -220,7 +224,7 @@ uilensai/
 │           ├── config/       # Model defaults, presets
 │           ├── report/       # Report generation + strategic insights
 │           ├── schemas/      # JSON report schema (report-schema.json)
-│           ├── services/     # CF Browser Rendering + Screenshot services
+│           ├── services/     # Cloudflare Browser Run + screenshot services
 │           └── utils/        # AI model clients, scoring engine, credentials
 └── package.json          # Root package (@optimald/uilensai)
 ```
@@ -242,12 +246,12 @@ const { strategicInsights, ceoVerdict } = results;
 
 | Issue | Solution |
 |-------|----------|
-| API key errors | Verify `.env` file has correct keys with available quota |
+| API key errors | Set `OPENROUTER_API_KEY`. Screenshot and crawl calls also need `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_BR_API_TOKEN` |
 | Timeouts on large sites | Increase `--capture-timeout` value |
 | Bot detection blocking | Use `--stealth advanced` |
 | CF screenshot failures | Check `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_BR_API_TOKEN` are set |
-| 403 on crawled sites | Crawler auto-falls back to Playwright; verify CF Browser Rendering quota |
-| Circuit breaker open | AI provider rate limited — system will retry with fallback models |
+| 403 on crawled sites | Crawler falls back to Playwright; confirm Cloudflare Browser Run quota |
+| Circuit breaker open | OpenRouter rate limited. The engine retries the next model in the fallback chain |
 
 ## License
 

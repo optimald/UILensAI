@@ -2,16 +2,17 @@
  * Lighthouse Version Validator
  * Ensures consistent Lighthouse versions across CLI and MCP environments
  * 
- * CRITICAL FIX: Part of remediation for Lighthouse version discrepancies
- * CLI was using 12.6.1 while MCP was using 11.7.1, causing performance metric inconsistencies
+ * PageSpeed Insights has shipped Lighthouse 13 since October 2025.
+ * A missing local lighthouse binary is expected: PSI is the data source.
+ * Lighthouse 13.5 adds llms.txt, Agent Resource Discovery, and WebMCP audits.
  */
 
 const { spawn } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-// Expected Lighthouse version for consistency
-const EXPECTED_LIGHTHOUSE_VERSION = '12.6.1';
+// PSI Lighthouse major. Exact patch floats with Google's PSI releases.
+const EXPECTED_LIGHTHOUSE_VERSION = '13';
 
 class LighthouseVersionValidator {
   /**
@@ -140,12 +141,10 @@ class LighthouseVersionValidator {
     );
     
     if (versions.length === 0) {
-      return false;
+      return true;
     }
-    
-    // Check if all versions are the same
-    const uniqueVersions = [...new Set(versions)];
-    return uniqueVersions.length === 1;
+
+    return versions.every(version => String(version).split('.')[0] === EXPECTED_LIGHTHOUSE_VERSION);
   }
   
   /**

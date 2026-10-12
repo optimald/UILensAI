@@ -611,7 +611,7 @@ Ratings/scores are 0-100. Provide actionable recommendations to improve loading 
 `,
 
   'accessibility-analysis': `
-You are an accessibility specialist (e.g., CPACC, WAS certified, deep knowledge of WCAG 2.1/2.2 and ARIA practices). Analyze the website accessibility data for URL: {{url}}.
+You are an accessibility specialist (e.g., CPACC, WAS certified, deep knowledge of WCAG 2.2 and ARIA practices). Analyze the website accessibility data for URL: {{url}}.
 Industry: {{industryContext.primaryIndustry}} (Consider specific accessibility needs, e.g., for {{industryContext.primaryIndustry}} users).
 Analysis Depth: {{analysisDepth}}.
 Target WCAG Level: {{targetWcagLevel}} (e.g., AA).
@@ -694,7 +694,7 @@ Every issue in 'issues.items' MUST contain ALL of:
 - 'where': (string) The CSS selector, form element, or page area affected
 - 'evidence': (string) The WCAG criterion, contrast ratio, or specific test result proving this issue
 ❌ Issues like "Color Contrast (55/100)" or "Keyboard Navigation" are NOT acceptable — they are category labels, not findings.
-✅ Example: "Navigation links have a 2.8:1 contrast ratio against the background, failing WCAG 2.1 SC 1.4.3 (minimum 4.5:1)" with where: ".nav-link on #main-nav" and evidence: "Foreground #999999 on background #FFFFFF = 2.8:1"
+✅ Example: "Navigation links have a 2.8:1 contrast ratio against the background, failing WCAG 2.2 SC 1.4.3 (minimum 4.5:1)" with where: ".nav-link on #main-nav" and evidence: "Foreground #999999 on background #FFFFFF = 2.8:1"
 
 This includes:
 - 'summary': An object with 'score' (number), 'rating' (string), and 'topIssues' (array of 3-5 strings - REQUIRED, NEVER EMPTY).
@@ -1635,7 +1635,7 @@ Report ONLY what you can observe from the data. If data is missing, use null or 
   `,
 
   'accessibility-expert-judgment': `
-You are a Senior Accessibility Consultant (IAAP CPAC certified) specializing in WCAG 2.1 compliance for {{industryContext.primaryIndustry}} websites. You have structured evidence from automated scans, ARIA tree analysis, and an AI extraction pass.
+You are a Senior Accessibility Consultant (IAAP CPAC certified) specializing in WCAG 2.2 compliance for {{industryContext.primaryIndustry}} websites. You have structured evidence from automated scans, ARIA tree analysis, and an AI extraction pass.
 
 Website URL: {{url}}
 Industry: {{industryContext.primaryIndustry}}
@@ -1671,7 +1671,7 @@ CRITICAL RULES:
 - conformanceLevelAchieved: Use "None" if critical A/AA failures exist, "Partial A" if minor issues, "A" if all A criteria pass, etc.
 
 NARRATIVE EXAMPLE (for reference tone, do not copy):
-"This dental practice website fails WCAG 2.1 Level A conformance due to 12 missing alt-text attributes on clinical procedure images — a direct violation of SC 1.1.1 that prevents screen reader users from understanding treatment options. The contact form lacks programmatic labels (SC 1.3.1), making it effectively unusable for the estimated 8 million Americans with visual disabilities who might need to schedule appointments. However, the heading hierarchy is well-structured and keyboard navigation works correctly for the primary menu, suggesting these issues stem from content management rather than architectural problems and can be resolved with a targeted remediation sprint of 2-3 days."
+"This dental practice website fails WCAG 2.2 Level A conformance due to 12 missing alt-text attributes on clinical procedure images — a direct violation of SC 1.1.1 that prevents screen reader users from understanding treatment options. The contact form lacks programmatic labels (SC 1.3.1), making it effectively unusable for the estimated 8 million Americans with visual disabilities who might need to schedule appointments. However, the heading hierarchy is well-structured and keyboard navigation works correctly for the primary menu, suggesting these issues stem from content management rather than architectural problems and can be resolved with a targeted remediation sprint of 2-3 days."
 
 🚨 Target 5000-7000 tokens. Complete every sentence. Focus on impact, not exhaustiveness.
   `,
@@ -2319,7 +2319,7 @@ Tier: { { tier } } (Enterprise)
 Accessibility Recommendations(assume full details including ID, text, priority, WCAG criteria, effort are available to you):
 { { recommendationsSummary } } (Provide a string list of up to 10 - 15 key recommendation texts and their priorities / WCAG criteria to give context, e.g., "Rec ID: {{recId1}}, Priority: {{recPriority1}}, WCAG: {{wcag1}}, Text: {{recText1}}...")
 Overall Accessibility Score: { { overallA11yScore } } (Current WCAG Conformance(if known): { { currentWcagConformance } }, e.g., "Partial A", "Significant issues found")
-Target WCAG Conformance Level: { { targetWcagLevel } } (e.g., "WCAG 2.1 Level AA", "WCAG 2.2 Level AA")
+Target WCAG Conformance Level: { { targetWcagLevel } } (e.g., "WCAG 2.2 Level AA")
 Key Business Drivers for Accessibility(if known): { { a11yBusinessDrivers } } (e.g., "Legal compliance (ADA/Section 508/EAA in {{targetJurisdiction}})", "Enhance brand reputation and demonstrate corporate social responsibility", "Expand market reach to the {{disabilityMarketSize}} individuals with disabilities", "Improve overall usability and SEO benefits for all users")
 Existing Accessibility Resources / Team(if known): { { existingA11yResources } } (e.g., "No dedicated accessibility team", "One part-time accessibility champion in UX team", "External vendor for occasional audits")
 Development Lifecycle: { { devLifecycle } } (e.g., "Agile with 2-week sprints", "Waterfall with quarterly releases")
@@ -2331,8 +2331,8 @@ This includes:
 - 'mediumTerm': array of recommendation IDs(High / Medium priority, more complex changes like comprehensive ARIA for custom widgets(e.g., date pickers, carousels), full form accessibility overhaul including error handling, initial PDF remediation strategy for top 5 documents, implementing multimedia captioning for new videos.Target: 3 - 6 months).
 - 'longTerm': array of recommendation IDs(Medium / Low priority, systemic changes like updating the design system / component library for accessibility, developing accessible content authoring guidelines and training, achieving full multimedia accessibility(transcripts, audio descriptions), addressing cognitive accessibility considerations.Target: 6 - 12 + months, ongoing).
 - 'resourceNeeds': array of strings(e.g., "Dedicated Accessibility Specialist/Lead (1 FTE) to champion and manage the program", "Frontend Developers with advanced ARIA/WCAG training (estimate 80 hours total per development team)", "QA Testers trained in assistive technologies (NVDA, JAWS, VoiceOver, TalkBack) and manual accessibility testing methodologies (estimate 40 hours per QA)", "Content Editors for accessible content creation (alt text, semantic HTML, plain language) training (1 day workshop)", "UX Designers for inclusive design principles and accessible pattern library workshop (2 days)", "Budget for accessibility audit tools (e.g., axe DevTools Pro, Siteimprove) and assistive technologies licenses").
-- 'trainingRecommendations': array of strings(e.g., "Role-based WCAG 2.1/2.2 {{targetWcagLevel}} training for all web development, design, and content teams, tailored to their specific responsibilities", "Accessible design principles and inclusive persona workshop for UX/UI designers focusing on {{industryContext.primaryIndustry}} user needs", "Screen reader usage (NVDA, JAWS, VoiceOver) and manual accessibility testing techniques training for QA team", "Accessible document creation (PDF, Word, PowerPoint) training for content authors and marketing teams", "Workshop on ARIA best practices for frontend developers").
-- 'estimatedTimeline': string(Overall estimated timeframe to reach target conformance, e.g., "9-15 months to achieve and maintain WCAG 2.1 {{targetWcagLevel}} conformance, with ongoing monitoring and iterative improvements integrated into the {{devLifecycle}} development lifecycle.").
+- 'trainingRecommendations': array of strings(e.g., "Role-based WCAG 2.2 {{targetWcagLevel}} training for all web development, design, and content teams, tailored to their specific responsibilities", "Accessible design principles and inclusive persona workshop for UX/UI designers focusing on {{industryContext.primaryIndustry}} user needs", "Screen reader usage (NVDA, JAWS, VoiceOver) and manual accessibility testing techniques training for QA team", "Accessible document creation (PDF, Word, PowerPoint) training for content authors and marketing teams", "Workshop on ARIA best practices for frontend developers").
+- 'estimatedTimeline': string(Overall estimated timeframe to reach target conformance, e.g., "9-15 months to achieve and maintain WCAG 2.2 {{targetWcagLevel}} conformance, with ongoing monitoring and iterative improvements integrated into the {{devLifecycle}} development lifecycle.").
 - 'governanceRecommendations': array of strings(e.g., "Establish an Accessibility Center of Excellence (ACoE) or cross-functional working group with executive sponsorship and clear accountability for accessibility outcomes", "Integrate automated accessibility checks (e.g., axe-core, Lighthouse) into the CI/CD pipeline with build failure on new critical/serious issues", "Mandate manual accessibility testing by trained QA engineers using a comprehensive checklist and assistive technologies before each major release or feature deployment", "Conduct regular (e.g., annual or bi-annual) third-party accessibility audits by a reputable firm to validate internal efforts and identify new issues", "Develop and publicly post an Accessibility Statement detailing commitment and features, and maintain an Accessibility Conformance Report (ACR/VPAT) if applicable", "Incorporate accessibility requirements into procurement processes for all new third-party tools, platforms, and content").
 Structure the plan logically to achieve { { targetWcagLevel } } and foster a sustainable accessibility - first culture within the organization.
 `,

@@ -2,6 +2,8 @@
 
 This document outlines the functional differences and execution boundaries between the three main tier levels in UILensAI: `Basic`, `Pro`, and `Enterprise`.
 
+`getPresetConfig()` currently returns the enterprise feature set for every tier. The differences below are the intended product boundaries, not what a scan gates today.
+
 ## Architectural Enforcement
 
 Tier differentiation is deeply embedded in the execution orchestrator (`analyze/index.js`), the module settings, and the UI Capture configuration.
@@ -10,7 +12,7 @@ Tier differentiation is deeply embedded in the execution orchestrator (`analyze/
 Targeted towards free audits, individual users, and quick high-level assessments.
 
 - **Viewports Analyzed**: Desktop only.
-- **AI Analytics Depth**: Uses `basic` depth parameters. Models fall back to faster, cheaper variants (e.g., `gemini-1.5-flash` or `claude-3-haiku`) depending on global configuration.
+- **AI Analytics Depth**: Uses `basic` depth parameters. The live model is `google/gemini-3.1-flash-lite` on OpenRouter, with `google/gemini-3.6-flash` for security and performance.
 - **Module Restrictions**:
   - `Competitive Context` is **disabled**.
   - Cross-module insights and deep narrative generation are heavily restricted.
@@ -21,7 +23,7 @@ Targeted towards free audits, individual users, and quick high-level assessments
 Targeted towards professionals, agencies, and small businesses needing comprehensive execution.
 
 - **Viewports Analyzed**: Desktop and Mobile (Cross-viewport analysis enabled).
-- **AI Analytics Depth**: Uses `advanced` depth parameters. Leverages `claude-3-5-sonnet` and `gemini-1.5-pro` for reasoning.
+- **AI Analytics Depth**: Uses `advanced` depth parameters. Reasoning uses `google/gemini-3.6-flash` and `google/gemini-3.8-flash` on OpenRouter.
 - **Module Restrictions**:
   - Requires all 9 core analysis modules.
   - Multi-page crawl limits increased (up to 5 pages).

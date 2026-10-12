@@ -8,12 +8,12 @@
 
 module.exports = {
   tierName: 'Enterprise', // For clarity
-  // Model configuration - Enterprise tier defaults to the most capable models.
-  modelStrategy: 'quality', // Prioritize quality over cost
-  modelFamily: 'deepseek',
-  // Use DeepSeek for all enterprise analysis
-  model: 'deepseek-chat',
-  maxTokens: 16384,           // DeepSeek-V3 supports large output
+  // Model configuration. Live scans go through OpenRouter (model-defaults.js).
+  // Preset model is only a CLI override when the caller does not pass one.
+  modelStrategy: 'quality',
+  modelFamily: 'openrouter',
+  model: 'google/gemini-3.1-flash-lite',
+  maxTokens: 16384,
 
   // Analysis configuration
   analysisDepth: 'deep',      // Deepest level of analysis for all modules.
@@ -145,5 +145,5 @@ module.exports = {
     }
   },
 
-  modelProviderPreferences: ['deepseek', 'google'] // Only providers we use
+  modelProviderPreferences: ['openrouter']
 };

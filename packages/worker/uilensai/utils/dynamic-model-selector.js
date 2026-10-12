@@ -29,6 +29,16 @@ const EXCLUDED_MODELS = new Set([
     // DeepSeek truncates JSON output
     'deepseek/deepseek-chat-v3-0324',
     'deepseek/deepseek-r1',
+    // Shut down or capacity-limited. Do not select these for new scans.
+    'google/gemini-3.1-flash-lite-preview',
+    'google/gemini-2.0-flash',
+    'google/gemini-2.0-flash-001',
+    'google/gemini-2.0-flash-lite',
+    'google/gemini-2.5-flash',
+    'google/gemini-2.5-flash-lite',
+    'google/gemini-1.5-pro',
+    'google/gemini-1.5-flash',
+    'google/gemini-1.5-flash-8b',
 ]);
 
 // Name patterns that indicate a model is NOT suitable for structured analysis
@@ -94,7 +104,7 @@ async function fetchAvailableModels() {
  * @param {number} [requirements.maxCostPerMillionOutput=5] - Max acceptable output cost per 1M tokens
  * @param {string[]} [requirements.preferProviders] - Prefer models from these providers (e.g. ['google/'])
  * @param {string[]} [requirements.excludeModels] - Model IDs to exclude
- * @param {boolean} [requirements.allowPreview=true] - Allow preview/experimental models
+ * @param {boolean} [requirements.allowPreview=false] - Allow preview/experimental models
  * @returns {Object|null} Selected model { id, pricing, maxOutput, contextLength }
  */
 async function selectBestModel(requirements = {}) {
@@ -107,7 +117,7 @@ async function selectBestModel(requirements = {}) {
         maxCostPerMillionOutput = 5,
         preferProviders = PREFERRED_PROVIDERS,
         excludeModels = [],
-        allowPreview = true,
+        allowPreview = false,
     } = requirements;
 
     const allModels = await fetchAvailableModels();
@@ -133,6 +143,9 @@ async function selectBestModel(requirements = {}) {
 
         // Skip nano/micro models — too small for complex structured JSON output
         if (modelIdLower.includes('nano') || modelIdLower.includes('micro')) return false;
+
+        // Gemini 1.5 and 2.x are shut down or limited to prior users.
+        if (/gemini-(1\.5|2\.[0-5])/.test(modelIdLower)) return false;
 
         // Check provider preference (if specified, at least one must match)
         if (preferProviders.length > 0) {
@@ -334,7 +347,7 @@ async function getModelForModule(moduleName, tier = 'pro', hardcodedDefaults = {
         console.warn(`[DynamicModelSelector] Dynamic selection failed for ${moduleName}: ${error.message}`);
     }
     // Fallback to hardcoded default
-    return hardcodedDefaults.GEMINI_FLASH_LITE || 'google/gemini-2.5-flash-lite';
+    return hardcodedDefaults.GEMINI_FLASH_LITE || 'google/gemini-3.1-flash-lite';
 }
 
 /**

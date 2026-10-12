@@ -67,7 +67,7 @@ async function logModelSelectionPlan(modulesToRun, globalModelConfig, tier, anal
   console.log(`Strategy: ${presetConfig.modelStrategy || 'cost-effective'}`);
 
   if (globalModelConfig.testingMode) {
-    console.log('🧪 TESTING MODE: All modules will use claude-3-5-haiku-20241022 for cost efficiency');
+    console.log('🧪 TESTING MODE: All modules will use google/gemini-3.1-flash-lite for cost efficiency');
   }
 
   if (globalModelConfig.modelFamily) {
@@ -182,16 +182,16 @@ Options:
   --url <url>                    URL to analyze (required)
   --modules <list>               Comma-separated list of modules to run.
                                  Default: ui
-                                 Available: ui,performance,seoContent,security,privacy,compatibility,marketing,conversion,accessibility,all
+                                 Available: ui,performance,seoContent,security,privacy,compatibility,marketing,conversion,accessibility,siteHealth,all
   
   Model Options:
-  --model <model_id>             Prefer a specific AI model ID (e.g., claude-3-opus-20240229). Overrides family defaults.
+  --model <model_id>             Prefer a specific OpenRouter model ID (e.g., google/gemini-3.1-flash-lite). Overrides the module default.
   --model-family <family>        Preferred AI model family if a specific model ID isn't provided.
-                                 Options: claude (default), openai, gemini.
+                                 Options: openrouter (default).
   --model-strategy <strategy>    How AI models are selected for tasks.
                                  Options: single, specialized (default), consensus (Pro/Enterprise).
   --max-tokens <number>          Maximum tokens for AI model responses. Defaults vary by model and tier.
-  --testing                      TESTING MODE: Override to use cheapest model (claude-3-5-haiku-20241022) regardless of tier to save costs during development/testing.
+  --testing                      TESTING MODE: Override to google/gemini-3.1-flash-lite regardless of tier.
 
   Tier Options:
   --tier <name>                  Specify the service tier. Affects features, analysis depth, and model access.
@@ -320,13 +320,15 @@ for (let i = 0; i < args.length; i++) {
         // Map 'seo' to 'seoContent' for backward compatibility
         const modules = nextArg.split(',').map(m => m.trim().toLowerCase());
         const moduleMapping = {
-          'seo': 'seoContent'
+          'seo': 'seoContent',
+          'sitehealth': 'siteHealth',
+          'site-health': 'siteHealth'
         };
 
         const mappedModules = modules.map(module => moduleMapping[module] || module);
 
         // Filter out unsupported modules to prevent schema validation errors
-        const supportedModules = ['ui', 'security', 'accessibility', 'performance', 'seoContent', 'privacy', 'compatibility', 'marketing', 'conversion'];
+        const supportedModules = ['ui', 'security', 'accessibility', 'performance', 'seoContent', 'privacy', 'compatibility', 'marketing', 'conversion', 'siteHealth'];
         const supportedModulesLower = supportedModules.map(m => m.toLowerCase());
 
         let validModules = [];
@@ -461,12 +463,12 @@ for (let i = 0; i < args.length; i++) {
     case '--intelligent-bot-protection': cliOptions.intelligentBotProtection = true; break;
     case '--no-bot-protection': cliOptions.intelligentBotProtection = false; break;
     case '--testing':
-      cliOptions.model = 'gemini-2.5-flash';
-      cliOptions.modelFamily = 'gemini';
+      cliOptions.model = 'google/gemini-3.1-flash-lite';
+      cliOptions.modelFamily = 'openrouter';
       cliOptions.modelStrategy = 'specialized';
       cliOptions.maxTokens = 2500;
       cliOptions.testingMode = true;
-      console.log('🧪 TESTING MODE: Using gemini-2.5-flash with increased tokens (2500) for complex analysis');
+      console.log('TESTING MODE: Using google/gemini-3.1-flash-lite with increased tokens (2500) for complex analysis');
       break;
     case '--use-mcp':
       cliOptions.useMcp = true;

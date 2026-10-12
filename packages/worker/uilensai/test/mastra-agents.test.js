@@ -65,7 +65,8 @@ describe('Expert Personas', () => {
 
   test('getAllPersonasMeta returns metadata for all modules', () => {
     const meta = getAllPersonasMeta();
-    expect(Object.keys(meta).length).toBe(10);
+    expect(Object.keys(meta).length).toBe(11);
+    expect(meta.auditDirector).toBeTruthy();
     for (const [key, val] of Object.entries(meta)) {
       expect(val.name).toBeTruthy();
       expect(val.title).toBeTruthy();

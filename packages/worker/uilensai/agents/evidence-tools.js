@@ -16,10 +16,21 @@
 
 let createTool;
 try {
-    ({ createTool } = require('@mastra/core'));
+    ({ createTool } = require('@mastra/core/tools'));
 } catch {
-    // Fallback: createTool not available
-    createTool = null;
+    try {
+        ({ createTool } = require('@mastra/core'));
+    } catch {
+        createTool = null;
+    }
+}
+
+function toolInput(input) {
+    if (!input || typeof input !== 'object') return {};
+    if (input.context && typeof input.context === 'object' && input.key === undefined && input.keys === undefined) {
+        return input.context;
+    }
+    return input;
 }
 
 const z = require('zod');
@@ -44,7 +55,8 @@ function buildEvidenceTools(registry) {
             inputSchema: z.object({
                 key: z.string().describe('The evidence signal key, e.g. "a11y.htmlLang" or "privacy.consentBanner"'),
             }),
-            execute: async ({ key }) => {
+            execute: async (input) => {
+                const { key } = toolInput(input);
                 const signal = registry.get(key);
                 if (!signal) {
                     return { found: false, key, value: null, message: `No evidence signal found for key "${key}". Use listEvidenceCategories to see available categories.` };
@@ -60,7 +72,8 @@ function buildEvidenceTools(registry) {
             inputSchema: z.object({
                 category: z.string().describe('Category prefix, e.g. "a11y", "privacy", "conversion"'),
             }),
-            execute: async ({ category }) => {
+            execute: async (input) => {
+                const { category } = toolInput(input);
                 const signals = registry.listCategory(category);
                 if (signals.length === 0) {
                     return { category, signals: [], message: `No signals found for category "${category}". Available: meta, content, a11y, privacy, compat, security, marketing, conversion, seo, platform.` };
@@ -111,7 +124,8 @@ function buildEvidenceTools(registry) {
             inputSchema: z.object({
                 keys: z.array(z.string()).describe('Array of evidence signal keys to retrieve'),
             }),
-            execute: async ({ keys }) => {
+            execute: async (input) => {
+                const { keys } = toolInput(input);
                 const results = {};
                 for (const key of keys) {
                     const signal = registry.get(key);
@@ -128,7 +142,8 @@ function buildEvidenceTools(registry) {
             inputSchema: z.object({
                 key: z.string().describe('The evidence signal key to check applicability for'),
             }),
-            execute: async ({ key }) => {
+            execute: async (input) => {
+                const { key } = toolInput(input);
                 const signal = registry.get(key);
                 if (!signal) {
                     return { key, exists: false, applicable: true, message: 'Signal not found — assume applicable' };

@@ -9,7 +9,7 @@
  *   3. Strategic Priority Ranking (top 3 actions by business ROI)
  *   4. Risk Assessment ("What happens if they do nothing?")
  *
- * Single AI call using gemini-2.5-flash, ~4K tokens.
+ * Single AI call using the CEO model from model-defaults, ~4K tokens.
  */
 
 const { analyzeWithAI } = require('../utils/ai-models');
@@ -193,7 +193,7 @@ async function runCEOOrchestrator(moduleResults, debateResults, options = {}) {
     const result = await analyzeWithAI({
       prompt,
       systemPrompt: 'You are Victoria Sterling, Chief Digital Strategy Officer. Respond with valid JSON only.',
-      model: config?.model || 'google/gemini-2.5-flash',
+      model: config?.model || 'google/gemini-3.6-flash',
       maxTokens: 2500,
       isJsonOutput: true,
       costAggregator,

@@ -5,10 +5,44 @@
  * - /crawl   — Multi-page website crawling with Markdown extraction
  * - /json    — AI-powered structured data extraction
  * 
- * Docs: https://developers.cloudflare.com/browser-rendering/rest-api/
+ * Docs: https://developers.cloudflare.com/browser-run/
+ * The product was renamed from Browser Rendering to Browser Run. Requests try
+ * /browser-run/ first and fall back to /browser-rendering/ on HTTP 404.
  */
 
 const BASE_URL = 'https://api.cloudflare.com/client/v4/accounts';
+const BROWSER_API_SEGMENTS = ['browser-run', 'browser-rendering'];
+let resolvedBrowserSegment = null;
+
+/**
+ * Call a Browser Run REST action, falling back to the legacy path on 404.
+ * @param {string} accountId
+ * @param {string} suffix - Path after the product segment, including an optional query string
+ * @param {RequestInit} [init]
+ * @returns {Promise<Response|null>}
+ */
+async function cfFetch(accountId, suffix, init = {}) {
+    const path = String(suffix).replace(/^\//, '');
+    const segments = resolvedBrowserSegment
+        ? [resolvedBrowserSegment, ...BROWSER_API_SEGMENTS.filter(segment => segment !== resolvedBrowserSegment)]
+        : BROWSER_API_SEGMENTS;
+
+    let lastResponse = null;
+    for (const segment of segments) {
+        const endpoint = `${BASE_URL}/${accountId}/${segment}/${path}`;
+        const response = await fetch(endpoint, init);
+        if (response.status === 404) {
+            if (response.body && typeof response.body.cancel === 'function') {
+                response.body.cancel().catch(() => {});
+            }
+            lastResponse = response;
+            continue;
+        }
+        resolvedBrowserSegment = segment;
+        return response;
+    }
+    return lastResponse;
+}
 
 // Default crawl configuration — targets high-value subpages
 const DEFAULT_CRAWL_OPTIONS = {
@@ -82,7 +116,6 @@ async function initiateCrawl(url, options = {}) {
     }
 
     const { accountId, apiToken } = creds;
-    const endpoint = `${BASE_URL}/${accountId}/browser-rendering/crawl`;
 
     // Merge user options with defaults
     const crawlBody = {
@@ -106,7 +139,7 @@ async function initiateCrawl(url, options = {}) {
     }
 
     try {
-        const response = await fetch(endpoint, {
+        const response = await cfFetch(accountId, 'crawl', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${apiToken}`,
@@ -155,7 +188,7 @@ async function pollForResults(jobId, options = {}) {
     const maxAttempts = options.maxAttempts ?? MAX_POLL_ATTEMPTS;
     const verbose = options.verbose ?? false;
 
-    const statusEndpoint = `${BASE_URL}/${accountId}/browser-rendering/crawl/${jobId}`;
+    const statusSuffix = `crawl/${jobId}`;
 
     // Initial delay: CF needs a moment to register the crawl job before polling
     const initialDelay = options.initialDelayMs ?? 3000;
@@ -167,7 +200,7 @@ async function pollForResults(jobId, options = {}) {
     for (let attempt = 1; attempt <= maxAttempts; attempt++) {
         try {
             // Use ?limit=1 for lightweight status checks
-            const statusResponse = await fetch(`${statusEndpoint}?limit=1`, {
+            const statusResponse = await cfFetch(accountId, `${statusSuffix}?limit=1`, {
                 headers: { 'Authorization': `Bearer ${apiToken}` },
             });
 
@@ -200,7 +233,7 @@ async function pollForResults(jobId, options = {}) {
 
                 // Job reached terminal state — fetch full results
                 if (status === 'completed' || (finished && finished > 0)) {
-                    const fullResponse = await fetch(`${statusEndpoint}?status=completed`, {
+                    const fullResponse = await cfFetch(accountId, `${statusSuffix}?status=completed`, {
                         headers: { 'Authorization': `Bearer ${apiToken}` },
                     });
                     const fullData = await fullResponse.json();
@@ -325,7 +358,6 @@ async function extractStructuredData(url, options = {}) {
     }
 
     const { accountId, apiToken } = creds;
-    const endpoint = `${BASE_URL}/${accountId}/browser-rendering/json`;
     const verbose = options.verbose ?? false;
 
     // Build request body
@@ -357,7 +389,7 @@ async function extractStructuredData(url, options = {}) {
     }
 
     try {
-        const response = await fetch(endpoint, {
+        const response = await cfFetch(accountId, 'json', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${apiToken}`,
@@ -483,6 +515,7 @@ module.exports = {
     extractStructuredData,
     // Shared utilities
     getCredentials,
+    cfFetch,
     // Constants
     DEFAULT_CRAWL_OPTIONS,
     EXTRACTION_SCHEMAS,

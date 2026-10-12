@@ -639,7 +639,7 @@ DO NOT return schema metadata like "$schema", "$id", or "$defs". Return populate
   const effectiveMaxTokens = maxTokens || MODEL_MAX_TOKENS[model] || MODEL_MAX_TOKENS.default_claude_limit || 24576;
 
   const requestBody = {
-    model: model || 'claude-3-5-sonnet-20241022',
+    model: model || 'google/gemini-3.1-flash-lite',
     max_tokens: effectiveMaxTokens,
     temperature: 0.1, // Low temperature for consistent structured output
     system: systemPrompt + '\n\nYou must respond with valid JSON that exactly matches the provided schema. Use the XML tags in the prompt to understand the structure and requirements.' +

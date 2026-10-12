@@ -5,20 +5,19 @@
  * ALL AI calls route through OpenRouter as the single gateway.
  * Models are selected from model-catalog.json for pricing/specs.
  *
- * COST TARGET: < $0.06 per full 9-module scan
+ * MODEL STRATEGY (updated 2026-10-12 from OpenRouter /api/v1/models):
+ * - Primary: google/gemini-3.1-flash-lite ($0.25/$1.50 per 1M) — GA replacement
+ *   for gemini-3.1-flash-lite-preview, which Google shut down on 2026-05-25.
+ *   GA shutdown is 2027-05-07.
+ * - Separate quota pool: google/gemini-3.6-flash ($0.75/$3.75 per 1M) for
+ *   security and performance. Gemini 2.5 Flash is capacity-limited and leaves
+ *   Vertex on 2026-10-20.
+ * - Frontier: google/gemini-3.8-flash ($0.75/$3.75 per 1M)
+ * - Vision: google/gemini-3.1-flash-lite (native vision)
  *
- * MODEL STRATEGY (updated 2026-03-19):
- * - Primary: google/gemini-3.1-flash-lite-preview — latest, optimized for cost & speed
- * - Fallback: google/gemini-2.5-flash ($0.30/$2.50 per 1M) — stable, strong reasoning
- * - Enterprise: google/gemini-3.1-pro-preview ($2/$12 per 1M) — frontier reasoning
- * - Vision: google/gemini-3.1-flash-lite-preview (supports vision natively)
- *
- * COST MATH (9 modules + industry + recs ≈ 12 calls):
- *   Security + Performance use Flash ($0.30/$2.50) ≈ 2 calls
- *   Other 7 modules use Flash Lite ($0.10/$0.40) ≈ 10 calls
- *   ~36K input tokens × ~$0.14 avg/1M = $0.005
- *   ~48K output tokens × ~$0.70 avg/1M = $0.034
- *   Total ≈ $0.039 per scan (Basic/Pro) — within budget
+ * The March 2026 cost target of under $0.06 per scan used preview rates
+ * ($0.10/$0.40) that no longer exist. Remeasure a live scan before treating
+ * any dollar figure as the budget.
  *
  * HIERARCHY (highest to lowest priority):
  * 1. GLOBAL_OVERRIDE - Forces one model for EVERYTHING (emergency use)
@@ -35,15 +34,15 @@ const MODEL_PROVIDERS = {
 // =============================================================================
 // MODELS - All accessed via OpenRouter
 // To change the model used, just change the ID here. No hardcoding elsewhere.
-// Pricing verified on https://openrouter.ai/models 2026-03-19
+// Pricing verified on https://openrouter.ai/api/v1/models 2026-10-12
 // =============================================================================
 const MODELS = {
-  // Primary — latest Gemini 3.1 Flash Lite, optimized for high-volume cost-efficient tasks
-  GEMINI_FLASH_LITE: 'google/gemini-3.1-flash-lite-preview',
-  // Fallback — stable Gemini 2.5 Flash, strong reasoning, separate rate-limit pool
-  GEMINI_FLASH: 'google/gemini-2.5-flash',
-  // Enterprise — frontier model, best reasoning, 1M context
-  GEMINI_PRO: 'google/gemini-3.1-pro-preview',
+  // Primary — GA Gemini 3.1 Flash Lite. The preview id was shut down 2026-05-25.
+  GEMINI_FLASH_LITE: 'google/gemini-3.1-flash-lite',
+  // Separate rate-limit pool from Flash Lite. Gemini 2.5 Flash is winding down.
+  GEMINI_FLASH: 'google/gemini-3.6-flash',
+  // Frontier Flash. GA, same OpenRouter rates as 3.6 Flash on 2026-10-12.
+  GEMINI_PRO: 'google/gemini-3.8-flash',
 };
 
 // =============================================================================
@@ -83,7 +82,7 @@ const tiers = {
 
 // =============================================================================
 // PER-MODULE DEFAULTS
-// All modules use Gemini 2.5 Flash — best quality/cost ratio at $0.15/$0.60
+// Most modules use Gemini 3.1 Flash Lite. Security and performance use 3.6 Flash.
 // =============================================================================
 const modules = {
   // --- PRE-PROCESSING ---
@@ -215,9 +214,9 @@ const tierModuleOverrides = {
 // FALLBACK MODELS (when primary model fails)
 // =============================================================================
 const FALLBACK_CHAIN = [
-  MODELS.GEMINI_FLASH_LITE,         // google/gemini-3.1-flash-lite-preview
-  MODELS.GEMINI_FLASH,              // google/gemini-2.5-flash (stable fallback)
-  'google/gemini-2.5-flash-lite',   // Legacy stable model as last resort
+  MODELS.GEMINI_FLASH_LITE,         // google/gemini-3.1-flash-lite
+  'google/gemini-3.5-flash-lite',   // newer lite, higher OpenRouter rate
+  MODELS.GEMINI_FLASH,              // google/gemini-3.6-flash
 ];
 
 // =============================================================================

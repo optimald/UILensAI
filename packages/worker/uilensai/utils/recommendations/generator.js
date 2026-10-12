@@ -107,7 +107,7 @@ const MINIMAL_RECOMMENDATION_TEMPLATES = {
             ]
         },
         {
-            text: "Optimize visual hierarchy by improving typography consistency, spacing, and color contrast to meet WCAG 2.1 AA standards while enhancing content readability",
+            text: "Optimize visual hierarchy by improving typography consistency, spacing, and color contrast to meet WCAG 2.2 AA standards while enhancing content readability",
             priority: "High",
             category: "Accessibility",
             effort: "Moderate",
@@ -272,7 +272,7 @@ function getRecommendationSystemPrompt(moduleName, industry = "general", analysi
 SPECIALIZATION: You are a UI/UX expert focusing on ${industry} industry websites, with deep expertise in:
 - Visual hierarchy and information architecture
 - Cross-device responsive design optimization  
-- Accessibility compliance (WCAG 2.1 AA standards)
+- Accessibility compliance (WCAG 2.2 AA standards)
 - Dynamic element implementation (modals, carousels, accordions, animations)
 - User experience patterns specific to ${industry} industry
 - Conversion-focused design improvements

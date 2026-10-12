@@ -12,9 +12,9 @@ module.exports = {
   // Model configuration - Basic tier uses intelligent selection for lowest cost + fastest models
   // System automatically selects fastest, most cost-effective model from AVAILABLE_MODELS
   // Prioritizes speed and cost over cutting-edge features
-  modelStrategy: 'cost-effective', // Optimize for cost and speed
-  modelFamily: 'deepseek',          // Preferred family - system selects best from tier list
-  model: null,                      // null = use intelligent selection (automatically picks fastest/c cheapest)
+  modelStrategy: 'cost-effective',
+  modelFamily: 'openrouter',
+  model: null,                      // null = model-defaults.js picks google/gemini-3.1-flash-lite
   maxTokens: null,                  // null = auto-determined based on selected model's capabilities
 
   // Analysis configuration

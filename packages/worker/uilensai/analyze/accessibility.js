@@ -745,7 +745,7 @@ function getSpecificDetailsForCriterion(criterionId, passed, prelimContext) {
 /**
  * Inject and run axe-core in the browser page for real WCAG violation detection.
  * axe-core is a client-side JS library that runs automated accessibility audits
- * against WCAG 2.1 Level A and AA success criteria.
+ * against WCAG 2.2 Level A and AA, which includes the 2.0 and 2.1 criteria.
  *
  * @param {Object} page - Playwright page object
  * @param {boolean} verbose - Enable verbose logging
@@ -761,20 +761,20 @@ async function runAxeCore(page, verbose = false) {
     try {
         // Inject axe-core from CDN
         await page.addScriptTag({
-            url: 'https://cdnjs.cloudflare.com/ajax/libs/axe-core/4.9.1/axe.min.js'
+            url: 'https://cdn.jsdelivr.net/npm/axe-core@4.14.0/axe.min.js'
         });
 
         // Wait briefly for script to load
         await page.waitForFunction(() => typeof window.axe !== 'undefined', { timeout: 5000 });
 
-        // Run axe with WCAG 2.1 AA ruleset
+        // WCAG 2.2 tags do not include earlier criteria. List every level.
         const axeResults = await page.evaluate(async () => {
             if (!window.axe) return null;
             try {
                 return await axe.run(document, {
                     runOnly: {
                         type: 'tag',
-                        values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice']
+                        values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22a', 'wcag22aa', 'best-practice']
                     },
                     resultTypes: ['violations', 'incomplete']
                 });
@@ -2160,14 +2160,14 @@ const {
                         id: `accessibility-fallback-${Date.now()}`,
                         text: `Complete manual accessibility audit recommended. ${lighthouseStatus.available ?
                             `Lighthouse detected ${accessibilityAudits.length} accessibility audits.` :
-                            'No automated accessibility data available.'} Focus on WCAG 2.1 AA compliance.`,
+                            'No automated accessibility data available.'} Focus on WCAG 2.2 AA compliance.`,
                         priority: "High",
                         source: "accessibility",
                         impact: "Comprehensive accessibility review needed to ensure compliance",
                         effort: "High",
                         effortHours: { min: 16, max: 40 },
                         implementationSteps: [
-                            { stepNumber: 1, description: "Conduct manual WCAG 2.1 AA compliance audit" },
+                            { stepNumber: 1, description: "Conduct manual WCAG 2.2 AA compliance audit" },
                             { stepNumber: 2, description: "Test with screen readers (NVDA, JAWS, VoiceOver)" },
                             { stepNumber: 3, description: "Verify keyboard navigation functionality" },
                             { stepNumber: 4, description: "Check color contrast ratios manually" }

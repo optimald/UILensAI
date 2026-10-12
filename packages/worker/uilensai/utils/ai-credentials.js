@@ -20,11 +20,14 @@ const {
 // Vision capability is now determined dynamically from OpenRouter API
 // This static list is only used as a fallback when the API is unreachable
 const VISION_MODELS = [
+  'google/gemini-3.1-flash-lite',
+  'google/gemini-3.5-flash-lite',
+  'google/gemini-3.6-flash',
+  'google/gemini-3.8-flash',
   'google/gemini-2.5-flash-lite',
   'google/gemini-2.5-flash',
   'google/gemini-3.1-pro-preview',
   'google/gemini-2.5-pro',
-  'google/gemini-3.1-flash-lite-preview',
 ];
 
 /**

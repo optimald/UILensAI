@@ -50,17 +50,17 @@ function loadModelCatalog(forceReload = false) {
       version: 'fallback',
       lastUpdated: new Date().toISOString(),
       providers: {
-        anthropic: {
-          name: 'Anthropic',
+        google: {
+          name: 'Google',
           models: {
-            'claude-3-haiku-20240307': {
-              name: 'Claude 3 Haiku (Fallback)',
-              contextWindowTokens: 200000,
+            'gemini-3.1-flash-lite': {
+              name: 'Gemini 3.1 Flash Lite (Fallback)',
+              contextWindowTokens: 1048576,
               supportsVision: true,
               performanceTier: 'basic',
               costInputPerMillion: 0.25,
-              costOutputPerMillion: 1.25,
-              notes: 'Fallback model configuration',
+              costOutputPerMillion: 1.50,
+              notes: 'Fallback when model-catalog.json cannot be loaded. OpenRouter list prices as of 2026-10-12.',
               deprecated: false
             }
           }

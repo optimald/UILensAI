@@ -3,8 +3,8 @@
   "$id": "https://uilens.ai/schemas/model-catalog.json",
   "title": "UILensAI Model Catalog Configuration",
   "description": "Configuration file for AI model capabilities, pricing, and metadata. Update this file when providers change models or pricing.",
-  "version": "1.3.0",
-  "lastUpdated": "2025-11-29",
+  "version": "2026.10.0",
+  "lastUpdated": "2026-10-12",
   "providers": {
     "anthropic": {
       "name": "Anthropic",
@@ -36,8 +36,8 @@
           "performanceTier": "advanced",
           "costInputPerMillion": 15,
           "costOutputPerMillion": 75,
-          "notes": "Our most capable model with highest level of intelligence and capability. Includes extended thinking.",
-          "deprecated": false,
+          "notes": "Retired on the Claude API. Use a Claude 5.5 model.",
+          "deprecated": true,
           "releaseDate": "2025-05-14",
           "features": [
             "extended_thinking",
@@ -53,8 +53,8 @@
           "performanceTier": "advanced",
           "costInputPerMillion": 3,
           "costOutputPerMillion": 15,
-          "notes": "High-performance model with balanced intelligence and speed. Includes extended thinking.",
-          "deprecated": false,
+          "notes": "Retired on the Claude API. Use a Claude 5.5 model.",
+          "deprecated": true,
           "releaseDate": "2025-05-14",
           "features": [
             "extended_thinking",
@@ -70,8 +70,8 @@
           "performanceTier": "advanced",
           "costInputPerMillion": 3,
           "costOutputPerMillion": 15,
-          "notes": "High-performance model with early extended thinking. Can be extended to 128k output with beta header.",
-          "deprecated": false,
+          "notes": "Retired on the Claude API. Use a Claude 5.5 model.",
+          "deprecated": true,
           "releaseDate": "2025-02-19",
           "features": [
             "extended_thinking",
@@ -90,8 +90,8 @@
           "performanceTier": "advanced",
           "costInputPerMillion": 15,
           "costOutputPerMillion": 75,
-          "notes": "Most capable model. Target 6-8K, hard limit 16K (model supports 32K). Claude 4 extremely verbose.",
-          "deprecated": false,
+          "notes": "Retired on the Claude API. Use a Claude 5.5 model.",
+          "deprecated": true,
           "releaseDate": "2025-08-05",
           "features": [
             "extended_thinking",
@@ -107,8 +107,8 @@
           "performanceTier": "advanced",
           "costInputPerMillion": 3,
           "costOutputPerMillion": 15,
-          "notes": "High-performance model. Target 6-8K, hard limit 16K (model supports 64K). Claude 4.5 extremely verbose.",
-          "deprecated": false,
+          "notes": "Deprecated 2026-09-30. Claude API retirement 2026-11-30. Replacement: claude-sonnet-5.5.",
+          "deprecated": true,
           "releaseDate": "2025-09-29",
           "features": [
             "extended_thinking",
@@ -140,8 +140,8 @@
           "performanceTier": "advanced",
           "costInputPerMillion": 15,
           "costOutputPerMillion": 75,
-          "notes": "Powerful model for complex tasks. No priority tier access.",
-          "deprecated": false,
+          "notes": "Retired on the Claude API. Use a Claude 5.5 model.",
+          "deprecated": true,
           "releaseDate": "2024-02-29",
           "trainingDataCutoff": "2023-08-01"
         },
@@ -153,8 +153,8 @@
           "performanceTier": "advanced",
           "costInputPerMillion": 3,
           "costOutputPerMillion": 15,
-          "notes": "Our previous intelligent model with high level of intelligence and capability.",
-          "deprecated": false,
+          "notes": "Retired on the Claude API. Use a Claude 5.5 model.",
+          "deprecated": true,
           "releaseDate": "2024-10-22",
           "features": [
             "priority_tier"
@@ -169,8 +169,8 @@
           "performanceTier": "advanced",
           "costInputPerMillion": 3,
           "costOutputPerMillion": 15,
-          "notes": "Previous Sonnet model, still highly capable.",
-          "deprecated": false,
+          "notes": "Retired on the Claude API. Use a Claude 5.5 model.",
+          "deprecated": true,
           "releaseDate": "2024-06-20",
           "features": [
             "priority_tier"
@@ -185,8 +185,8 @@
           "performanceTier": "basic",
           "costInputPerMillion": 0.8,
           "costOutputPerMillion": 4,
-          "notes": "Our fastest model with intelligence at blazing speeds.",
-          "deprecated": false,
+          "notes": "Retired on the Claude API. Use a Claude 5.5 model.",
+          "deprecated": true,
           "releaseDate": "2024-10-22",
           "features": [
             "priority_tier"
@@ -217,8 +217,8 @@
           "performanceTier": "basic",
           "costInputPerMillion": 0.25,
           "costOutputPerMillion": 1.25,
-          "notes": "Fast and compact model for near-instant responsiveness.",
-          "deprecated": false,
+          "notes": "Retired on the Claude API. Use a Claude 5.5 model.",
+          "deprecated": true,
           "releaseDate": "2024-03-07",
           "trainingDataCutoff": "2023-08-01"
         },
@@ -229,10 +229,46 @@
           "performanceTier": "advanced",
           "costInputPerMillion": 2,
           "costOutputPerMillion": 8,
-          "notes": "Next-generation Claude model with enhanced capabilities and larger context window.",
+          "notes": "Retired on the Claude API. Use a Claude 5.5 model.",
           "deprecated": true,
           "releaseDate": "2025-06-01",
           "experimental": true
+        },
+        "claude-opus-5.5": {
+          "name": "Claude Opus 5.5",
+          "contextWindowTokens": 1000000,
+          "maxOutputTokens": 128000,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 4,
+          "costOutputPerMillion": 20,
+          "notes": "OpenRouter id and rates checked 2026-10-12. Not on the default scan path.",
+          "deprecated": false,
+          "releaseDate": "2026-09-22"
+        },
+        "claude-sonnet-5.5": {
+          "name": "Claude Sonnet 5.5",
+          "contextWindowTokens": 1000000,
+          "maxOutputTokens": 128000,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 2,
+          "costOutputPerMillion": 10,
+          "notes": "OpenRouter id and rates checked 2026-10-12. Not on the default scan path.",
+          "deprecated": false,
+          "releaseDate": "2026-09-28"
+        },
+        "claude-haiku-5.5": {
+          "name": "Claude Haiku 5.5",
+          "contextWindowTokens": 200000,
+          "maxOutputTokens": 64000,
+          "supportsVision": true,
+          "performanceTier": "basic",
+          "costInputPerMillion": 0.1,
+          "costOutputPerMillion": 0.5,
+          "notes": "OpenRouter list price on 2026-10-12. Not on the default scan path.",
+          "deprecated": false,
+          "releaseDate": "2026-10-07"
         }
       }
     },
@@ -281,8 +317,8 @@
           "performanceTier": "advanced",
           "costInputPerMillion": 10,
           "costOutputPerMillion": 30,
-          "notes": "GPT-4 Turbo with vision capabilities.",
-          "deprecated": false,
+          "notes": "Superseded. Do not use for new scans.",
+          "deprecated": true,
           "releaseDate": "2024-04-09"
         },
         "gpt-4": {
@@ -303,8 +339,8 @@
           "performanceTier": "basic",
           "costInputPerMillion": 0.5,
           "costOutputPerMillion": 1.5,
-          "notes": "Fast and affordable for basic tasks.",
-          "deprecated": false,
+          "notes": "Retired from the recommended set. Do not use for new scans.",
+          "deprecated": true,
           "releaseDate": "2023-03-01"
         },
         "o1": {
@@ -315,8 +351,8 @@
           "performanceTier": "advanced",
           "costInputPerMillion": 15,
           "costOutputPerMillion": 60,
-          "notes": "Advanced reasoning model with extended thinking capabilities. Excellent for complex problem-solving and coding.",
-          "deprecated": false,
+          "notes": "Superseded by later reasoning models.",
+          "deprecated": true,
           "releaseDate": "2024-12-17"
         },
         "o1-mini": {
@@ -325,10 +361,10 @@
           "maxOutputTokens": 65536,
           "supportsVision": false,
           "performanceTier": "intermediate",
-          "costInputPerMillion": 1.10,
-          "costOutputPerMillion": 4.40,
-          "notes": "Faster, more affordable reasoning model for coding and STEM tasks. Standard pricing with caching support.",
-          "deprecated": false,
+          "costInputPerMillion": 1.1,
+          "costOutputPerMillion": 4.4,
+          "notes": "Superseded by later reasoning models.",
+          "deprecated": true,
           "releaseDate": "2024-09-12"
         },
         "o3": {
@@ -337,8 +373,8 @@
           "maxOutputTokens": 100000,
           "supportsVision": true,
           "performanceTier": "advanced",
-          "costInputPerMillion": 2.00,
-          "costOutputPerMillion": 8.00,
+          "costInputPerMillion": 2,
+          "costOutputPerMillion": 8,
           "notes": "Advanced reasoning model succeeding o1. Standard pricing: $2/$8 per M, with caching: $0.50/$8.",
           "deprecated": false,
           "releaseDate": "2025-01-20"
@@ -349,8 +385,8 @@
           "maxOutputTokens": 65536,
           "supportsVision": false,
           "performanceTier": "intermediate",
-          "costInputPerMillion": 1.10,
-          "costOutputPerMillion": 4.40,
+          "costInputPerMillion": 1.1,
+          "costOutputPerMillion": 4.4,
           "notes": "Cost-effective reasoning model. Standard pricing with caching support ($0.55/$4.40).",
           "deprecated": false,
           "releaseDate": "2025-01-20"
@@ -361,8 +397,8 @@
           "maxOutputTokens": 65536,
           "supportsVision": false,
           "performanceTier": "intermediate",
-          "costInputPerMillion": 1.10,
-          "costOutputPerMillion": 4.40,
+          "costInputPerMillion": 1.1,
+          "costOutputPerMillion": 4.4,
           "notes": "Latest mini reasoning model. Standard pricing: $1.10/$4.40, with caching: $0.275/$4.40.",
           "deprecated": false,
           "releaseDate": "2025-04-16"
@@ -374,7 +410,7 @@
           "supportsVision": true,
           "performanceTier": "advanced",
           "costInputPerMillion": 1.25,
-          "costOutputPerMillion": 10.00,
+          "costOutputPerMillion": 10,
           "notes": "Latest GPT-5 model. Standard pricing with caching support ($0.125/$10).",
           "deprecated": false,
           "releaseDate": "2025-05-01"
@@ -386,7 +422,7 @@
           "supportsVision": true,
           "performanceTier": "intermediate",
           "costInputPerMillion": 0.25,
-          "costOutputPerMillion": 2.00,
+          "costOutputPerMillion": 2,
           "notes": "Cost-effective GPT-5 variant. Standard pricing with caching support ($0.025/$2).",
           "deprecated": false,
           "releaseDate": "2025-05-01"
@@ -397,8 +433,8 @@
           "maxOutputTokens": 100000,
           "supportsVision": true,
           "performanceTier": "advanced",
-          "costInputPerMillion": 2.00,
-          "costOutputPerMillion": 8.00,
+          "costInputPerMillion": 2,
+          "costOutputPerMillion": 8,
           "notes": "GPT-4.1 model. Standard pricing with caching support ($0.50/$8).",
           "deprecated": false,
           "releaseDate": "2025-04-14"
@@ -409,8 +445,8 @@
           "maxOutputTokens": 65536,
           "supportsVision": true,
           "performanceTier": "intermediate",
-          "costInputPerMillion": 0.40,
-          "costOutputPerMillion": 1.60,
+          "costInputPerMillion": 0.4,
+          "costOutputPerMillion": 1.6,
           "notes": "Cost-effective GPT-4.1 variant. Standard pricing with caching support ($0.10/$1.60).",
           "deprecated": false,
           "releaseDate": "2025-04-14"
@@ -433,8 +469,8 @@
           "maxOutputTokens": 100000,
           "supportsVision": true,
           "performanceTier": "advanced",
-          "costInputPerMillion": 1.50,
-          "costOutputPerMillion": 12.00,
+          "costInputPerMillion": 1.5,
+          "costOutputPerMillion": 12,
           "notes": "Latest GPT-5.1 model with enhanced reasoning and coding capabilities.",
           "deprecated": false,
           "releaseDate": "2025-11-13"
@@ -445,8 +481,8 @@
           "maxOutputTokens": 100000,
           "supportsVision": true,
           "performanceTier": "advanced",
-          "costInputPerMillion": 2.00,
-          "costOutputPerMillion": 15.00,
+          "costInputPerMillion": 2,
+          "costOutputPerMillion": 15,
           "notes": "Professional tier GPT-5 with enhanced capabilities.",
           "deprecated": false,
           "releaseDate": "2025-10-06"
@@ -457,8 +493,8 @@
           "maxOutputTokens": 32000,
           "supportsVision": true,
           "performanceTier": "basic",
-          "costInputPerMillion": 0.10,
-          "costOutputPerMillion": 0.40,
+          "costInputPerMillion": 0.1,
+          "costOutputPerMillion": 0.4,
           "notes": "Ultra-efficient GPT-5 variant for high-throughput applications.",
           "deprecated": false,
           "releaseDate": "2025-08-07"
@@ -469,8 +505,8 @@
           "maxOutputTokens": 32000,
           "supportsVision": true,
           "performanceTier": "basic",
-          "costInputPerMillion": 0.10,
-          "costOutputPerMillion": 0.40,
+          "costInputPerMillion": 0.1,
+          "costOutputPerMillion": 0.4,
           "notes": "Ultra-efficient GPT-4.1 variant.",
           "deprecated": false,
           "releaseDate": "2025-04-14"
@@ -481,10 +517,10 @@
           "maxOutputTokens": 100000,
           "supportsVision": true,
           "performanceTier": "advanced",
-          "costInputPerMillion": 20.00,
-          "costOutputPerMillion": 80.00,
-          "notes": "Professional reasoning model with maximum compute for complex problems.",
-          "deprecated": false,
+          "costInputPerMillion": 20,
+          "costOutputPerMillion": 80,
+          "notes": "Superseded by later reasoning models.",
+          "deprecated": true,
           "releaseDate": "2025-03-19"
         }
       }
@@ -501,8 +537,8 @@
           "performanceTier": "advanced",
           "costInputPerMillion": 0.1,
           "costOutputPerMillion": 0.4,
-          "notes": "Latest experimental Gemini 2.0 Flash model.",
-          "deprecated": false,
+          "notes": "Shut down or limited to prior users. New scans use Gemini 3.1 Flash Lite, 3.5 Flash Lite, or 3.6 Flash.",
+          "deprecated": true,
           "experimental": true,
           "releaseDate": "2024-12-11"
         },
@@ -513,8 +549,8 @@
           "performanceTier": "advanced",
           "costInputPerMillion": 1.25,
           "costOutputPerMillion": 5,
-          "notes": "High-capability model with very large context window. Pricing varies by input size.",
-          "deprecated": false,
+          "notes": "Shut down or limited to prior users. New scans use Gemini 3.1 Flash Lite, 3.5 Flash Lite, or 3.6 Flash.",
+          "deprecated": true,
           "releaseDate": "2024-02-15"
         },
         "gemini-1.5-flash": {
@@ -524,8 +560,8 @@
           "performanceTier": "intermediate",
           "costInputPerMillion": 0.075,
           "costOutputPerMillion": 0.3,
-          "notes": "Fast and efficient with large context window.",
-          "deprecated": false,
+          "notes": "Shut down or limited to prior users. New scans use Gemini 3.1 Flash Lite, 3.5 Flash Lite, or 3.6 Flash.",
+          "deprecated": true,
           "releaseDate": "2024-05-14"
         },
         "gemini-1.5-flash-8b": {
@@ -535,8 +571,8 @@
           "performanceTier": "basic",
           "costInputPerMillion": 0.0375,
           "costOutputPerMillion": 0.15,
-          "notes": "Smaller, faster variant of Flash.",
-          "deprecated": false,
+          "notes": "Shut down or limited to prior users. New scans use Gemini 3.1 Flash Lite, 3.5 Flash Lite, or 3.6 Flash.",
+          "deprecated": true,
           "releaseDate": "2024-10-03"
         },
         "gemini-2.5-pro": {
@@ -547,8 +583,8 @@
           "performanceTier": "advanced",
           "costInputPerMillion": 1.25,
           "costOutputPerMillion": 10,
-          "notes": "High-performance model for complex problems, reasoning, coding, and long context. Pricing: ≤200K tokens=$1.25/$10, >200K=$2.50/$15 per M.",
-          "deprecated": false,
+          "notes": "Shut down or limited to prior users. New scans use Gemini 3.1 Flash Lite, 3.5 Flash Lite, or 3.6 Flash.",
+          "deprecated": true,
           "releaseDate": "2025-01-01"
         },
         "gemini-2.5-flash": {
@@ -558,9 +594,9 @@
           "supportsVision": true,
           "performanceTier": "intermediate",
           "costInputPerMillion": 0.15,
-          "costOutputPerMillion": 0.60,
-          "notes": "Fast and cost-effective Gemini model. Great for general purpose tasks with large context support.",
-          "deprecated": false,
+          "costOutputPerMillion": 0.6,
+          "notes": "Shut down or limited to prior users. New scans use Gemini 3.1 Flash Lite, 3.5 Flash Lite, or 3.6 Flash.",
+          "deprecated": true,
           "releaseDate": "2025-01-01"
         },
         "gemini-2.5-flash-lite": {
@@ -570,9 +606,9 @@
           "supportsVision": true,
           "performanceTier": "basic",
           "costInputPerMillion": 0.075,
-          "costOutputPerMillion": 0.30,
-          "notes": "The fastest and most cost-effective Gemini model. Optimized for high-throughput.",
-          "deprecated": false,
+          "costOutputPerMillion": 0.3,
+          "notes": "Shut down or limited to prior users. New scans use Gemini 3.1 Flash Lite, 3.5 Flash Lite, or 3.6 Flash.",
+          "deprecated": true,
           "releaseDate": "2025-01-01"
         },
         "gemini-2.0-flash": {
@@ -581,10 +617,10 @@
           "maxOutputTokens": 8192,
           "supportsVision": true,
           "performanceTier": "intermediate",
-          "costInputPerMillion": 0.10,
-          "costOutputPerMillion": 0.40,
-          "notes": "Stable Gemini 2.0 Flash model.",
-          "deprecated": false,
+          "costInputPerMillion": 0.1,
+          "costOutputPerMillion": 0.4,
+          "notes": "Shut down or limited to prior users. New scans use Gemini 3.1 Flash Lite, 3.5 Flash Lite, or 3.6 Flash.",
+          "deprecated": true,
           "releaseDate": "2024-12-11"
         },
         "gemini-2.0-flash-lite": {
@@ -594,9 +630,9 @@
           "supportsVision": true,
           "performanceTier": "basic",
           "costInputPerMillion": 0.075,
-          "costOutputPerMillion": 0.30,
-          "notes": "Lightweight Gemini 2.0 variant for cost-effective processing.",
-          "deprecated": false,
+          "costOutputPerMillion": 0.3,
+          "notes": "Shut down or limited to prior users. New scans use Gemini 3.1 Flash Lite, 3.5 Flash Lite, or 3.6 Flash.",
+          "deprecated": true,
           "releaseDate": "2024-12-11"
         },
         "gemini-3-pro-preview": {
@@ -605,12 +641,60 @@
           "maxOutputTokens": 65536,
           "supportsVision": true,
           "performanceTier": "advanced",
-          "costInputPerMillion": 2.0,
-          "costOutputPerMillion": 12.0,
+          "costInputPerMillion": 2,
+          "costOutputPerMillion": 12,
           "notes": "The most capable Gemini model. State-of-the-art reasoning and multimodal understanding.",
           "deprecated": false,
           "experimental": true,
           "releaseDate": "2025-11-01"
+        },
+        "gemini-3.1-flash-lite": {
+          "name": "Gemini 3.1 Flash Lite",
+          "contextWindowTokens": 1048576,
+          "maxOutputTokens": 65536,
+          "supportsVision": true,
+          "performanceTier": "basic",
+          "costInputPerMillion": 0.25,
+          "costOutputPerMillion": 1.5,
+          "notes": "Default scan model. GA replacement for the preview shut down 2026-05-25. OpenRouter rates checked 2026-10-12. GA shutdown 2027-05-07.",
+          "deprecated": false,
+          "releaseDate": "2026-05-07"
+        },
+        "gemini-3.5-flash-lite": {
+          "name": "Gemini 3.5 Flash Lite",
+          "contextWindowTokens": 1048576,
+          "maxOutputTokens": 65536,
+          "supportsVision": true,
+          "performanceTier": "intermediate",
+          "costInputPerMillion": 0.3,
+          "costOutputPerMillion": 2.5,
+          "notes": "Fallback lite model. OpenRouter rates checked 2026-10-12.",
+          "deprecated": false,
+          "releaseDate": "2026-07-21"
+        },
+        "gemini-3.6-flash": {
+          "name": "Gemini 3.6 Flash",
+          "contextWindowTokens": 1048576,
+          "maxOutputTokens": 65536,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 0.75,
+          "costOutputPerMillion": 3.75,
+          "notes": "Security and performance model, separate from Flash Lite. OpenRouter rates checked 2026-10-12.",
+          "deprecated": false,
+          "releaseDate": "2026-07-21"
+        },
+        "gemini-3.8-flash": {
+          "name": "Gemini 3.8 Flash",
+          "contextWindowTokens": 1048576,
+          "maxOutputTokens": 65536,
+          "supportsVision": true,
+          "performanceTier": "advanced",
+          "costInputPerMillion": 0.75,
+          "costOutputPerMillion": 3.75,
+          "notes": "Current frontier Flash. OpenRouter rates checked 2026-10-12.",
+          "deprecated": false,
+          "releaseDate": "2026-09-02"
         }
       }
     },
@@ -625,8 +709,8 @@
           "maxOutputTokens": 100000,
           "supportsVision": false,
           "performanceTier": "intermediate",
-          "costInputPerMillion": 0.20,
-          "costOutputPerMillion": 0.50,
+          "costInputPerMillion": 0.2,
+          "costOutputPerMillion": 0.5,
           "notes": "Fast and cost-effective Grok model with 2M context window. Best for high-throughput applications.",
           "deprecated": false,
           "releaseDate": "2025-11-19"
@@ -637,8 +721,8 @@
           "maxOutputTokens": 100000,
           "supportsVision": false,
           "performanceTier": "intermediate",
-          "costInputPerMillion": 0.20,
-          "costOutputPerMillion": 0.50,
+          "costInputPerMillion": 0.2,
+          "costOutputPerMillion": 0.5,
           "notes": "Cost-efficient Grok 4 with 2M context window.",
           "deprecated": false,
           "releaseDate": "2025-09-01"
@@ -649,8 +733,8 @@
           "maxOutputTokens": 32000,
           "supportsVision": true,
           "performanceTier": "advanced",
-          "costInputPerMillion": 3.00,
-          "costOutputPerMillion": 15.00,
+          "costInputPerMillion": 3,
+          "costOutputPerMillion": 15,
           "notes": "Full Grok 4 model with vision capabilities. Most powerful xAI model.",
           "deprecated": false,
           "releaseDate": "2025-07-09"
@@ -661,8 +745,8 @@
           "maxOutputTokens": 32000,
           "supportsVision": false,
           "performanceTier": "intermediate",
-          "costInputPerMillion": 0.20,
-          "costOutputPerMillion": 1.50,
+          "costInputPerMillion": 0.2,
+          "costOutputPerMillion": 1.5,
           "notes": "Optimized for agentic coding tasks.",
           "deprecated": false,
           "releaseDate": "2025-08-01"
@@ -673,8 +757,8 @@
           "maxOutputTokens": 8192,
           "supportsVision": true,
           "performanceTier": "intermediate",
-          "costInputPerMillion": 2.00,
-          "costOutputPerMillion": 10.00,
+          "costInputPerMillion": 2,
+          "costOutputPerMillion": 10,
           "notes": "Previous generation Grok with vision capabilities.",
           "deprecated": false,
           "releaseDate": "2024-08-01"
@@ -685,8 +769,8 @@
           "maxOutputTokens": 8192,
           "supportsVision": false,
           "performanceTier": "basic",
-          "costInputPerMillion": 1.00,
-          "costOutputPerMillion": 5.00,
+          "costInputPerMillion": 1,
+          "costOutputPerMillion": 5,
           "notes": "Original Grok beta model.",
           "deprecated": true,
           "releaseDate": "2024-03-01"

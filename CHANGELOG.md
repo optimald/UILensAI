@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.30] - 2026-10-12
+
+### Changed
+- **OpenRouter models:** Default scan model is `google/gemini-3.1-flash-lite`. Security and performance use `google/gemini-3.6-flash`. Frontier calls use `google/gemini-3.8-flash`. Fallback order is 3.1 Flash Lite, 3.5 Flash Lite, then 3.6 Flash. The previous primary id, `google/gemini-3.1-flash-lite-preview`, was shut down on 2026-05-25.
+- **Directions:** README, CLI help, and tier presets now describe the OpenRouter-only path. `OPENROUTER_API_KEY` is the AI credential scans read. Cloudflare capture tries Browser Run and falls back to Browser Rendering on HTTP 404.
+- **Accessibility baseline:** axe-core 4.14.0 with WCAG 2.2 AA tags. Touch-target mapping uses success criterion 2.5.8.
+- **Performance source:** PageSpeed Insights remains the performance source. Expected Lighthouse major inside PSI is 13.
+- **Runtime:** Node engines are `>=22`. Playwright is pinned to 1.64.0. `@mastra/core` is `^1.0.0`, with an import fallback for 0.24. CI workflows install Node 22, which `engine-strict` requires.
+- **CLI modules:** `siteHealth` is accepted by the published CLI, including `--modules all`.
+
+### Removed
+- Unused `inngest` dependency from the worker package.
+
 ## [1.3.29] - 2026-05-02
 
 ### Added

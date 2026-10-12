@@ -1117,7 +1117,7 @@ async function generateReport(analysisResults, options, verbose = false) {
         performance: 'Score = weighted Lighthouse metrics: FCP (10%), LCP (25%), TBT (30%), CLS (25%), Speed Index (10%), with deductions for missing meta tags, large DOM size, and unoptimized images',
         seoContent: 'Score = weighted combination of metadata quality (20%), content depth and readability (25%), technical SEO signals (25%), heading structure (15%), and link health (15%)',
         security: 'Score = weighted analysis of SSL/TLS configuration (25%), HTTP security headers (25%), cookie security (15%), form vulnerabilities (15%), and content security policy (20%)',
-        accessibility: 'Score = WCAG 2.1 AA compliance across four principles: Perceivable (25%), Operable (25%), Understandable (25%), Robust (25%), with critical failures (missing alt text, no keyboard nav) causing automatic 15-point deductions',
+        accessibility: 'Score = WCAG 2.2 AA compliance across four principles: Perceivable (25%), Operable (25%), Understandable (25%), Robust (25%), with critical failures (missing alt text, no keyboard nav) causing automatic 15-point deductions',
         privacy: 'Score = weighted assessment of consent management (30%), cookie compliance (25%), privacy policy completeness (20%), third-party tracking footprint (15%), and data handling practices (10%)',
         conversion: 'Score = analysis of CTA effectiveness (25%), form UX and completion rates (25%), funnel clarity (20%), trust signals (15%), and value proposition prominence (15%)',
         marketing: 'Score = assessment of analytics implementation (20%), social media integration (15%), content marketing signals (20%), email capture presence (15%), brand consistency (15%), and competitive positioning (15%)',
@@ -1426,25 +1426,25 @@ async function generateReport(analysisResults, options, verbose = false) {
 
     // ====================================================================
     // FIX: Inject WCAG Success Criteria references into accessibility issues
-    // Ensures every a11y issue maps to a verifiable WCAG 2.1 criterion
+    // Ensures every a11y issue maps to a verifiable WCAG 2.2 criterion
     // ====================================================================
     {
         const wcagMapping = [
-            { test: /lang(uage)?\s+(of\s+)?(page|document|html)/i, sc: 'WCAG 2.1 SC 3.1.1 (Language of Page)' },
-            { test: /bypass|skip\s+(to\s+)?content|skip.*nav|repetitive\s+nav/i, sc: 'WCAG 2.1 SC 2.4.1 (Bypass Blocks)' },
-            { test: /color\s+contrast|contrast\s+ratio/i, sc: 'WCAG 2.1 SC 1.4.3 (Contrast Minimum)' },
-            { test: /alt\s+(text|attribute)|image.*alt|missing\s+alt/i, sc: 'WCAG 2.1 SC 1.1.1 (Non-text Content)' },
-            { test: /keyboard|tab\s+order|focus\s+(indicator|visible|ring|order)/i, sc: 'WCAG 2.1 SC 2.4.7 (Focus Visible)' },
-            { test: /form.*label|label.*form|programmatic\s+label/i, sc: 'WCAG 2.1 SC 1.3.1 (Info and Relationships)' },
-            { test: /heading\s+(hierarchy|structure|order|level)/i, sc: 'WCAG 2.1 SC 1.3.1 (Info and Relationships)' },
-            { test: /aria|role\s+attribute|aria-label/i, sc: 'WCAG 2.1 SC 4.1.2 (Name, Role, Value)' },
-            { test: /page\s+title|document\s+title/i, sc: 'WCAG 2.1 SC 2.4.2 (Page Titled)' },
-            { test: /link\s+purpose|link\s+text|descriptive\s+link/i, sc: 'WCAG 2.1 SC 2.4.4 (Link Purpose)' },
-            { test: /error\s+(identification|suggestion|prevention)/i, sc: 'WCAG 2.1 SC 3.3.1 (Error Identification)' },
-            { test: /resize|text\s+resize|zoom/i, sc: 'WCAG 2.1 SC 1.4.4 (Resize Text)' },
-            { test: /meaningful\s+sequence|reading\s+order/i, sc: 'WCAG 2.1 SC 1.3.2 (Meaningful Sequence)' },
-            { test: /audio|video|captions?|transcript/i, sc: 'WCAG 2.1 SC 1.2.2 (Captions)' },
-            { test: /touch\s+target|target\s+size/i, sc: 'WCAG 2.1 SC 2.5.5 (Target Size)' },
+            { test: /lang(uage)?\s+(of\s+)?(page|document|html)/i, sc: 'WCAG 2.2 SC 3.1.1 (Language of Page)' },
+            { test: /bypass|skip\s+(to\s+)?content|skip.*nav|repetitive\s+nav/i, sc: 'WCAG 2.2 SC 2.4.1 (Bypass Blocks)' },
+            { test: /color\s+contrast|contrast\s+ratio/i, sc: 'WCAG 2.2 SC 1.4.3 (Contrast Minimum)' },
+            { test: /alt\s+(text|attribute)|image.*alt|missing\s+alt/i, sc: 'WCAG 2.2 SC 1.1.1 (Non-text Content)' },
+            { test: /keyboard|tab\s+order|focus\s+(indicator|visible|ring|order)/i, sc: 'WCAG 2.2 SC 2.4.7 (Focus Visible)' },
+            { test: /form.*label|label.*form|programmatic\s+label/i, sc: 'WCAG 2.2 SC 1.3.1 (Info and Relationships)' },
+            { test: /heading\s+(hierarchy|structure|order|level)/i, sc: 'WCAG 2.2 SC 1.3.1 (Info and Relationships)' },
+            { test: /aria|role\s+attribute|aria-label/i, sc: 'WCAG 2.2 SC 4.1.2 (Name, Role, Value)' },
+            { test: /page\s+title|document\s+title/i, sc: 'WCAG 2.2 SC 2.4.2 (Page Titled)' },
+            { test: /link\s+purpose|link\s+text|descriptive\s+link/i, sc: 'WCAG 2.2 SC 2.4.4 (Link Purpose)' },
+            { test: /error\s+(identification|suggestion|prevention)/i, sc: 'WCAG 2.2 SC 3.3.1 (Error Identification)' },
+            { test: /resize|text\s+resize|zoom/i, sc: 'WCAG 2.2 SC 1.4.4 (Resize Text)' },
+            { test: /meaningful\s+sequence|reading\s+order/i, sc: 'WCAG 2.2 SC 1.3.2 (Meaningful Sequence)' },
+            { test: /audio|video|captions?|transcript/i, sc: 'WCAG 2.2 SC 1.2.2 (Captions)' },
+            { test: /touch\s+target|target\s+size/i, sc: 'WCAG 2.2 SC 2.5.8 (Target Size Minimum)' },
         ];
 
         const a11yModule = finalReport.modules?.accessibility;

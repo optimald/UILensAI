@@ -5,21 +5,7 @@
  * providing insights on Core Web Vitals, loading speed, server configuration,
  * third-party impact, and client-side rendering.;
  */
-const fs = require('fs');
-const path = require('path');
 const { URL } = require('url');
-const { spawn, execSync } = require('child_process');
-
-// Fix lighthouse import - it should be a default import
-let lighthouse;
-try {
-    lighthouse = require('lighthouse').default || require('lighthouse');
-} catch (error) {
-    console.warn('[PerformanceModule] Lighthouse not available:', error.message);
-    lighthouse = null
-}
-
-const { v4: uuidv4 } = require('uuid');
 
 const { getModelConfig } = require('../utils/ai-credentials');
 // getStructuredData and getSchemaForModule are not directly used in this module if AI part is minimal

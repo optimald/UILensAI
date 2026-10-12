@@ -21,6 +21,10 @@ try {
 // Max output tokens per model (all accessed via OpenRouter gateway)
 const OPENROUTER_MODEL_MAX_OUTPUT_TOKENS = {
     // Google models (currently used)
+    'google/gemini-3.1-flash-lite': 65536,
+    'google/gemini-3.5-flash-lite': 65536,
+    'google/gemini-3.6-flash': 65536,
+    'google/gemini-3.8-flash': 65536,
     'google/gemini-2.5-flash-lite': 65536,
     'google/gemini-2.5-flash': 65536,
     'google/gemini-2.5-pro': 65536,

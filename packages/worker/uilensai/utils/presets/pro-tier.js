@@ -8,10 +8,10 @@
 
 module.exports = {
   tierName: 'Pro', // For clarity
-  // Model configuration - Pro tier uses optimal models per module type
-  // STRATEGY: Claude for visual analysis (superior), Gemini for text analysis (faster, cheaper), o3 for security reasoning
-  modelStrategy: 'specialized', // Specialized models per module type
-  modelFamily: 'mixed', // Use different providers per module
+  // Model configuration. Runtime scans use OpenRouter ids from model-defaults.js.
+  // These preferredModel values are per-module hints if a caller reads them.
+  modelStrategy: 'specialized',
+  modelFamily: 'openrouter',
   model: null, // Will be determined per module by moduleModelConfigs
   // REMOVED: maxTokens - let intelligent model selection determine token limits based on selected model
 
@@ -95,7 +95,7 @@ module.exports = {
       supportsVision: false, 
       minContext: 128000,
       preferredProvider: 'google', // Default to Gemini for speed
-      preferredModel: 'gemini-1.5-pro' // Stable pro model
+      preferredModel: 'google/gemini-3.6-flash' // Stable pro model
     },
     // VISUAL MODULE - Use Gemini 2.0 Flash for screenshot analysis (vision + cost-effective)
     ui: { 
@@ -103,7 +103,7 @@ module.exports = {
       supportsVision: true, 
       minContext: 128000,
       preferredProvider: 'google',
-      preferredModel: 'gemini-2.0-flash-exp' // Gemini 2.0 Flash has vision capabilities
+      preferredModel: 'google/gemini-3.1-flash-lite' // Current cheap vision-capable model
     },
     // DOM-BASED MODULES - Use Gemini 2.5 (no screenshots, just DOM analysis)
     marketing: { 
@@ -111,21 +111,21 @@ module.exports = {
       supportsVision: false, // Marketing analyzes DOM (CTAs, links), not screenshots
       minContext: 128000,
       preferredProvider: 'google',
-      preferredModel: 'gemini-1.5-pro' // Pro for marketing analysis
+      preferredModel: 'google/gemini-3.6-flash' // Pro for marketing analysis
     },
     conversion: { 
       performanceTier: 'intermediate', 
       supportsVision: false, // Conversion analyzes DOM (forms, buttons), not screenshots
       minContext: 128000,
       preferredProvider: 'google',
-      preferredModel: 'gemini-1.5-pro' // Pro for conversion analysis
+      preferredModel: 'google/gemini-3.6-flash' // Pro for conversion analysis
     },
     accessibility: { 
       performanceTier: 'advanced', 
       supportsVision: false, // Accessibility analyzes DOM (ARIA, alt text), not screenshots
       minContext: 200000,
       preferredProvider: 'google',
-      preferredModel: 'gemini-1.5-pro' // Pro for accessibility analysis
+      preferredModel: 'google/gemini-3.6-flash' // Pro for accessibility analysis
     },
     // TEXT MODULES - Use Gemini 2.5 (faster, cheaper, excellent for structured analysis)
     performance: { 
@@ -133,49 +133,49 @@ module.exports = {
       supportsVision: false, 
       minContext: 128000,
       preferredProvider: 'google',
-      preferredModel: 'gemini-1.5-flash' // Fast/cheap for metrics
+      preferredModel: 'google/gemini-3.1-flash-lite' // Fast/cheap for metrics
     },
     seoContent: { 
       performanceTier: 'intermediate', 
       supportsVision: false, 
       minContext: 200000,
       preferredProvider: 'google',
-      preferredModel: 'gemini-1.5-pro' // Pro for complex SEO
+      preferredModel: 'google/gemini-3.6-flash' // Pro for complex SEO
     },
     security: { 
       performanceTier: 'advanced', 
       supportsVision: false, 
       minContext: 200000,
       preferredProvider: 'openai',
-      preferredModel: 'o3' // Reasoning model for superior vulnerability detection ($2/$8 per M)
+      preferredModel: 'google/gemini-3.6-flash' // Separate quota pool from the cheap scan model
     },
     privacy: { 
       performanceTier: 'intermediate', 
       supportsVision: false, 
       minContext: 128000,
       preferredProvider: 'google',
-      preferredModel: 'gemini-1.5-pro' // Pro for privacy analysis
+      preferredModel: 'google/gemini-3.6-flash' // Pro for privacy analysis
     },
     compatibility: { 
       performanceTier: 'intermediate', 
       supportsVision: false, 
       minContext: 128000,
       preferredProvider: 'google',
-      preferredModel: 'gemini-1.5-flash' // Fast for browser compat
+      preferredModel: 'google/gemini-3.1-flash-lite' // Fast for browser compat
     },
     siteHealth: {
       performanceTier: 'basic',
       supportsVision: false,
       minContext: 32000,
       preferredProvider: 'google',
-      preferredModel: 'gemini-1.5-flash' // Fast for link validation (no AI needed)
+      preferredModel: 'google/gemini-3.1-flash-lite' // Fast for link validation (no AI needed)
     },
     'top-recommendations': {
       performanceTier: 'intermediate', 
       supportsVision: false,
       minContext: 128000,
       preferredProvider: 'google',
-      preferredModel: 'gemini-1.5-pro' // Pro for strategic recommendations
+      preferredModel: 'google/gemini-3.6-flash' // Pro for strategic recommendations
     }
   },
 

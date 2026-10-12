@@ -226,19 +226,20 @@ const QUALITY_CRITERIA = {
 };
 
 const FALLBACK_MODELS = {
-  // DeepSeek models fallback to Gemini
-  'deepseek-chat': ['gemini-2.5-flash', 'gemini-2.0-flash'],
-  'deepseek-reasoner': ['gemini-2.5-pro-preview-05-06', 'deepseek-chat'],
-
-  // Gemini models fallback to DeepSeek
-  'gemini-2.0-flash': ['deepseek-chat', 'gemini-2.5-flash'],
-  'gemini-2.5-flash': ['deepseek-chat', 'gemini-2.0-flash'],
-  'gemini-2.5-pro-preview-05-06': ['deepseek-chat', 'gemini-2.5-flash'],
-  'gemini-3.0-flash-preview': ['deepseek-chat', 'gemini-2.5-flash'],
-
-  // Generic family fallbacks
-  'deepseek': ['gemini-2.5-flash', 'gemini-2.0-flash'],
-  'google': ['deepseek-chat', 'deepseek-reasoner'],
+  'google/gemini-3.1-flash-lite': ['google/gemini-3.5-flash-lite', 'google/gemini-3.6-flash'],
+  'google/gemini-3.5-flash-lite': ['google/gemini-3.1-flash-lite', 'google/gemini-3.6-flash'],
+  'google/gemini-3.6-flash': ['google/gemini-3.5-flash-lite', 'google/gemini-3.1-flash-lite'],
+  'google/gemini-3.8-flash': ['google/gemini-3.6-flash', 'google/gemini-3.1-flash-lite'],
+  // Legacy ids still resolve to live models.
+  'gemini-2.0-flash': ['google/gemini-3.1-flash-lite', 'google/gemini-3.5-flash-lite'],
+  'gemini-2.5-flash': ['google/gemini-3.1-flash-lite', 'google/gemini-3.6-flash'],
+  'gemini-2.5-pro-preview-05-06': ['google/gemini-3.6-flash', 'google/gemini-3.1-flash-lite'],
+  'gemini-3.0-flash-preview': ['google/gemini-3.1-flash-lite', 'google/gemini-3.6-flash'],
+  'gemini-3.1-flash-lite-preview': ['google/gemini-3.1-flash-lite', 'google/gemini-3.5-flash-lite'],
+  'deepseek-chat': ['google/gemini-3.1-flash-lite', 'google/gemini-3.5-flash-lite'],
+  'deepseek-reasoner': ['google/gemini-3.6-flash', 'google/gemini-3.1-flash-lite'],
+  'deepseek': ['google/gemini-3.1-flash-lite', 'google/gemini-3.5-flash-lite'],
+  'google': ['google/gemini-3.1-flash-lite', 'google/gemini-3.6-flash'],
 };
 
 // --- Core Functions ---

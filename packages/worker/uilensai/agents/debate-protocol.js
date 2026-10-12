@@ -160,7 +160,7 @@ async function runDebate(pair, moduleResults, options = {}) {
     const result = await analyzeWithAI({
       prompt,
       systemPrompt: 'You are an impartial arbiter in a multi-agent adversarial review. You must respond with valid JSON only.',
-      model: config?.model || 'google/gemini-2.5-flash-lite',
+      model: config?.model || 'google/gemini-3.1-flash-lite',
       maxTokens: 1500,
       isJsonOutput: true,
       costAggregator,

@@ -397,7 +397,7 @@ async function generateAccessibilityImplementationPlan(recommendations, industry
         recommendationsSummary,
         overallA11yScore: getNestedProperty(options, 'moduleData.accessibility.summary.score', 60), // Requires moduleData in options
         currentWcagConformance: getNestedProperty(options, 'moduleData.accessibility.wcagCompliance.conformanceLevelAchieved', "Partial AA"),
-        targetWcagLevel: "WCAG 2.1 Level AA", // Example
+        targetWcagLevel: "WCAG 2.2 Level AA", // Example
         a11yBusinessDrivers: "Legal compliance, brand reputation, expanded market reach.", // Example
         existingA11yResources: "One part-time accessibility champion.", // Example
         devLifecycle: "Agile with 2-week sprints." // Example

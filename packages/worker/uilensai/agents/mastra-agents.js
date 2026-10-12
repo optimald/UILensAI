@@ -15,10 +15,14 @@
 
 let Agent;
 try {
-  ({ Agent } = require('@mastra/core'));
-} catch (err) {
-  console.warn('[MastraAgents] @mastra/core not available — agents disabled, pipeline will use analyzeWithAI fallback');
-  Agent = null;
+  ({ Agent } = require('@mastra/core/agent'));
+} catch {
+  try {
+    ({ Agent } = require('@mastra/core'));
+  } catch {
+    console.warn('[MastraAgents] @mastra/core not available — agents disabled, pipeline will use analyzeWithAI fallback');
+    Agent = null;
+  }
 }
 
 const { getPersona, getPersonaInstructions, getAllPersonasMeta } = require('./personas');
@@ -32,7 +36,7 @@ const agentCache = new Map();
  * Uses model-defaults.js for the canonical model ID, then prefixes
  * with 'openrouter/' for Mastra's model router format.
  *
- * e.g. 'google/gemini-3.1-flash-lite-preview' → 'openrouter/google/gemini-3.1-flash-lite-preview'
+ * e.g. 'google/gemini-3.1-flash-lite' → 'openrouter/google/gemini-3.1-flash-lite'
  */
 function getModelIdForModule(moduleName, tier = 'pro') {
   const config = getModuleConfig(moduleName, tier);

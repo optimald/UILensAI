@@ -28,6 +28,7 @@ const packageJson = require('../../package.json');
 
 // Import main orchestrator
 const { analyzeWebsite } = require('../analyze/index');
+const { getDefaultModelFamily, MODELS } = require('../config/model-defaults');
 
 // Import report generation
 const { generateReport } = require('../report/index');
@@ -72,16 +73,16 @@ Options:
   --url <url>                    URL to analyze (required)
   --modules <list>               Comma-separated list of modules to run.
                                  Default: ui
-                                 Available: ui,performance,seoContent,security,privacy,compatibility,marketing,conversion,accessibility,all
+                                 Available: ui,performance,seoContent,security,privacy,compatibility,marketing,conversion,accessibility,siteHealth,all
   
   Model Options:
-  --model <model_id>             Prefer a specific AI model ID (e.g., claude-3-opus-20240229). Overrides family defaults.
+  --model <model_id>             Prefer a specific OpenRouter model ID (e.g., google/gemini-3.1-flash-lite). Overrides the module default.
   --model-family <family>        Preferred AI model family if a specific model ID isn't provided.
-                                 Options: claude (default), openai, gemini.
+                                 Options: openrouter (default).
   --model-strategy <strategy>    How AI models are selected for tasks.
                                  Options: single, specialized (default), consensus (Pro/Enterprise).
   --max-tokens <number>          Maximum tokens for AI model responses. Defaults vary by model and tier.
-  --testing                      TESTING MODE: Override to use cheapest model (claude-3-5-haiku-20241022) regardless of tier to save costs during development/testing.
+  --testing                      TESTING MODE: Override to google/gemini-3.1-flash-lite regardless of tier.
 
   Tier Options:
   --tier <name>                  Specify the service tier. Affects features, analysis depth, and model access.
@@ -150,7 +151,7 @@ let showVersionFlag = false;
 let cliOptions = {
   modulesToRun: ['ui'],
   model: process.env.UILENS_MODEL || null, // Allow specific model override
-  modelFamily: process.env.UILENS_MODEL_FAMILY || require('../config/model-defaults').getDefaultModelFamily('cli'),
+  modelFamily: process.env.UILENS_MODEL_FAMILY || getDefaultModelFamily('cli'),
   modelStrategy: 'specialized',
   maxTokens: null, // Will be determined by tier/model specifics later
   tier: 'Basic', // Default tier
@@ -202,7 +203,9 @@ for (let i = 0; i < args.length; i++) {
         // Map 'seo' to 'seoContent' for backward compatibility
         const modules = nextArg.split(',').map(m => m.trim().toLowerCase());
         const moduleMapping = {
-          'seo': 'seoContent'
+          'seo': 'seoContent',
+          'sitehealth': 'siteHealth',
+          'site-health': 'siteHealth'
         };
 
         const mappedModules = modules.map(module => moduleMapping[module] || module);
@@ -356,16 +359,15 @@ for (let i = 0; i < args.length; i++) {
     case '--cf-screenshots': case '--psi': case '--no-browser': case '--deep-crawl':
     case '--intelligent-bot-protection': case '--no-bot-protection':
       break;
-    case '--testing':
-      // Use centralized default for testing mode, but allow override via env
-      const testingModelFamily = process.env.UILENS_MODEL_FAMILY || require('../config/model-defaults').getDefaultModelFamily('cli');
-      cliOptions.model = testingModelFamily === 'google' ? 'gemini-1.5-flash' : 'claude-3-5-haiku-20241022';
-      cliOptions.modelFamily = testingModelFamily;
+    case '--testing': {
+      cliOptions.model = MODELS.GEMINI_FLASH_LITE;
+      cliOptions.modelFamily = 'openrouter';
       cliOptions.modelStrategy = 'specialized';
       cliOptions.maxTokens = 2500;
       cliOptions.testingMode = true;
-      console.log('🧪 TESTING MODE: Using cheapest model (claude-3-5-haiku-20241022) with increased tokens (2500) for complex analysis');
+      console.log(`TESTING MODE: Using ${MODELS.GEMINI_FLASH_LITE} with increased tokens (2500) for complex analysis`);
       break;
+    }
     case '--use-mcp':
       cliOptions.useMcp = true;
       console.log('🔄 MCP MODE: Will use WebEvo MCP integration');
@@ -406,7 +408,7 @@ cliOptions = {
   featureSet: { ...(presetConfig.featureSet || {}), ...(cliOptions.featureSet || {}) },
   // CLI args for model details should override preset if preset had null/default
   model: cliOptions.model !== null ? cliOptions.model : presetConfig.model,
-  modelFamily: cliOptions.modelFamily || presetConfig.modelFamily || require('../config/model-defaults').getDefaultModelFamily('cli'),
+  modelFamily: cliOptions.modelFamily || presetConfig.modelFamily || getDefaultModelFamily('cli'),
   maxTokens: cliOptions.maxTokens !== null ? cliOptions.maxTokens : presetConfig.maxTokens,
   analysisDepth: cliOptions.analysisDepth !== null ? cliOptions.analysisDepth : presetConfig.analysisDepth,
   // Ensure captureTimeout from CLI takes precedence over preset
@@ -442,7 +444,7 @@ const modelValidationConfig = {
 };
 if (cliOptions.modelStrategy === 'specialized' || cliOptions.modelStrategy === 'consensus' || !cliOptions.model) {
   // If strategy isn't single or no specific model chosen, validation should check based on preferred family or general availability
-  modelValidationConfig.model = cliOptions.modelFamily || require('../config/model-defaults').getDefaultModelFamily('cli'); // Validate against preferred family
+  modelValidationConfig.model = cliOptions.modelFamily || getDefaultModelFamily('cli'); // Validate against preferred family
 }
 
 const modelValidation = getModelConfig(modelValidationConfig);
