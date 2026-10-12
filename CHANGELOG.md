@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 ## [1.3.33] - 2026-10-12
 
 ### Changed
-- The engine is loaded from a git checkout. Registry publish config and the GitHub Packages workflow are removed.
+- The engine is loaded from a git checkout. Registry publish config and the GitHub Packages workflow are removed. WebEvo and MarketPounce upgrade steps are in `UPGRADE.md`.
 - UI vision, conversion, marketing, and the audit director use `google/gemini-3.8-flash`. Performance, accessibility, and security keep tool scores and use Flash Lite only to write fixes for findings the tools already reported. Site health does not call a model.
 
 ## [1.3.32] - 2026-10-12
