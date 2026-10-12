@@ -23,12 +23,12 @@ UILensAI captures website data across desktop, mobile, and tablet viewports usin
 
 ## Get the engine
 
-Current release: [v1.3.32](https://github.com/optimald/UILensAI/releases/tag/v1.3.32).
+Current release: [v1.3.33](https://github.com/optimald/UILensAI/releases/tag/v1.3.33).
 
 ```bash
 git clone https://github.com/optimald/UILensAI.git
 cd UILensAI
-git checkout v1.3.32
+git checkout v1.3.33
 npm install
 ```
 
@@ -234,7 +234,7 @@ uilensai/
 
 ## WebEvo Integration
 
-UILensAI is loaded by path from a checkout of [v1.3.32](https://github.com/optimald/UILensAI/releases/tag/v1.3.32):
+UILensAI is loaded by path from a checkout of [v1.3.33](https://github.com/optimald/UILensAI/releases/tag/v1.3.33):
 
 ```javascript
 const { analyzeWebsite } = require('<path-to-UILensAI>');

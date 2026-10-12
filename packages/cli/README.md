@@ -7,7 +7,7 @@ Command-line entry point for the website audit. Setup, models, and module output
 ```bash
 git clone https://github.com/optimald/UILensAI.git
 cd UILensAI
-git checkout v1.3.32
+git checkout v1.3.33
 npm install
 node packages/cli/cli.js --help
 ```

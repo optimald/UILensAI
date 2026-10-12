@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [1.3.33] - 2026-10-12
 
 ### Changed
 - The engine is loaded from a git checkout. Registry publish config and the GitHub Packages workflow are removed.

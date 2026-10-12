@@ -20,7 +20,7 @@ packages/
 From a checkout of the release tag:
 
 ```bash
-git checkout v1.3.32
+git checkout v1.3.33
 npm install
 npm test
 npm run cli -- --url https://example.com --modules ui
