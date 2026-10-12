@@ -9,11 +9,11 @@
  * - Primary: google/gemini-3.1-flash-lite ($0.25/$1.50 per 1M) — GA replacement
  *   for gemini-3.1-flash-lite-preview, which Google shut down on 2026-05-25.
  *   GA shutdown is 2027-05-07.
- * - Separate quota pool: google/gemini-3.6-flash ($0.75/$3.75 per 1M) for
- *   security and performance. Gemini 2.5 Flash is capacity-limited and leaves
- *   Vertex on 2026-10-20.
- * - Frontier: google/gemini-3.8-flash ($0.75/$3.75 per 1M)
- * - Vision: google/gemini-3.1-flash-lite (native vision)
+ * - Judgment (UI vision, conversion, marketing, audit director):
+ *   google/gemini-3.8-flash ($0.75/$3.75 per 1M).
+ * - Measured modules (performance, accessibility, security, site health) use
+ *   Flash Lite only to write fixes from tool evidence. Site health makes no
+ *   model call. Gemini 2.5 Flash leaves Vertex on 2026-10-20.
  *
  * The March 2026 cost target of under $0.06 per scan used preview rates
  * ($0.10/$0.40) that no longer exist. Remeasure a live scan before treating
@@ -41,7 +41,7 @@ const MODELS = {
   GEMINI_FLASH_LITE: 'google/gemini-3.1-flash-lite',
   // Separate rate-limit pool from Flash Lite. Gemini 2.5 Flash is winding down.
   GEMINI_FLASH: 'google/gemini-3.6-flash',
-  // Frontier Flash. GA, same OpenRouter rates as 3.6 Flash on 2026-10-12.
+  // Judgment model. Same OpenRouter list rate as 3.6 Flash on 2026-10-12.
   GEMINI_PRO: 'google/gemini-3.8-flash',
 };
 
@@ -82,7 +82,7 @@ const tiers = {
 
 // =============================================================================
 // PER-MODULE DEFAULTS
-// Most modules use Gemini 3.1 Flash Lite. Security and performance use 3.6 Flash.
+// Judgment modules use Gemini 3.8 Flash. Measured modules use Flash Lite.
 // =============================================================================
 const modules = {
   // --- PRE-PROCESSING ---
@@ -96,42 +96,42 @@ const modules = {
   // --- 9 SCAN MODULES ---
   ui: {
     provider: MODEL_PROVIDERS.OPENROUTER,
-    model: MODELS.GEMINI_FLASH_LITE,
+    model: MODELS.GEMINI_PRO,
     requiresVision: true,
     maxTokens: MAX_TOKENS.complex,
-    description: 'UI/UX analysis with vision — Flash Lite has native vision support'
+    description: 'UI vision judgment — 3.8 Flash'
   },
 
   security: {
     provider: MODEL_PROVIDERS.OPENROUTER,
-    model: MODELS.GEMINI_FLASH,  // CIRCUIT BREAKER FIX: Use Flash (separate rate limit pool)
+    model: MODELS.GEMINI_FLASH_LITE,
     requiresVision: false,
-    maxTokens: MAX_TOKENS.complex,
-    description: 'Security analysis — uses Flash for dedicated rate limit pool'
+    maxTokens: MAX_TOKENS.simple,
+    description: 'Fix text for measured header and TLS findings'
   },
 
   accessibility: {
     provider: MODEL_PROVIDERS.OPENROUTER,
     model: MODELS.GEMINI_FLASH_LITE,
     requiresVision: false,
-    maxTokens: MAX_TOKENS.standard,
-    description: 'WCAG compliance analysis'
+    maxTokens: MAX_TOKENS.simple,
+    description: 'Fix text for axe-core findings. Rules stay deterministic.'
   },
 
   conversion: {
     provider: MODEL_PROVIDERS.OPENROUTER,
-    model: MODELS.GEMINI_FLASH_LITE,
+    model: MODELS.GEMINI_PRO,
     requiresVision: false,
     maxTokens: MAX_TOKENS.complex,
-    description: 'Conversion rate optimization analysis'
+    description: 'Conversion judgment — 3.8 Flash'
   },
 
   performance: {
     provider: MODEL_PROVIDERS.OPENROUTER,
-    model: MODELS.GEMINI_FLASH,  // CIRCUIT BREAKER FIX: Use Flash (separate rate limit pool)
+    model: MODELS.GEMINI_FLASH_LITE,
     requiresVision: false,
     maxTokens: MAX_TOKENS.simple,
-    description: 'Metrics-based performance analysis — uses Flash for dedicated rate limit pool'
+    description: 'Fix text for PageSpeed Insights metrics. Scores stay measured.'
   },
 
   seoContent: {
@@ -152,10 +152,10 @@ const modules = {
 
   marketing: {
     provider: MODEL_PROVIDERS.OPENROUTER,
-    model: MODELS.GEMINI_FLASH_LITE,
+    model: MODELS.GEMINI_PRO,
     requiresVision: false,
     maxTokens: MAX_TOKENS.standard,
-    description: 'Marketing effectiveness analysis'
+    description: 'Marketing judgment — 3.8 Flash'
   },
 
   privacy: {
@@ -198,6 +198,23 @@ const modules = {
     requiresVision: false,
     maxTokens: 2500,
     description: 'CEO orchestrator — executive synthesis and strategic priorities'
+  },
+
+  auditDirector: {
+    provider: MODEL_PROVIDERS.OPENROUTER,
+    model: MODELS.GEMINI_PRO,
+    requiresVision: false,
+    maxTokens: 2500,
+    description: 'Cross-module contradiction check — 3.8 Flash'
+  },
+
+  // siteHealth scores the crawl. It does not call a model.
+  siteHealth: {
+    provider: MODEL_PROVIDERS.OPENROUTER,
+    model: MODELS.GEMINI_FLASH_LITE,
+    requiresVision: false,
+    maxTokens: MAX_TOKENS.simple,
+    description: 'Unused. Link health is deterministic.'
   }
 };
 
@@ -356,6 +373,13 @@ let dynamicScanConfigTier = null;
 async function getModuleConfigDynamic(moduleName, tier = 'pro') {
   // Global override always wins
   if (GLOBAL_OVERRIDE.enabled) {
+    return getModuleConfig(moduleName, tier);
+  }
+
+  // Judgment modules stay on the configured model. Dynamic selection
+  // would replace them with the cheapest model that clears a price cap.
+  const judgmentModules = new Set(['ui', 'conversion', 'marketing', 'auditDirector']);
+  if (judgmentModules.has(moduleName) || judgmentModules.has(findModuleKey(moduleName))) {
     return getModuleConfig(moduleName, tier);
   }
 

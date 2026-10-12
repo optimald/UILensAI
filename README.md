@@ -1,11 +1,10 @@
 # UILensAI
 
-[![npm version](https://img.shields.io/npm/v/@optimald/uilensai.svg)](https://www.npmjs.com/package/@optimald/uilensai)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
 UILensAI is an AI-powered website analysis engine providing comprehensive insights across ten specialized modules, including enterprise-grade SEO, AEO (Answer Engine Optimization), and GEO (Generative Engine Optimization) diagnostics.
 
-> **📦 Pure npm package**: Install via npm and use directly — no server, no database required. Clients bring their own Cloudflare credentials for screenshot capture.
+WebEvo loads this engine from a git checkout. It is not published to a package registry.
 
 ## Overview
 
@@ -22,13 +21,18 @@ UILensAI captures website data across desktop, mobile, and tablet viewports usin
 - **Cloud-Native Screenshots:** Uses the Cloudflare Browser Run REST API, with a fallback to the previous Browser Rendering path. No local browser binaries are required for capture.
 - **Crawler Resilience:** Automatic Playwright fallback when HTTP fetch is blocked by Cloudflare/bot protection (403 responses).
 
-## Installation
+## Get the engine
+
+Current release: [v1.3.32](https://github.com/optimald/UILensAI/releases/tag/v1.3.32).
 
 ```bash
-npm install @optimald/uilensai
+git clone https://github.com/optimald/UILensAI.git
+cd UILensAI
+git checkout v1.3.32
+npm install
 ```
 
-> **Note**: Requires Node.js >= 22.0.0. Node 20 reached end of life on 30 Apr 2026.
+Requires Node.js >= 22. `npm install` only installs this checkout's dependencies. Do not publish the package.
 
 ## Configuration
 
@@ -44,9 +48,9 @@ Default models, priced from the OpenRouter list on 12 Oct 2026:
 
 | Role | Model | Input / output per 1M tokens |
 |------|--------|------------------------------|
-| Main scan | `google/gemini-3.1-flash-lite` | $0.25 / $1.50 |
-| Security and performance | `google/gemini-3.6-flash` | $0.75 / $3.75 |
-| Frontier | `google/gemini-3.8-flash` | $0.75 / $3.75 |
+| Measured modules (performance, accessibility, security) | `google/gemini-3.1-flash-lite` | $0.25 / $1.50 |
+| Judgment (UI, conversion, marketing, audit director) | `google/gemini-3.8-flash` | $0.75 / $3.75 |
+| Fallback | `google/gemini-3.5-flash-lite`, then `google/gemini-3.6-flash` | $0.30 / $2.50, then $0.75 / $3.75 |
 
 If the primary model is unavailable, the fallback chain is 3.1 Flash Lite, then 3.5 Flash Lite, then 3.6 Flash. Remeasure a live scan before quoting a per-scan dollar budget. The older under-$0.06 figure used preview rates that no longer exist.
 
@@ -67,10 +71,10 @@ GOOGLE_PSI_API_KEY=your_google_api_key
 
 ## Usage
 
-### Programmatic (npm package)
+### Programmatic
 
 ```javascript
-const { analyzeWebsite, captureScreenshots, cfBrowserService } = require('@optimald/uilensai');
+const { analyzeWebsite, captureScreenshots, cfBrowserService } = require('<path-to-UILensAI>');
 
 // Run a full website analysis
 const results = await analyzeWebsite({
@@ -206,9 +210,8 @@ Every scan goes through OpenRouter. `OPENROUTER_API_KEY` is the only AI credenti
 
 | Role | Model |
 |------|--------|
-| Main scan, vision, recommendations | `google/gemini-3.1-flash-lite` |
-| Security and performance | `google/gemini-3.6-flash` |
-| Frontier | `google/gemini-3.8-flash` |
+| Performance, accessibility, security, and other measured text | `google/gemini-3.1-flash-lite` |
+| UI vision, conversion, marketing, audit director | `google/gemini-3.8-flash` |
 
 ## Project Structure
 
@@ -231,11 +234,10 @@ uilensai/
 
 ## WebEvo Integration
 
-UILensAI is used as a direct dependency by [WebEvo](https://webevo.ai):
+UILensAI is loaded by path from a checkout of [v1.3.32](https://github.com/optimald/UILensAI/releases/tag/v1.3.32):
 
 ```javascript
-// In WebEvo's codebase
-const { analyzeWebsite } = require('@optimald/uilensai');
+const { analyzeWebsite } = require('<path-to-UILensAI>');
 const results = await analyzeWebsite(url, { modules: ['ui', 'performance', 'seoContent'] });
 // Access enterprise intelligence
 const { strategicInsights, ceoVerdict } = results;

@@ -1,12 +1,12 @@
 # Packages
 
-The published package is the repository root, `@optimald/uilensai`. These directories are what that package ships.
+WebEvo loads this repository from a git checkout. These directories are the engine.
 
 ```
 packages/
 ├── cli/                 # `uilensai` binary (packages/cli/cli.js)
 └── worker/
-    └── uilensai/        # Analysis engine imported by the CLI and by require('@optimald/uilensai')
+    └── uilensai/        # Analysis engine, required by path from the repo root
         ├── analyze/     # Ten audit modules
         ├── agents/      # Personas, evidence tools, cross-module checks
         ├── capture/     # Screenshot capture
@@ -17,13 +17,16 @@ packages/
         └── utils/       # OpenRouter client, scoring, presets
 ```
 
-Install and run from the repository root. See the [root README](../README.md) for credentials, models, and CLI flags.
+From a checkout of the release tag:
 
 ```bash
+git checkout v1.3.32
 npm install
 npm test
 npm run cli -- --url https://example.com --modules ui
 ```
+
+`npm install` installs this checkout's dependencies. Do not publish the package. See the [root README](../README.md) for credentials, models, and CLI flags.
 
 ## Environment
 

@@ -13,6 +13,11 @@ const { getPersonaInstructions, getPersona } = require('../agents/personas');
 const { getMemoryContext } = require('../agents/procedural-memory');
 const { generateWithAgent, isMastraAvailable } = require('../agents/mastra-agents');
 
+const MEASURED_MODULES = new Set(['performance', 'accessibility', 'security', 'siteHealth']);
+
+const FIX_ONLY_INSTRUCTION = `MEASURED MODULE: The score and the findings already come from tools (PageSpeed Insights, axe-core, security headers, or the crawl). Do not invent issues and do not rescore.
+Write a fix only for a problem that is already present in verifiedEvidence or the scraped metrics. If that evidence shows no real issue, say so and return no recommendations.`;
+
 /**
  * Execute a two-pass AI analysis for a module.
  *
@@ -62,10 +67,16 @@ async function twoPassAnalysis(options) {
         evidenceBlock,
     } = options;
 
+    const measuredModule = MEASURED_MODULES.has(moduleName);
     const totalUsage = { pass1: null, pass2: null, totalCostUSD: 0 };
     let pass1Evidence = null;
     let pass1Failed = false;
 
+    // Measured modules already have tool evidence. Skip the extraction call.
+    if (measuredModule) {
+        pass1Failed = false;
+        if (verbose) console.log(`[TwoPass:${moduleName}] Skipping Pass 1 — score comes from tools`);
+    } else {
     // ─── Pass 1: Evidence Extraction ─────────────────────────────────
     try {
         if (verbose) console.log(`[TwoPass:${moduleName}] Starting Pass 1 — Evidence Extraction`);
@@ -114,6 +125,7 @@ async function twoPassAnalysis(options) {
         pass1Failed = true;
         if (verbose) console.warn(`[TwoPass:${moduleName}] Pass 1 failed: ${err.message} — falling back to single-pass`);
     }
+    }
 
     // ─── Pass 2: Expert Judgment ─────────────────────────────────────
     try {
@@ -133,7 +145,10 @@ async function twoPassAnalysis(options) {
             ...evidenceData,
         };
 
-        const pass2Prompt = getPrompt(pass2Template, pass2Variables);
+        const pass2PromptRaw = getPrompt(pass2Template, pass2Variables);
+        const pass2Prompt = measuredModule && pass2PromptRaw
+            ? `${FIX_ONLY_INSTRUCTION}\n\n${pass2PromptRaw}`
+            : pass2PromptRaw;
 
         if (!pass2Prompt) {
             throw new Error(`Pass 2 template '${pass2Template}' not found`);
@@ -274,6 +289,8 @@ Your response MUST be valid JSON conforming to the provided schema. It MUST cont
 CRITICAL: Your narrative should read like a senior consultant's assessment, not a generic checklist. Reference specific evidence and explain WHY it matters for this type of business.`;
         }
 
+            pass2SystemPrompt = `${measuredModule ? FIX_ONLY_INSTRUCTION + '\n\n' : ''}${pass2SystemPrompt}`;
+
         const pass2Result = await analyzeWithAI({
             prompt: pass2Prompt,
             systemPrompt: pass2SystemPrompt,
@@ -288,7 +305,7 @@ CRITICAL: Your narrative should read like a senior consultant's assessment, not 
             images,
             imageMediaType,
             vision: !!images,
-            maxTokens: pass2Options.maxTokens || 16384,
+            maxTokens: pass2Options.maxTokens || (measuredModule ? 4096 : 16384),
             costAggregator,
             verbose,
             ...pass2Options,
@@ -375,4 +392,4 @@ function isScoreField(key) {
         || key === 'rating_score';
 }
 
-module.exports = { twoPassAnalysis, guardAIScores };
+module.exports = { twoPassAnalysis, guardAIScores, MEASURED_MODULES };

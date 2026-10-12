@@ -1,21 +1,24 @@
 # UILensAI CLI
 
-Command-line entry point for the UILensAI website audit. The published package is [`@optimald/uilensai`](https://www.npmjs.com/package/@optimald/uilensai). Setup, models, and module output are documented in the [root README](../../README.md).
+Command-line entry point for the website audit. Setup, models, and module output are documented in the [root README](../../README.md).
 
-## Install
+## Get the engine
 
 ```bash
-npm install @optimald/uilensai
+git clone https://github.com/optimald/UILensAI.git
+cd UILensAI
+git checkout v1.3.32
+npm install
+node packages/cli/cli.js --help
 ```
 
-Requires Node.js >= 22.
+Requires Node.js >= 22. The `npm install` step installs this checkout's dependencies. The engine is not published to a package registry.
 
 ## Run
 
 ```bash
-uilensai --url https://example.com --modules ui,performance,seoContent,siteHealth
-uilensai --url https://example.com --modules all --analysis-depth comprehensive
-uilensai --help
+node packages/cli/cli.js --url https://example.com --modules ui,performance,seoContent,siteHealth
+node packages/cli/cli.js --url https://example.com --modules all --analysis-depth comprehensive
 ```
 
 `--modules all` runs ui, performance, seoContent, security, privacy, compatibility, marketing, conversion, accessibility, and siteHealth.
