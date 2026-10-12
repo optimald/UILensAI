@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.32] - 2026-10-12
+
+### Fixed
+- Declared `chalk@4` as a runtime dependency. The CLI requires it, and a clean install of 1.3.31 would fail to start.
+
 ## [1.3.31] - 2026-10-12
 
 npm `1.3.30` was already published on 2026-05-19 from commit `3b1acd8`. This release is 1.3.31 so the registry version matches this tree.
