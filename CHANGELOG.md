@@ -2,7 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.3.30] - 2026-10-12
+## [1.3.31] - 2026-10-12
+
+npm `1.3.30` was already published on 2026-05-19 from commit `3b1acd8`. This release is 1.3.31 so the registry version matches this tree.
 
 ### Changed
 - **OpenRouter models:** Default scan model is `google/gemini-3.1-flash-lite`. Security and performance use `google/gemini-3.6-flash`. Frontier calls use `google/gemini-3.8-flash`. Fallback order is 3.1 Flash Lite, 3.5 Flash Lite, then 3.6 Flash. The previous primary id, `google/gemini-3.1-flash-lite-preview`, was shut down on 2026-05-25.
